@@ -5,7 +5,7 @@
 
 **Topic you chose:** Bus Scheduling
 
-**Sprint Number:** NO.2
+**Sprint Number:** NO. 3
 
 **Scrum Master**: Andres Morales De Jesus
 
