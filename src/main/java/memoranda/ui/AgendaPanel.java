@@ -88,7 +88,7 @@ public class AgendaPanel extends JPanel {
 					else if (d.startsWith("memoranda:tasks")) {
 						String id = d.split("#")[1];
 						CurrentProject.set(ProjectManager.getProject(id));
-						parentPanel.taskB_actionPerformed(null);
+						//parentPanel.taskB_actionPerformed(null);
 					} else if (d.startsWith("memoranda:project")) {
 						String id = d.split("#")[1];
 						CurrentProject.set(ProjectManager.getProject(id));

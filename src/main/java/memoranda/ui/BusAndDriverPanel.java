@@ -487,7 +487,10 @@ public class BusAndDriverPanel extends JPanel {
         busPane.revalidate();
         busPane.repaint();
     }
-    
+
+    /**
+     * Button that allows for the selection of a driver.
+     */
     public class SelectDriverButton extends JButton {
     	private Bus bus;
     	

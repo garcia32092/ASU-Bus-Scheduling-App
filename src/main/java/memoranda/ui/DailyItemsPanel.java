@@ -179,7 +179,7 @@ public class DailyItemsPanel extends JPanel {
         taskB.setMargin(new Insets(0, 0, 0, 0));
         taskB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                taskB_actionPerformed(e);
+                //taskButton_actionPerformed(e);
             }
         });
         taskB.setPreferredSize(new Dimension(24, 24));
@@ -473,11 +473,8 @@ public class DailyItemsPanel extends JPanel {
 	public String getCurrentPanel() {
 		return CurrentPanel;
 	}
-    void taskB_actionPerformed(ActionEvent e) {
-        parentPanel.tasksB_actionPerformed(null);
-    }
 
     void alarmB_actionPerformed(ActionEvent e) {
-        parentPanel.routeB_actionPerformed(null);
+        parentPanel.routeButton_actionPerformed(null);
     }
 }
