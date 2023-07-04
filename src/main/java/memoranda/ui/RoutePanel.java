@@ -2,13 +2,9 @@ package main.java.memoranda.ui;
 
 import main.java.memoranda.*;
 
-
 import javax.swing.*;
-
 import java.awt.*;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 
 public class RoutePanel extends JPanel {
@@ -21,20 +17,20 @@ public class RoutePanel extends JPanel {
     public RoutePanel() {
         try {
             jbInit();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
+
     void jbInit() throws Exception {
 
-    	jsonHandler = new JsonHandler();
+        jsonHandler = new JsonHandler();
         String fileName = "nodes1.json";
         jsonHandler.readNodesFromJSON(fileName);
         mapGen = new MapGenerator(jsonHandler.getNodes());
         scrollPane = new JScrollPane();
 
-        this.setLayout(new GridLayout(0,2));
+        this.setLayout(new GridLayout(0, 2));
         scrollPane.getViewport().setBackground(Color.DARK_GRAY);
         scrollPane.getViewport().add(mapGen);
         scrollPane.setPreferredSize(new Dimension(900, 800));
@@ -57,7 +53,7 @@ public class RoutePanel extends JPanel {
         // Side Panel
         CreateRoutePanel routePanel = new CreateRoutePanel();
         JPanel sidePanel = new JPanel();
-        sidePanel.setLayout(new GridLayout(2,1));
+        sidePanel.setLayout(new GridLayout(2, 1));
         sidePanel.setPreferredSize(new Dimension(getWidth(), getHeight()));
         sidePanel.setBackground(Color.BLACK);
 
@@ -89,5 +85,6 @@ public class RoutePanel extends JPanel {
         }
 
     }
+
 
 }

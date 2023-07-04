@@ -7,12 +7,11 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package main.java.memoranda.util;
-import java.util.Vector;
 
-import nu.xom.Attribute;
-import nu.xom.Document;
-import nu.xom.Element;
-import nu.xom.Elements;
+import nu.xom.*;
+
+import java.util.*;
+
 /**
  *
  */
@@ -52,7 +51,7 @@ public class MimeTypesList {
             Element el = els.get(i);
             Elements exts = el.getChildElements("ext");
             for (int j = 0; j < exts.size(); j++)
-                if (exts.get(j).getValue().toLowerCase().equals(ext.toLowerCase()))
+                if (exts.get(j).getValue().equalsIgnoreCase(ext))
                     return new MimeType(el);
         }
         return new MimeType();
@@ -81,8 +80,8 @@ public class MimeTypesList {
     public static String getExtension(String s) {
         String ext = null;
         int i = s.lastIndexOf('.');
-        if (i > 0 &&  i < s.length() - 1) {
-            ext = s.substring(i+1).toLowerCase();
+        if (i > 0 && i < s.length() - 1) {
+            ext = s.substring(i + 1).toLowerCase();
         }
         return ext;
     }

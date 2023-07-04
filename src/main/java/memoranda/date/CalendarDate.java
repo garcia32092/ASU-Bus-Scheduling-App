@@ -8,12 +8,10 @@
  */
 package main.java.memoranda.date;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import main.java.memoranda.util.*;
 
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.Util;
+import java.text.*;
+import java.util.*;
 
 /**
  *
@@ -21,9 +19,9 @@ import main.java.memoranda.util.Util;
 /*$Id: CalendarDate.java,v 1.3 2004/01/30 12:17:41 alexeya Exp $*/
 public class CalendarDate {
 
-    private int _year;
-    private int _month;
-    private int _day;
+    private final int _year;
+    private final int _month;
+    private final int _day;
 
     public static Calendar dateToCalendar(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -40,12 +38,13 @@ public class CalendarDate {
         _month = month;
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, _year);
-        cal.set(Calendar.MONTH, _month);cal.getTime();
+        cal.set(Calendar.MONTH, _month);
+        cal.getTime();
         int dmax = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
         if (day <= dmax)
-          _day = day;
+            _day = day;
         else
-          _day = dmax;
+            _day = dmax;
 
     }
 
@@ -124,12 +123,10 @@ public class CalendarDate {
         if (object.getClass().isInstance(CalendarDate.class)) {
             CalendarDate d2 = (CalendarDate) object;
             return ((d2.getDay() == getDay()) && (d2.getMonth() == getMonth()) && (d2.getYear() == getYear()));
-        }
-        else if (object.getClass().isInstance(Calendar.class)) {
+        } else if (object.getClass().isInstance(Calendar.class)) {
             Calendar cal = (Calendar) object;
             return this.equals(new CalendarDate(cal));
-        }
-        else if (object.getClass().isInstance(Date.class)) {
+        } else if (object.getClass().isInstance(Date.class)) {
             Date d = (Date) object;
             return this.equals(new CalendarDate(d));
         }
@@ -157,23 +154,23 @@ public class CalendarDate {
 
     public String toString() {
         return Util.getDateStamp(this);
-    }  
-    
+    }
+
     public String getFullDateString() {
         return Local.getDateString(this, DateFormat.FULL);
     }
-    
+
     public String getMediumDateString() {
         return Local.getDateString(this, DateFormat.MEDIUM);
     }
-    
+
     public String getLongDateString() {
         return Local.getDateString(this, DateFormat.LONG);
     }
-    
+
     public String getShortDateString() {
         return Local.getDateString(this, DateFormat.SHORT);
     }
-    
+
 
 }

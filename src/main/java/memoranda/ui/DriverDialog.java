@@ -1,11 +1,10 @@
 package main.java.memoranda.ui;
 
-import main.java.memoranda.Driver;
-import main.java.memoranda.util.Local;
+import main.java.memoranda.*;
+import main.java.memoranda.util.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -40,25 +39,23 @@ public class DriverDialog extends JDialog {
     public DriverDialog(Frame frame, String title) {
         super(frame, title, true);
         try {
-            jbInit();            
+            jbInit();
             pack();
-        }
-
-        catch (Exception ex) {
+        } catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
-    
+
     void jbInit() throws Exception {
-	this.setResizable(false);
-	this.setSize(new Dimension(430,300));
+        this.setResizable(false);
+        this.setSize(new Dimension(430, 300));
         border1 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
-        border2 = BorderFactory.createEtchedBorder(Color.white, 
+        border2 = BorderFactory.createEtchedBorder(Color.white,
             new Color(142, 142, 142));
-        border3 = new TitledBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0), 
-        Local.getString("Driver Name"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
+        border3 = new TitledBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0),
+            Local.getString("Driver Name"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
         border4 = BorderFactory.createEmptyBorder(0, 5, 0, 5);
-        border8 = BorderFactory.createEtchedBorder(Color.white, 
+        border8 = BorderFactory.createEtchedBorder(Color.white,
             new Color(178, 178, 178));
         cancelButton.setMaximumSize(new Dimension(100, 26));
         cancelButton.setMinimumSize(new Dimension(100, 26));
@@ -79,7 +76,7 @@ public class DriverDialog extends JDialog {
                 okayButton_ActionPerformed(e);
             }
         });
-        
+
         this.getRootPane().setDefaultButton(okayButton);
         mPanel.setBorder(border1);
         areaPanel.setBorder(border2);
@@ -88,31 +85,31 @@ public class DriverDialog extends JDialog {
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
         header.setText(Local.getString("Driver"));
-        header.setIcon(new ImageIcon(DriverDialog.class.getResource( "/ui/icons/task48.png")));
-        
+        header.setIcon(new ImageIcon(DriverDialog.class.getResource("/ui/icons/task48.png")));
+
         GridBagLayout gbLayout = (GridBagLayout) jPanel8.getLayout();
         jPanel8.setBorder(border3);
-				
+
         nameField.setBorder(border8);
         nameField.setPreferredSize(new Dimension(375, 24));
         GridBagConstraints nameFieldConstraints = new GridBagConstraints();
         nameFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         nameFieldConstraints.weighty = 1;
-        gbLayout.setConstraints(nameField,nameFieldConstraints);
+        gbLayout.setConstraints(nameField, nameFieldConstraints);
 
         idField.setBorder(border8);
         idField.setPreferredSize(new Dimension(55, 24));
         GridBagConstraints idFieldConstraints = new GridBagConstraints();
         idFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         idFieldConstraints.weighty = 1;
-        gbLayout.setConstraints(idField,idFieldConstraints);
+        gbLayout.setConstraints(idField, idFieldConstraints);
 
         phoneField.setBorder(border8);
         phoneField.setPreferredSize(new Dimension(155, 24));
         GridBagConstraints phoneFieldConstraints = new GridBagConstraints();
         phoneFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         phoneFieldConstraints.weighty = 1;
-        gbLayout.setConstraints(phoneField,phoneFieldConstraints);
+        gbLayout.setConstraints(phoneField, phoneFieldConstraints);
 
         idLabel.setText(Local.getString("ID Number"));
         idLabel.setMinimumSize(new Dimension(60, 16));
@@ -142,22 +139,23 @@ public class DriverDialog extends JDialog {
         idFieldPanel.add(idField, null);
         gridPanel.add(phoneField, phoneFieldConstraints);
         gridPanel.add(phoneFieldPanel, null);
-        phoneFieldPanel.add(phoneField,null);
+        phoneFieldPanel.add(phoneField, null);
 
         //Listener to ensure only integers with length no greater than 6 characters are typed
         idField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(idField.getText().length() >= 6)
+                if (idField.getText().length() >= 6)
                     e.consume();
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {            }
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(!idField.getText().matches("\\d"))
+                if (!idField.getText().matches("\\d"))
                     idField.setText(idField.getText().replaceAll("\\D", ""));
             }
         });
@@ -165,46 +163,48 @@ public class DriverDialog extends JDialog {
         nameField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(nameField.getText().length() >= 35)
+                if (nameField.getText().length() >= 35)
                     e.consume();
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {       }
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
-            public void keyReleased(KeyEvent e) {      }
+            public void keyReleased(KeyEvent e) {
+            }
         });
 
         phoneField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(phoneField.getText().length() >= 14)
+                if (phoneField.getText().length() >= 14)
                     e.consume();
-                if(phoneField.getText().length() == 0)
+                if (phoneField.getText().length() == 0)
                     phoneField.setText("(");
-                if(phoneField.getText().length() == 4)
+                if (phoneField.getText().length() == 4)
                     phoneField.setText(phoneField.getText() + ") ");
-                if(phoneField.getText().length() == 9)
+                if (phoneField.getText().length() == 9)
                     phoneField.setText(phoneField.getText() + "-");
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(phoneField.getText().length() >= 14)
+                if (phoneField.getText().length() >= 14)
                     e.consume();
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(phoneField.getText().length() >= 14)
+                if (phoneField.getText().length() >= 14)
                     e.consume();
             }
         });
     }
 
     void okayButton_ActionPerformed(ActionEvent e) {
-	    CANCELLED = false;
+        CANCELLED = false;
         tempDriver = new Driver(idField.getText(), nameField.getText(), phoneField.getText());
         this.dispose();
     }

@@ -1,18 +1,13 @@
 package main.java.memoranda.util;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Locale;
-
-import main.java.memoranda.date.CalendarDate;
+import main.java.memoranda.date.*;
 
 import java.io.*;
+import java.text.*;
+import java.util.*;
 
 /**
  * Provides locale info
- *
  */
 /*$Id: Local.java,v 1.6 2004/10/11 08:48:21 alexeya Exp $*/
 public class Local {
@@ -22,42 +17,39 @@ public class Local {
     static boolean disabled = false;
 
     static {
-    	if (!Configuration.get("DISABLE_L10N").equals("yes")) {
-	    	String fn = "messages_"
-	                    + currentLocale.getLanguage()
-	                    + ".properties";
-	        if (Configuration.get("LOCALES_DIR") != "") {
-	        	System.out.print("Look "+fn+" at: "+Configuration.get("LOCALES_DIR")+" ");
-	        	try {
-	        		messages.load(new FileInputStream(
-	        			Configuration.get("LOCALES_DIR")+File.separator+fn));
-	        		System.out.println(" - found");
-	        	}
-	        	catch (IOException ex) {
-	        		// Do nothing ...
-	        		System.out.println(" - not found");
-	        		ex.printStackTrace();
-	        	}
-	        }
-	        if (messages.size() == 0) {
-		        try {
-		            messages.load(
-		                Local.class.getResourceAsStream(
-		                    "localmessages/"+fn));            
-		        }
-		        catch (Exception e) {
-		            // Do nothing ...
-		        }
-	        }
-    	}
-    	else {
-    		currentLocale = new Locale("en", "US");
-    		/*DEBUG*/
-    		System.out.println("* DEBUG: Locales are disabled");
-    	}       
-    	if (messages.size() == 0) 
-    		messages = null;
-    		
+        if (!Configuration.get("DISABLE_L10N").equals("yes")) {
+            String fn = "messages_"
+                + currentLocale.getLanguage()
+                + ".properties";
+            if (Configuration.get("LOCALES_DIR") != "") {
+                System.out.print("Look " + fn + " at: " + Configuration.get("LOCALES_DIR") + " ");
+                try {
+                    messages.load(new FileInputStream(
+                        Configuration.get("LOCALES_DIR") + File.separator + fn));
+                    System.out.println(" - found");
+                } catch (IOException ex) {
+                    // Do nothing ...
+                    System.out.println(" - not found");
+                    ex.printStackTrace();
+                }
+            }
+            if (messages.size() == 0) {
+                try {
+                    messages.load(
+                        Local.class.getResourceAsStream(
+                            "localmessages/" + fn));
+                } catch (Exception e) {
+                    // Do nothing ...
+                }
+            }
+        } else {
+            currentLocale = new Locale("en", "US");
+            /*DEBUG*/
+            System.out.println("* DEBUG: Locales are disabled");
+        }
+        if (messages.size() == 0)
+            messages = null;
+
         /*** DEBUG PURPOSES ***/
         System.out.println("Default locale: " + currentLocale.getDisplayName());
         if (messages != null) {
@@ -65,13 +57,12 @@ public class Local {
                 "Use local messages: messages_"
                     + currentLocale.getLanguage()
                     + ".properties");
-        }
-        else {
+        } else {
             System.out.println(
                 "* DEBUG: Locales are disabled or not found: messages_"
                     + currentLocale.getLanguage()
                     + ".properties");
-        }        
+        }
         /**********************/
     }
 
@@ -83,7 +74,7 @@ public class Local {
         return currentLocale;
     }
 
-    static String monthnames[] =
+    static String[] monthnames =
         {
             "Jan",
             "Feb",
@@ -96,10 +87,10 @@ public class Local {
             "September",
             "October",
             "November",
-            "December" };
+            "December"};
 
-    static String weekdaynames[] =
-        { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+    static String[] weekdaynames =
+        {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     public static String getString(String key) {
         if ((messages == null) || (disabled)) {
@@ -108,8 +99,7 @@ public class Local {
         String msg = (String) messages.get(key.trim().toUpperCase());
         if ((msg != null) && (msg.length() > 0)) {
             return msg;
-        }
-        else {
+        } else {
             return key;
         }
     }
@@ -135,7 +125,7 @@ public class Local {
                     "Thu",
                     "Fri",
                     "Sat",
-                    "Sun" };
+                    "Sun"};
 
         for (int i = 0; i < 7; i++) {
             localwdnames[i] = getString(localnames[i]);
@@ -155,6 +145,7 @@ public class Local {
         DateFormat dateFormat = DateFormat.getDateInstance(f, currentLocale);
         return dateFormat.format(d);
     }
+
     public static String getDateString(Calendar cal, int f) {
         /*@todo: Get date string format from locale*/
         /*String s =
@@ -226,32 +217,28 @@ public class Local {
         if (s.indexOf(":") > 0) {
             h = s.substring(0, s.indexOf(":"));
             m = s.substring(s.indexOf(":") + 1);
-        }
-        else if (s.indexOf(":") == 0) {
+        } else if (s.indexOf(":") == 0) {
             h = "0";
             m = s;
-        }
-        else {
+        } else {
             h = s;
             m = "0";
         }
         int[] time = new int[2];
         try {
-            time[0] = new Integer(h).intValue();
+            time[0] = Integer.parseInt(h);
             if ((time[0] < 0) || (time[0] > 23)) {
                 time[0] = 0;
             }
-        }
-        catch (NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             return null;
         }
         try {
-            time[1] = new Integer(m).intValue();
+            time[1] = Integer.parseInt(m);
             if ((time[1] < 0) || (time[1] > 59)) {
                 time[1] = 0;
             }
-        }
-        catch (NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             return null;
         }
         return time;

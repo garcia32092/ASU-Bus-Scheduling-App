@@ -1,12 +1,11 @@
 package main.java.memoranda;
 
-import java.util.Collection;
-import java.util.Vector;
+import java.util.*;
 
 public class CurrentNote {
 
-	private static Note currentNote = null;
-    private static Vector noteListeners = new Vector();
+    private static Note currentNote = null;
+    private static final Vector noteListeners = new Vector();
 
     public static Note get() {
         return currentNote;
@@ -32,7 +31,7 @@ public class CurrentNote {
 
     private static void noteChanged(Note note, boolean toSaveCurrentNote) {
         for (int i = 0; i < noteListeners.size(); i++) {
-            ((NoteListener)noteListeners.get(i)).noteChange(note,toSaveCurrentNote);
-		}
+            ((NoteListener) noteListeners.get(i)).noteChange(note, toSaveCurrentNote);
+        }
     }
 }

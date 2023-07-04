@@ -1,14 +1,6 @@
 package main.java.memoranda.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.io.*;
 import java.util.*;
 
 /*$Id: LoadableProperties.java,v 1.4 2004/01/30 12:17:42 alexeya Exp $*/
@@ -20,7 +12,7 @@ public class LoadableProperties extends Hashtable {
 
     public void load(InputStream inStream) throws IOException {
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(inStream, "UTF-8"));
+        BufferedReader in = new BufferedReader(new InputStreamReader(inStream, java.nio.charset.StandardCharsets.UTF_8));
 
         String aKey;
         String aValue;
@@ -39,15 +31,15 @@ public class LoadableProperties extends Hashtable {
     }
 
     public void save(OutputStream outStream, boolean sorted) throws IOException {
-    	if (!sorted) {
-    		save(outStream);
-    		return;
-    	}
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outStream, "UTF-8"));
+        if (!sorted) {
+            save(outStream);
+            return;
+        }
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outStream, java.nio.charset.StandardCharsets.UTF_8));
         String aKey;
         Object aValue;
         TreeMap tm = new TreeMap(this);
-        for (Iterator i = tm.keySet().iterator(); i.hasNext();) {
+        for (Iterator i = tm.keySet().iterator(); i.hasNext(); ) {
             aKey = (String) i.next();
             aValue = get(aKey);
             out.write(aKey + " = " + aValue);
@@ -56,12 +48,12 @@ public class LoadableProperties extends Hashtable {
         out.flush();
         out.close();
     }
-    
+
     public void save(OutputStream outStream) throws IOException {
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outStream, "UTF-8"));
+        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(outStream, java.nio.charset.StandardCharsets.UTF_8));
         String aKey;
         Object aValue;
-        for (Enumeration e = keys(); e.hasMoreElements();) {
+        for (Enumeration e = keys(); e.hasMoreElements(); ) {
             aKey = (String) e.nextElement();
             aValue = get(aKey);
             out.write(aKey + " = " + aValue);
@@ -78,25 +70,18 @@ public class LoadableProperties extends Hashtable {
             if (str.startsWith("#") || str.startsWith("!")) {
                 return false;
             }
-        }
-        else {
+        } else {
             return false;
         }
 
         int index = str.indexOf("=");
-        if (index > 0 && str.length() > index) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return index > 0 && str.length() > index;
     }
 
     private String getNextLine(BufferedReader br) {
         try {
             return br.readLine();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
 

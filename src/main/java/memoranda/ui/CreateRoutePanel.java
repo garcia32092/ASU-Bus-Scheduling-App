@@ -2,14 +2,11 @@ package main.java.memoranda.ui;
 
 import main.java.memoranda.*;
 
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import java.util.ArrayList;
+import java.awt.event.*;
 import java.util.List;
+import java.util.*;
 
 
 public class CreateRoutePanel extends JPanel implements ActionListener {
@@ -27,11 +24,11 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
     public CreateRoutePanel() {
         try {
             jbInit();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
+
     void jbInit() throws Exception {
 
         jsonHandler = new JsonHandler();
@@ -60,7 +57,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         JLabel instructionsLabel = instructionsLabelMaker();
         routeSelectionPanel.add(routeLabel, BorderLayout.NORTH);
         routeSelectionPanel.add(routeSelectionList(), BorderLayout.CENTER);
-        routeSelectionPanel.add(instructionsLabel,BorderLayout.SOUTH);
+        routeSelectionPanel.add(instructionsLabel, BorderLayout.SOUTH);
 
         mainPanel.add(routeSelectionPanel, BorderLayout.NORTH);
 
@@ -100,8 +97,8 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
 
     private JLabel instructionsLabelMaker() {
         JLabel label = new JLabel("<html>To select multiple stops at once:<br>" +
-                "SHIFT + mouse click or Control key + mouse click on desired stops<br>" +
-                "then click on create route once driver, bus, and stop duration have been chosen</html>");
+            "SHIFT + mouse click or Control key + mouse click on desired stops<br>" +
+            "then click on create route once driver, bus, and stop duration have been chosen</html>");
         return label;
     }
 
@@ -116,7 +113,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         return sp;
     }
 
-    private void addRoutePointListListener() {
+    public void addRoutePointListListener() {
         routePointList.addListSelectionListener(e -> {
             List<String> nodes = routePointList.getSelectedValuesList();
             listOfNodes = new ArrayList<>();
@@ -141,7 +138,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         jsonHandler.getDriversToString().forEach(driverModel::addElement);
         driverBox.setModel(driverModel);
         driverBox.setVisible(true);
-        driverBox.setBounds(10,310,100,25);
+        driverBox.setBounds(10, 310, 100, 25);
         return driverBox;
     }
 
@@ -151,7 +148,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         jsonHandler.getBusesToString().forEach(busModel::addElement);
         busBox.setModel(busModel);
         busBox.setVisible(true);
-        busBox.setBounds(10,360,100,25);
+        busBox.setBounds(10, 360, 100, 25);
         return busBox;
     }
 
@@ -161,14 +158,14 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         double stopTime = Double.parseDouble(stopDuration.getText());
         Route route = new Route((ArrayList<Node>) listOfNodes, stopTime);
 
-        for(Driver driver : jsonHandler.getDriverList()) {
-            if(driver.getName().equals(driverName)) {
+        for (Driver driver : jsonHandler.getDriverList()) {
+            if (driver.getName().equals(driverName)) {
                 route.setDriver(driver);
             }
         }
 
-        for(Bus bus : jsonHandler.getBusList()) {
-            if(bus.getId().equals(busId)) {
+        for (Bus bus : jsonHandler.getBusList()) {
+            if (bus.getId().equals(busId)) {
                 route.setBus(bus);
             }
         }
@@ -182,7 +179,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if(e.getSource() == createButton) {
+        if (e.getSource() == createButton) {
             createRoute();
 
         }
@@ -195,16 +192,43 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         JOptionPane.showConfirmDialog(this, "Route created successfully", "Message", JOptionPane.DEFAULT_OPTION);
     }
 
+    public JTextField getStopDuration() {
+        return stopDuration;
+    }
+
+    public JList<String> getRoutePointList() {
+        return routePointList;
+    }
+
+    public JComboBox<Object> getDriverBox() {
+        return driverBox;
+    }
+
+    public JButton getCreateButton() {
+        return createButton;
+    }
+
+    public JComboBox<Object> getBusBox() {
+        return busBox;
+    }
+
+    public List<Node> getListOfNodes() {
+        return listOfNodes;
+    }
+
+    public JsonHandler getJsonHandler() {
+        return jsonHandler;
+    }
 
     public static void main(String[] args) {
 
-                CreateRoutePanel createRoutePanel = new CreateRoutePanel();
+        CreateRoutePanel createRoutePanel = new CreateRoutePanel();
 
-                JFrame frame = new JFrame("Create Route");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.getContentPane().add(createRoutePanel);
-                frame.pack();
-                frame.setVisible(true);
+        JFrame frame = new JFrame("Create Route");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(createRoutePanel);
+        frame.pack();
+        frame.setVisible(true);
     }
 
 }

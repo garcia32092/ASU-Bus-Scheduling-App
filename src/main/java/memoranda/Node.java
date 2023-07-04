@@ -9,7 +9,8 @@ public class Node {
 
     /**
      * The default constructor for Node
-     * @param id the ID associated with the specific node
+     *
+     * @param id  the ID associated with the specific node
      * @param lat the latitude coordinates of the Node
      * @param lon the longitude coordinates of the Node
      */
@@ -21,16 +22,18 @@ public class Node {
         y = -1;
     }
 
-	/**
+    /**
      * Getter function for the String ID
+     *
      * @return the ID associated with the node
      */
     public String getId() {
-    	return id;
+        return id;
     }
 
     /**
      * Getter function for the latitude value
+     *
      * @return the latitude value of the Node
      */
     public double getLatitude() {
@@ -39,31 +42,33 @@ public class Node {
 
     /**
      * Getter function for the longitude value
+     *
      * @return the longitude value of the Node
      */
     public double getLongitude() {
         return longitude;
     }
-    
-	public int getX() {
-		return x;
-	}
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public void setX(int x) {
+        this.x = x;
+    }
 
-	public void setY(int y) {
-		this.y = y;
-	}
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
 
     /**
      * Calculates the distance between the Nodes in km
-     * @param n the first Node
+     *
+     * @param n  the first Node
      * @param nn the second Node
      * @return the distance of the Nodes in km
      */
@@ -78,16 +83,17 @@ public class Node {
 //        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 //        double d = R * c; //distance in kilometers
 //        return d;
-    	double xDiff = nn.getX() - n.getX();
+        double xDiff = nn.getX() - n.getX();
         double yDiff = nn.getY() - n.getY();
-        
+
         double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         return distance;
     }
 
     /**
      * Calculates the distance between Nodes in miles
-     * @param n first node
+     *
+     * @param n  first node
      * @param nn second node
      * @return The distance of nodes in miles
      */
@@ -104,17 +110,16 @@ public class Node {
      * @return the string
      */
     public String toString() {
-        return "Node: " + id.toString() + "\nlatitude: " + latitude + "\nlongitude: " + longitude;
+        return "Node: " + id + "\nlatitude: " + latitude + "\nlongitude: " + longitude;
     }
 
     /**
      * equals implementation
+     *
      * @param n the comparison Node
      * @return returns true if the latitude and longitude values are equal, else returns false
      */
     public boolean equals(Node n) {
-        if(latitude == n.getLatitude() && longitude == n.getLongitude())
-            return true;
-        return false;
+        return latitude == n.getLatitude() && longitude == n.getLongitude();
     }
 }

@@ -1,29 +1,23 @@
 package main.java.memoranda;
 
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
 
 public class JsonHandler {
 
-	public List<Node> nodes;
+    public List<Node> nodes;
     public List<String> nodesString;
 
     public List<String> driversToString;
     public List<String> busesToString;
-	public ArrayList<Driver> driverList;
+    public ArrayList<Driver> driverList;
     public ArrayList<Bus> busList;
-    private ArrayList<Route> routeList;
+    private final ArrayList<Route> routeList;
 
     public JsonHandler() {
         nodes = new ArrayList<Node>();
@@ -43,9 +37,10 @@ public class JsonHandler {
         object.put("lon", node.getLongitude());
         return object;
     }
-	public void readNodesFromJSON(String filename) {
+
+    public void readNodesFromJSON(String filename) {
         try {
-        	JSONParser parser = new JSONParser();
+            JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
 
             JSONArray nodesArray = (JSONArray) jsonObject.get("nodes");
@@ -71,9 +66,9 @@ public class JsonHandler {
 
 
         Node selectedNode = nodes.stream()
-                .filter(node -> node.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+            .filter(node -> node.getId().equals(id))
+            .findFirst()
+            .orElse(null);
 
 
         if (selectedNode != null) {
@@ -84,7 +79,6 @@ public class JsonHandler {
 
         return object;
     }
-
 
 
     public void writeRouteToJson(Route route) {
@@ -146,17 +140,17 @@ public class JsonHandler {
             JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("nodes1.json"));
 
             JSONArray routesArray = (JSONArray) jsonObject.get("Routes");
-            List<Node> listOfNodes= new ArrayList<Node>();
+            List<Node> listOfNodes = new ArrayList<Node>();
             Double stopDuration = 0.0;
             for (Object obj : routesArray) {
                 JSONObject routeObj = (JSONObject) obj;
-                if(routeObj.get("Stop Duration").equals("Stop Duration")) {
+                if (routeObj.get("Stop Duration").equals("Stop Duration")) {
                     stopDuration = (Double) routeObj.get("Stop Duration");
                 }
                 String id = (String) routeObj.get("Id");
                 Double longitude = (Double) routeObj.get("Longitude");
                 Double latitude = (Double) routeObj.get("Latitude");
-                listOfNodes.add(new Node(id,latitude,longitude));
+                listOfNodes.add(new Node(id, latitude, longitude));
             }
 
 
@@ -173,6 +167,7 @@ public class JsonHandler {
     public List<String> getNodesString() {
         return nodesString;
     }
+
     public void readDriversFromJSON(String filename) {
         try {
             JSONParser parser = new JSONParser();
@@ -287,12 +282,15 @@ public class JsonHandler {
     public List<String> getBusesToString() {
         return busesToString;
     }
+
     public List<Node> getNodes() {
         return nodes;
     }
+
     public ArrayList<Route> getRouteList() {
         return routeList;
     }
+
     public void addNodeString(String option) {
         nodesString.add(option);
     }
@@ -304,6 +302,7 @@ public class JsonHandler {
     private void addBusToString(String id) {
         busesToString.add(id);
     }
+
     public void addNode(String id, double latitude, double longitude) {
         nodes.add(new Node(id, latitude, longitude));
     }
@@ -313,11 +312,9 @@ public class JsonHandler {
     }
 
 
-
     public ArrayList<Driver> getDriverList() {
         return driverList;
     }
-
 
 
     public ArrayList<Bus> getBusList() {

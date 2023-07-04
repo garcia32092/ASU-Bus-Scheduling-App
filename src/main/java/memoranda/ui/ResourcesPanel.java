@@ -1,36 +1,12 @@
 package main.java.memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.KeyEvent;
-import java.io.File;
+import main.java.memoranda.*;
+import main.java.memoranda.util.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import main.java.memoranda.CurrentProject;
-import main.java.memoranda.Resource;
-import main.java.memoranda.util.AppList;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.MimeType;
-import main.java.memoranda.util.MimeTypesList;
-import main.java.memoranda.util.Util;
-
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.*;
 
 /*$Id: ResourcesPanel.java,v 1.13 2007/03/20 08:22:41 alexeya Exp $*/
@@ -42,20 +18,20 @@ public class ResourcesPanel extends JPanel {
     JButton removeResB = new JButton();
     JScrollPane scrollPane = new JScrollPane();
     JButton refreshB = new JButton();
-  JPopupMenu resPPMenu = new JPopupMenu();
-  JMenuItem ppRun = new JMenuItem();
-  JMenuItem ppRemoveRes = new JMenuItem();
-  JMenuItem ppNewRes = new JMenuItem();
-  JMenuItem ppRefresh = new JMenuItem();
+    JPopupMenu resPPMenu = new JPopupMenu();
+    JMenuItem ppRun = new JMenuItem();
+    JMenuItem ppRemoveRes = new JMenuItem();
+    JMenuItem ppNewRes = new JMenuItem();
+    JMenuItem ppRefresh = new JMenuItem();
 
     public ResourcesPanel() {
         try {
             jbInit();
-        }
-        catch (Exception ex) {
-           new ExceptionDialog(ex);
+        } catch (Exception ex) {
+            new ExceptionDialog(ex);
         }
     }
+
     void jbInit() throws Exception {
         toolBar.setFloatable(false);
         this.setLayout(borderLayout1);
@@ -105,7 +81,8 @@ public class ResourcesPanel extends JPanel {
             public void valueChanged(ListSelectionEvent e) {
                 boolean enbl = (resourcesTable.getRowCount() > 0) && (resourcesTable.getSelectedRow() > -1);
 
-                removeResB.setEnabled(enbl); ppRemoveRes.setEnabled(enbl);
+                removeResB.setEnabled(enbl);
+                ppRemoveRes.setEnabled(enbl);
                 ppRun.setEnabled(enbl);
             }
         });
@@ -125,66 +102,70 @@ public class ResourcesPanel extends JPanel {
         refreshB.setIcon(
             new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
         resPPMenu.setFont(new java.awt.Font("Dialog", 1, 10));
-    ppRun.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppRun.setText(Local.getString("Open resource")+"...");
-    ppRun.addActionListener(new java.awt.event.ActionListener() {
+        ppRun.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppRun.setText(Local.getString("Open resource") + "...");
+        ppRun.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppRun_actionPerformed(e);
             }
         });
-    ppRun.setEnabled(false);
+        ppRun.setEnabled(false);
 
-    ppRemoveRes.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppRemoveRes.setText(Local.getString("Remove resource"));
-    ppRemoveRes.addActionListener(new java.awt.event.ActionListener() {
+        ppRemoveRes.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppRemoveRes.setText(Local.getString("Remove resource"));
+        ppRemoveRes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppRemoveRes_actionPerformed(e);
             }
         });
-    ppRemoveRes.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/removeresource.png")));
-    ppRemoveRes.setEnabled(false);
-    ppNewRes.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppNewRes.setText(Local.getString("New resource")+"...");
-    ppNewRes.addActionListener(new java.awt.event.ActionListener() {
+        ppRemoveRes.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/removeresource.png")));
+        ppRemoveRes.setEnabled(false);
+        ppNewRes.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppNewRes.setText(Local.getString("New resource") + "...");
+        ppNewRes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ppNewRes_actionPerformed(e);
             }
         });
-    ppNewRes.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/addresource.png")));
+        ppNewRes.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/addresource.png")));
 
-    ppRefresh.setFont(new java.awt.Font("Dialog", 1, 11));
-    ppRefresh.setText(Local.getString("Refresh"));
-    ppRefresh.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        ppRefresh_actionPerformed(e);
-      }
-    });
-    ppRefresh.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
+        ppRefresh.setFont(new java.awt.Font("Dialog", 1, 11));
+        ppRefresh.setText(Local.getString("Refresh"));
+        ppRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ppRefresh_actionPerformed(e);
+            }
+        });
+        ppRefresh.setIcon(new ImageIcon(main.java.memoranda.ui.AppFrame.class.getResource("/ui/icons/refreshres.png")));
 
-    toolBar.add(newResB, null);
+        toolBar.add(newResB, null);
         toolBar.add(removeResB, null);
         toolBar.addSeparator();
         toolBar.add(refreshB, null);
         this.add(scrollPane, BorderLayout.CENTER);
         scrollPane.getViewport().add(resourcesTable, null);
         this.add(toolBar, BorderLayout.NORTH);
-    resPPMenu.add(ppRun);
-    resPPMenu.addSeparator();
-    resPPMenu.add(ppNewRes);
-    resPPMenu.add(ppRemoveRes);
-    resPPMenu.addSeparator();
-    resPPMenu.add(ppRefresh);
-	
-		// remove resources using the DEL key
-		resourcesTable.addKeyListener(new KeyListener() {
-			public void keyPressed(KeyEvent e){
-				if(resourcesTable.getSelectedRows().length>0 
-					&& e.getKeyCode()==KeyEvent.VK_DELETE)
-					ppRemoveRes_actionPerformed(null);
-			}
-			public void	keyReleased(KeyEvent e){}
-			public void keyTyped(KeyEvent e){} 
-		});
+        resPPMenu.add(ppRun);
+        resPPMenu.addSeparator();
+        resPPMenu.add(ppNewRes);
+        resPPMenu.add(ppRemoveRes);
+        resPPMenu.addSeparator();
+        resPPMenu.add(ppRefresh);
+
+        // remove resources using the DEL key
+        resourcesTable.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                if (resourcesTable.getSelectedRows().length > 0
+                    && e.getKeyCode() == KeyEvent.VK_DELETE)
+                    ppRemoveRes_actionPerformed(null);
+            }
+
+            public void keyReleased(KeyEvent e) {
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+        });
     }
 
     void newResB_actionPerformed(ActionEvent e) {
@@ -207,15 +188,13 @@ public class ResourcesPanel extends JPanel {
                 return;
             // if file if projectFile, than copy the file and change url.
             if (dlg.projectFileCB.isSelected()) {
-            	fpath = copyFileToProjectDir(fpath);
-            	CurrentProject.getResourcesList().addResource(fpath, false, true);
-            }
-            else
-            	CurrentProject.getResourcesList().addResource(fpath);            	     	
-            
+                fpath = copyFileToProjectDir(fpath);
+                CurrentProject.getResourcesList().addResource(fpath, false, true);
+            } else
+                CurrentProject.getResourcesList().addResource(fpath);
+
             resourcesTable.tableChanged();
-        }
-        else {
+        } else {
             if (!Util.checkBrowser())
                 return;
             CurrentProject.getResourcesList().addResource(dlg.urlField.getText(), true, false);
@@ -237,7 +216,7 @@ public class ResourcesPanel extends JPanel {
             msg = Local.getString("Remove") + " " + toRemove.length + " " + Local.getString("shortcuts");
         msg +=
             "\n"
-            + Local.getString("Are you sure?");
+                + Local.getString("Are you sure?");
         int n =
             JOptionPane.showConfirmDialog(
                 App.getFrame(),
@@ -246,9 +225,9 @@ public class ResourcesPanel extends JPanel {
                 JOptionPane.YES_NO_OPTION);
         if (n != JOptionPane.YES_OPTION)
             return;
-        for (int i = 0; i < toRemove.length; i++) {        	
-        		CurrentProject.getResourcesList().removeResource(
-                        ((Resource) resourcesTable.getModel().getValueAt(toRemove[i], ResourcesTable._RESOURCE)).getPath());
+        for (int i = 0; i < toRemove.length; i++) {
+            CurrentProject.getResourcesList().removeResource(
+                ((Resource) resourcesTable.getModel().getValueAt(toRemove[i], ResourcesTable._RESOURCE)).getPath());
         }
         resourcesTable.tableChanged();
     }
@@ -278,8 +257,7 @@ public class ResourcesPanel extends JPanel {
         if (appId == null) {
             appId = Util.generateId();
             d = new File("/");
-        }
-        else {
+        } else {
             File exe = new File(appList.getFindPath(appId) + "/" + appList.getExec(appId));
             if (exe.isFile())
                 return true;
@@ -290,7 +268,7 @@ public class ResourcesPanel extends JPanel {
         SetAppDialog dlg =
             new SetAppDialog(
                 App.getFrame(),
-                Local.getString(Local.getString("Select the application to open files of type")+" '" + mt.getLabel() + "'"));
+                Local.getString(Local.getString("Select the application to open files of type") + " '" + mt.getLabel() + "'"));
         Dimension dlgSize = new Dimension(420, 300);
         dlg.setSize(dlgSize);
         Dimension frmSize = App.getFrame().getSize();
@@ -314,7 +292,7 @@ public class ResourcesPanel extends JPanel {
         CurrentStorage.get().storeMimeTypesList();
         return true;
     }
-    
+
 
     void runApp(String fpath) {
         MimeType mt = MimeTypesList.getMimeTypeForFile(fpath);
@@ -332,11 +310,10 @@ public class ResourcesPanel extends JPanel {
         System.out.println("Run: " + command[0]);
         try {
             Runtime.getRuntime().exec(command);
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             new ExceptionDialog(ex, "Failed to run an external application <br><code>"
-                    +command[0]+"</code>", "Check the application path and command line parameters for this resource type " +
-                    		"(File-&gt;Preferences-&gt;Resource types).");
+                + command[0] + "</code>", "Check the application path and command line parameters for this resource type " +
+                "(File-&gt;Preferences-&gt;Resource types).");
         }
     }
 
@@ -349,7 +326,7 @@ public class ResourcesPanel extends JPanel {
         public void mouseClicked(MouseEvent e) {
             if ((e.getClickCount() == 2) && (resourcesTable.getSelectedRow() > -1)) {
                 String path = (String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 3);
-                if (path.length() >0)
+                if (path.length() > 0)
                     runApp(path);
                 else
                     runBrowser((String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 0));
@@ -357,84 +334,87 @@ public class ResourcesPanel extends JPanel {
             //editTaskB_actionPerformed(null);
         }
 
-                public void mousePressed(MouseEvent e) {
-                    maybeShowPopup(e);
-                }
+        public void mousePressed(MouseEvent e) {
+            maybeShowPopup(e);
+        }
 
-                public void mouseReleased(MouseEvent e) {
-                    maybeShowPopup(e);
-                }
+        public void mouseReleased(MouseEvent e) {
+            maybeShowPopup(e);
+        }
 
-                private void maybeShowPopup(MouseEvent e) {
-                    if (e.isPopupTrigger()) {
-                        resPPMenu.show(e.getComponent(), e.getX(), e.getY());
-                    }
-                }
+        private void maybeShowPopup(MouseEvent e) {
+            if (e.isPopupTrigger()) {
+                resPPMenu.show(e.getComponent(), e.getX(), e.getY());
+            }
+        }
 
     }
+
     void refreshB_actionPerformed(ActionEvent e) {
         resourcesTable.tableChanged();
     }
 
-  void ppRun_actionPerformed(ActionEvent e) {
-    String path = (String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 3);
-                if (path.length() >0)
-                    runApp(path);
-                else
-                    runBrowser((String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 0));
-  }
-  void ppRemoveRes_actionPerformed(ActionEvent e) {
-    removeResB_actionPerformed(e);
-  }
-  void ppNewRes_actionPerformed(ActionEvent e) {
-    newResB_actionPerformed(e);
-  }
+    void ppRun_actionPerformed(ActionEvent e) {
+        String path = (String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 3);
+        if (path.length() > 0)
+            runApp(path);
+        else
+            runBrowser((String) resourcesTable.getValueAt(resourcesTable.getSelectedRow(), 0));
+    }
 
-  void ppRefresh_actionPerformed(ActionEvent e) {
-     resourcesTable.tableChanged();
-  }
-  
-  /**
-   * Copy a file to the directory of the current project
-   * @param srcStr The path of the source file.
-   * @param destStr The destination path.
-   * @return The new path of the file.
-   */
-  String copyFileToProjectDir(String srcStr) {
-	  
-	  String JN_DOCPATH = Util.getEnvDir();	    
-	  
-	  String baseName;
-	  int i = srcStr.lastIndexOf( File.separator );
-		if ( i != -1 ) {
-			baseName = srcStr.substring(i+1);
-		} else
-			baseName = srcStr;
-		
-	  String destStr = JN_DOCPATH + CurrentProject.get().getID() 
-	  				   + File.separator + "_projectFiles" + File.separator + baseName;
-	  
-	  File f = new File(JN_DOCPATH + CurrentProject.get().getID() + File.separator + "_projectFiles");
-	  if (!f.exists()) {
-		  f.mkdirs();
-	  }	  
-	  System.out.println("[DEBUG] Copy file from: "+srcStr+" to: "+destStr);
-	  
-	  try {
-         FileInputStream in = new FileInputStream(srcStr);
-         FileOutputStream out = new FileOutputStream(destStr);
-         byte[] buf = new byte[4096];
-         int len;
-         while ((len = in.read(buf)) > 0) {
-           out.write(buf, 0, len);
-         }
-         out.close();
-         in.close();
-       } 
-	   catch (IOException e) {
-         System.err.println(e.toString());
-       }
-		     
-  return destStr;
-  }
+    void ppRemoveRes_actionPerformed(ActionEvent e) {
+        removeResB_actionPerformed(e);
+    }
+
+    void ppNewRes_actionPerformed(ActionEvent e) {
+        newResB_actionPerformed(e);
+    }
+
+    void ppRefresh_actionPerformed(ActionEvent e) {
+        resourcesTable.tableChanged();
+    }
+
+    /**
+     * Copy a file to the directory of the current project
+     *
+     * @param srcStr  The path of the source file.
+     * @param destStr The destination path.
+     * @return The new path of the file.
+     */
+    String copyFileToProjectDir(String srcStr) {
+
+        String JN_DOCPATH = Util.getEnvDir();
+
+        String baseName;
+        int i = srcStr.lastIndexOf(File.separator);
+        if (i != -1) {
+            baseName = srcStr.substring(i + 1);
+        } else
+            baseName = srcStr;
+
+        String destStr = JN_DOCPATH + CurrentProject.get().getID()
+            + File.separator + "_projectFiles" + File.separator + baseName;
+
+        File f = new File(JN_DOCPATH + CurrentProject.get().getID() + File.separator + "_projectFiles");
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        System.out.println("[DEBUG] Copy file from: " + srcStr + " to: " + destStr);
+
+        try {
+            FileInputStream in = new FileInputStream(srcStr);
+            FileOutputStream out = new FileOutputStream(destStr);
+            byte[] buf = new byte[4096];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+
+        return destStr;
+    }
 }
