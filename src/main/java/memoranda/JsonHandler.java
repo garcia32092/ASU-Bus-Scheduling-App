@@ -41,7 +41,11 @@ public class JsonHandler {
     public void readNodesFromJSON(String filename) {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             JSONArray nodesArray = (JSONArray) jsonObject.get("nodes");
 
@@ -85,7 +89,11 @@ public class JsonHandler {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("nodes1.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream("nodes1.json"), "UTF-8")));
+
 
             // Create a new JSONArray to store all routes (existing + new)
             JSONArray routesArray = new JSONArray();
@@ -124,10 +132,15 @@ public class JsonHandler {
             jsonObject.put("Routes", routesArray);
 
             // Write the updated JSONObject to the file
-            FileWriter fileWriter = new FileWriter("nodes1.json");
-            fileWriter.write(jsonObject.toJSONString());
-            fileWriter.flush();
-            fileWriter.close();
+            try (OutputStreamWriter writer =
+                     new OutputStreamWriter(new FileOutputStream("nodes1.json"),"UTF-8")) {
+                writer.write(jsonObject.toJSONString());
+                writer.flush();
+                // The writer will be automatically closed by the try-with-resources block
+            } catch (IOException e) {
+                // Handle the exception appropriately
+                e.printStackTrace();
+            }
             System.out.println("Routes have been written to and saved in nodes1.json");
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,7 +150,11 @@ public class JsonHandler {
     public void readRoutesFromJSON() {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("nodes1.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream("nodes1.json"), "UTF-8")));
+
 
             JSONArray routesArray = (JSONArray) jsonObject.get("Routes");
             List<Node> listOfNodes = new ArrayList<Node>();
@@ -171,7 +188,11 @@ public class JsonHandler {
     public void readDriversFromJSON(String filename) {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             JSONArray nodesArray = (JSONArray) jsonObject.get("drivers");
 
@@ -191,8 +212,10 @@ public class JsonHandler {
     public void readBusesFromJSON(String filename) {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
-
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
             JSONArray nodesArray = (JSONArray) jsonObject.get("buses");
 
             for (Object obj : nodesArray) {
@@ -213,7 +236,11 @@ public class JsonHandler {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             // Create a new JSONArray to store all drivers (existing + new)
             JSONArray driversArray = new JSONArray();
@@ -232,10 +259,16 @@ public class JsonHandler {
             jsonObject.put("drivers", driversArray);
 
             // Write the updated JSONObject to the file
-            FileWriter fileWriter = new FileWriter(filename);
-            fileWriter.write(jsonObject.toJSONString());
-            fileWriter.flush();
-            fileWriter.close();
+
+            try (OutputStreamWriter writer =
+                     new OutputStreamWriter(new FileOutputStream(filename),"UTF-8")) {
+                writer.write(jsonObject.toJSONString());
+                writer.flush();
+                // The writer will be automatically closed by the try-with-resources block
+            } catch (IOException e) {
+                // Handle the exception appropriately
+                e.printStackTrace();
+            }
             System.out.println("Drivers have been written to and saved in nodes1.json");
         } catch (Exception e) {
             e.printStackTrace();
@@ -246,7 +279,11 @@ public class JsonHandler {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             // Create a new JSONArray to store all drivers (existing + new)
             JSONArray busesArray = new JSONArray();
@@ -265,10 +302,15 @@ public class JsonHandler {
             jsonObject.put("buses", busesArray);
 
             // Write the updated JSONObject to the file
-            FileWriter fileWriter = new FileWriter(filename);
-            fileWriter.write(jsonObject.toJSONString());
-            fileWriter.flush();
-            fileWriter.close();
+            try (OutputStreamWriter writer =
+                     new OutputStreamWriter(new FileOutputStream(filename),"UTF-8")) {
+                writer.write(jsonObject.toJSONString());
+                writer.flush();
+                // The writer will be automatically closed by the try-with-resources block
+            } catch (IOException e) {
+                // Handle the exception appropriately
+                e.printStackTrace();
+            }
             System.out.println("Buses have been written to and saved in nodes1.json");
         } catch (Exception e) {
             e.printStackTrace();

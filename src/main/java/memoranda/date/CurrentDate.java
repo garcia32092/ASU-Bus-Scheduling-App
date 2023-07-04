@@ -8,7 +8,8 @@
  */
 package main.java.memoranda.date;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Vector;
 
 /**
  *

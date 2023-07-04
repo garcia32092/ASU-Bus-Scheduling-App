@@ -45,27 +45,27 @@ public class TaskImpl implements Task, Comparable {
 
     public CalendarDate getEndDate() {
         String ed = _element.getAttribute("endDate").getValue();
-        if (ed != "")
+        if (!ed.equals("") )
             return new CalendarDate(_element.getAttribute("endDate").getValue());
         Task parent = this.getParentTask();
-        if (parent != null)
+        if (!parent.equals(null))
             return parent.getEndDate();
         Project pr = this._tl.getProject();
-        if (pr.getEndDate() != null)
+        if (!pr.getEndDate().equals(null))
             return pr.getEndDate();
         return this.getStartDate();
 
     }
 
     public void setEndDate(CalendarDate date) {
-        if (date == null)
+        if (date.equals(null))
             setAttr("endDate", "");
         setAttr("endDate", date.toString());
     }
 
     public long getEffort() {
         Attribute attr = _element.getAttribute("effort");
-        if (attr == null) {
+        if (attr.equals(null)) {
             return 0;
         } else {
             try {

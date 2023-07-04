@@ -144,9 +144,26 @@ public class EventImpl implements Event, Comparable {
         return a != null && a.getValue().equals("true");
     }
 
-    public int compareTo(Object o) {
+//    public int compareTo(Object o) {
+//        Event event = (Event) o;
+//        return (getHour() * 60 + getMinute()) - (event.getHour() * 60 + event.getMinute());
+//    }
+public int compareTo(Object o) {
+    if (o instanceof Event) {
         Event event = (Event) o;
-        return (getHour() * 60 + getMinute()) - (event.getHour() * 60 + event.getMinute());
+        int thisTime = getHour() * 60 + getMinute();
+        int otherTime = event.getHour() * 60 + event.getMinute();
+
+        if (thisTime < otherTime) {
+            return -1;
+        } else if (thisTime > otherTime) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
+
+    throw new IllegalArgumentException("Cannot compare different types.");
+}
 
 }

@@ -8,10 +8,12 @@
  */
 package main.java.memoranda.date;
 
-import main.java.memoranda.util.*;
+import main.java.memoranda.util.Local;
+import main.java.memoranda.util.Util;
 
-import java.text.*;
-import java.util.*;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *

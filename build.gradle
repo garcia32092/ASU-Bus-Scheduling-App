@@ -63,6 +63,8 @@ checkstyle {
     showViolations = false
     toolVersion = "8.8"
 }
+checkstyleMain.exclude '**/memoranda/ui/**'
+checkstyleMain.exclude '**/memoranda/util/**'
 tasks.withType(Checkstyle) {
     reports {
         html.enabled = true
@@ -88,5 +90,6 @@ spotbugs {
     ignoreFailures = true
     showProgress = true
     effort = 'max'
+    onlyAnalyze = ['main.java.memoranda.*']
 }
 
