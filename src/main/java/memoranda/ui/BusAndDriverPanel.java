@@ -298,8 +298,6 @@ public class BusAndDriverPanel extends JPanel {
 
             //this.setSize(500, 500);
         }
-
-
     }
 
     /**
@@ -497,7 +495,25 @@ public class BusAndDriverPanel extends JPanel {
         }
 
         private void selectDriverButton_ActionPerformed(ActionEvent e) {
+            AddDriverToBusDialog dialogBox = new AddDriverToBusDialog(App.getFrame(), Local.getString("Add Driver"), this.bus);
+            Dimension frmSize = App.getFrame().getSize();
+            Point loc = App.getFrame().getLocation();
+            dialogBox.setLocation((frmSize.width - dialogBox.getSize().width) / 2 + loc.x, (frmSize.height - dialogBox.getSize().height) / 2 + loc.y);
+            dialogBox.setVisible(true);
+            if (dialogBox.CANCELLED)
+                return;
 
+            updateList();
+            /*
+
+            if (driverList.hasDriver(dialogBox.tempDriver.getId()))
+                return; //temp solution so no duplicate IDs are made
+            driverList.addDriver(dialogBox.tempDriver);
+
+            jsonHandler.writeDriversToJSON(fileName);
+
+            updateList();
+             */
         }
     }
 }
