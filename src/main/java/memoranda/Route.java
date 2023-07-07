@@ -6,7 +6,7 @@ import java.util.*;
 
 public class
 Route {
-    private ArrayList<Node> nodes;
+    private List<Node> nodes;
     private double length; // in km
     private double duration; // in minutes
     double stopDuration; // in minutes
@@ -21,9 +21,8 @@ Route {
      * @param n  ArrayList of Nodes
      * @param sd stopDuration of Bus at each Node
      */
-    public Route(ArrayList<Node> n, double sd) {
-        nodes = new ArrayList<Node>();
-        nodes = n;
+    public Route(List<Node> n, double sd) {
+        this.nodes = n;
         length = calculateLength();
         duration = calculateDuration();
         stopDuration = sd;
@@ -124,7 +123,7 @@ Route {
      *
      * @return the ArrayList of Nodes in the Route
      */
-    public ArrayList<Node> getNodes() {
+    public List<Node> getNodes() {
         return nodes;
     }
 
