@@ -50,7 +50,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
     }
 
     private void buildPanel() {
-        setPreferredSize(new Dimension(500, 500));
+        setPreferredSize(new Dimension(500, 550));
         setBackground(Color.GRAY);
 
         setLayout(new BorderLayout());
@@ -79,12 +79,12 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         gbc.anchor = GridBagConstraints.WEST;
         gbc.insets = new Insets(5, 5, 5, 5);
 
-        JLabel stopDurationLabel = new JLabel("Stop Duration: (Default = 5 min.)");
+        JLabel stopDurationLabel = new JLabel("Set Stop Duration: (Default = 5 min.)");
         stopDuration = new JTextField(10);
         stopDuration.setText("5");
-        JLabel driverLabel = new JLabel("Driver:");
+        JLabel driverLabel = new JLabel("Select Driver Name:");
 
-        JLabel busLabel = new JLabel("Bus:");
+        JLabel busLabel = new JLabel("Select Bus Number:");
 
         otherComponentsPanel.add(stopDurationLabel, gbc);
         otherComponentsPanel.add(stopDuration, gbc);
@@ -107,19 +107,17 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
 
     private JLabel instructionsLabelMaker() {
         JLabel label = new JLabel("<html>To select multiple stops at once:<br>" +
-            "SHIFT + mouse click or Control key + mouse click on desired stops<br>" +
-            "then click on create route once driver, bus, and stop duration have been chosen</html>");
+            "SHIFT + mouse click or Control key + mouse click on desired stops<br>");
         return label;
     }
 
 
     private JScrollPane routeSelectionList() {
         routePointList = new JList(jsonHandler.getNodesString().toArray());
-        routePointList.setVisibleRowCount(8); // Set the number of visible rows
+        routePointList.setVisibleRowCount(12); // Set the number of visible rows
         routePointList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         addRoutePointListListener();
         JScrollPane sp = new JScrollPane(routePointList);
-        sp.setBounds(10, 70, 100, 100);
         return sp;
     }
 
@@ -174,7 +172,23 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         String driverName = (String) driverBox.getSelectedItem();
         String busId = (String) busBox.getSelectedItem();
         double stopTime = Double.parseDouble(stopDuration.getText());
-        Route route = new Route(listOfNodes, stopTime);
+        
+        routePointList.clearSelection();
+        RouteGenerator routeGen = new RouteGenerator(jsonHandler.getNodes());
+        List<Node> newRoute = routeGen.shortestRoute(listOfNodes.get(0), listOfNodes.get(listOfNodes.size() - 1));
+        
+        System.out.println("\nTesting for path within shortestRoute");
+        System.out.println("SIZE: " + newRoute.size());
+	    for (int i = 0; i < newRoute.size() - 1; i++) {
+            System.out.println("Node ID: " + newRoute.get(i).getId());
+            System.out.println("Node X: " + newRoute.get(i).getX() + " Node Y: " + newRoute.get(i).getY());
+        }
+        System.out.println("END path testing");
+        
+        if (newRoute.isEmpty())
+        	System.out.println("The new route is empty.");
+        
+        Route route = new Route(newRoute, stopTime);
 
         for (Driver driver : jsonHandler.getDriverList()) {
             if (driver.getName().equals(driverName)) {
@@ -189,20 +203,6 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         }
 
         jsonHandler.writeRouteToJson(route);
-        routePointList.clearSelection();
-        ShortestRouteGenerator srGen = new ShortestRouteGenerator(jsonHandler.getNodes());
-        List<Node> newRoute = srGen.shortestRoute(listOfNodes.get(0), listOfNodes.get(listOfNodes.size() - 1));
-        
-        System.out.println("\nTesting for path within shortestRoute");
-        System.out.println("SIZE: " + newRoute.size());
-	    for (int i = 0; i < newRoute.size() - 1; i++) {
-            System.out.println("Node ID: " + newRoute.get(i).getId());
-            System.out.println("Node X: " + newRoute.get(i).getX() + " Node Y: " + newRoute.get(i).getY());
-        }
-        System.out.println("END path testing");
-        
-        if (newRoute.isEmpty())
-        	System.out.println("The new route is empty.");
         mapGen.setRoute(newRoute);
         mapGen.repaint();
 
@@ -221,7 +221,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
 
     private void message() {
 
-        JOptionPane.showConfirmDialog(this, "Route created successfully", "Message", JOptionPane.DEFAULT_OPTION);
+        JOptionPane.showConfirmDialog(null, "Route created successfully", "", JOptionPane.DEFAULT_OPTION);
     }
 
     public JTextField getStopDuration() {

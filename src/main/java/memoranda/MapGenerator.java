@@ -98,16 +98,16 @@ public class MapGenerator extends JPanel {
                 Node node2 = route.get(i + 1);
                 System.out.println("X: " + node1.getX() + " Y: " + node1.getY());
                 System.out.println("X: " + node2.getX() + " Y: " + node2.getY());
-                g2d.drawLine(node1.getX() + 18/2, node1.getY() + 18/2, node2.getX() + 18/2, node2.getY() + 18/2);
+                g2d.drawLine(node1.getX() + 16/2, node1.getY() + 16/2, node2.getX() + 16/2, node2.getY() + 16/2);
             }
         }
 
         // Iterate over the nodes and draw them on the panel
         for (Node node : nodes) {
-            g.setColor(Color.BLACK);
+            g.setColor(Color.DARK_GRAY);
             if (node.isBusStop()) {
             	// Draw a dot for each node
-                g.fillOval(node.getX(), node.getY(), 18, 18);
+                g.fillOval(node.getX(), node.getY(), 16, 16);
                 // Draw the node's ID
                 g.drawString(node.getId(), node.getX(), node.getY());
             }

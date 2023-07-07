@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ShortestRouteGenerator {
+public class RouteGenerator {
 	List<Node> nodes;
 	
-	public ShortestRouteGenerator(List<Node> nodes) {
+	public RouteGenerator(List<Node> nodes) {
 		this.nodes = nodes;
 	}
 

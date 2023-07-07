@@ -149,7 +149,7 @@ public class AddDriverToBusDialog extends JDialog {
         if (id.length() < 6)
             for (int i = id.length(); i < 6; i++)
             	id = "0" + id;
-        if(id.equals(""))
+        if(id.equals("000000"))
             this.bus.setAssignedDriver(null);
         else
             this.bus.setAssignedDriver(id);

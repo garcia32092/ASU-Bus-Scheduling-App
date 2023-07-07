@@ -101,11 +101,13 @@ public class JsonHandler {
     	            int neighborId = Integer.parseInt(potentialNeighbor.getId());
     	            if (Math.abs(nodeId - neighborId) <= 1) {
     	                node.addNeighbor(potentialNeighbor);
-    	            }
-    	            else if (nodeId == 1 && neighborId == numOfNodes) {
+    	            } else if ((nodeId == 1 && neighborId == numOfNodes) || (nodeId == numOfNodes && neighborId == 1)) {
     	            	node.addNeighbor(potentialNeighbor);
-    	            }
-    	            else if (nodeId == numOfNodes && neighborId == 1) {
+    	            } else if ((nodeId == 32 && neighborId == 17) || (nodeId == 17 && neighborId == 32)) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            } else if ((nodeId == 34 && neighborId == 31) || (nodeId == 31 && neighborId == 34)) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            } else if ((nodeId == 34 && neighborId == 1) || (nodeId == 1 && neighborId == 34)) {
     	            	node.addNeighbor(potentialNeighbor);
     	            }
     	        }
