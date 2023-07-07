@@ -15,7 +15,8 @@ public class MapGenerator extends JPanel {
     private BufferedImage image;
 
     public MapGenerator() {
-        nodes = new ArrayList<>();
+        this.nodes = new ArrayList<>();
+        this.route = new ArrayList<>();
 
         getImage("/map1.png");
 
@@ -24,6 +25,7 @@ public class MapGenerator extends JPanel {
 
     public MapGenerator(List<Node> nodes) {
         this.nodes = nodes;
+        this.route = new ArrayList<>();
 
         getImage("/map1.png");
 
@@ -53,9 +55,9 @@ public class MapGenerator extends JPanel {
     }
 
 
-    public void addNode(String id, double latitude, double longitude) {
-        nodes.add(new Node(id, latitude, longitude));
-    }
+//    public void addNode(String id, double latitude, double longitude) {
+//        nodes.add(new Node(id, latitude, longitude));
+//    }
 
     public void addRoutePoint(Node n) {
         route.add(n);
@@ -69,66 +71,47 @@ public class MapGenerator extends JPanel {
         return shortestPath;
     }
 
+	public List<Node> getRoute() {
+		return route;
+	}
+
+	public void setRoute(List<Node> route) {
+		this.route = route;
+	}
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.clearRect(0, 0, getWidth(), getHeight());
         Graphics2D g2d = (Graphics2D) g;
-
-        double refLatitude = 0;
-        double refLongitude = 0;
-        for (Node node : nodes)
-            if (node.getId().equals("Reference")) {
-                refLatitude = node.getLatitude();
-                refLongitude = node.getLongitude();
-            }
-
+        
         if (image != null) {
             g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), this);
         }
 
-        Stroke str1 = new BasicStroke(2f);
-        g2d.setColor(Color.GREEN);
+        Stroke str1 = new BasicStroke(3f);
         g2d.setStroke(str1);
-
+        
+        // Draw route
         g2d.setColor(Color.RED);
-        // Iterate over the nodes and draw them on the panel
-        for (Node node : nodes) {
-            if (node.getId().equals("Reference")) {
-                continue;
+        if (!route.isEmpty()) {
+        	for (int i = 0; i < route.size() - 1; i++) {
+                Node node1 = route.get(i);
+                Node node2 = route.get(i + 1);
+                System.out.println("X: " + node1.getX() + " Y: " + node1.getY());
+                System.out.println("X: " + node2.getX() + " Y: " + node2.getY());
+                g2d.drawLine(node1.getX() + 18/2, node1.getY() + 18/2, node2.getX() + 18/2, node2.getY() + 18/2);
             }
-            // Scale the longitude and latitude to fit within the panel dimensions
-            int x = (int) ((((refLongitude - node.getLongitude()) * -1) / 0.0000206) + 222);
-            int y = (int) (((refLatitude - node.getLatitude()) / 0.00001706) + 135);
-            node.setX(x);
-            node.setY(y);
-
-            // Draw a dot for each node
-            g.setColor(Color.DARK_GRAY);
-            g.fillOval(x, y, 15, 15);
-//            g.fillOval(222, 140, 10, 10); // reference point
-//            g.fillOval(385, 250, 10, 10);
-//            g.fillOval(1053, 300, 10, 10);
-//            g.fillOval(1053, 700, 10, 10);
-//            g.fillOval(385, 700, 10, 10);
-
-            // Draw the node's ID
-            g.setColor(Color.BLACK);
-            g.drawString(node.getId(), x, y);
         }
 
-        // Draw route
-//        g2d.setColor(Color.RED);
-//        if (route.size() > 1) {
-//            Point2D.Double prevPoint = route.get(0);
-//            for (int i = 1; i < route.size(); i++) {
-//                Point2D.Double currPoint = route.get(i);
-//                int x1 = (int) ((prevPoint.x - longitudeMin) * width / (longitudeMax - longitudeMin));
-//                int y1 = (int) ((latitudeMax - prevPoint.y) * height / (latitudeMax - latitudeMin));
-//                int x2 = (int) ((currPoint.x - longitudeMin) * width / (longitudeMax - longitudeMin));
-//                int y2 = (int) ((latitudeMax - currPoint.y) * height / (latitudeMax - latitudeMin));
-//                g2d.drawLine(x1, y1, x2, y2);
-//                prevPoint = currPoint;
-//            }
-//        }
+        // Iterate over the nodes and draw them on the panel
+        for (Node node : nodes) {
+            g.setColor(Color.BLACK);
+            if (node.isBusStop()) {
+            	// Draw a dot for each node
+                g.fillOval(node.getX(), node.getY(), 18, 18);
+                // Draw the node's ID
+                g.drawString(node.getId(), node.getX(), node.getY());
+            }
+
+        }
     }
 }
