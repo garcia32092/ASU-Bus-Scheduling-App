@@ -37,9 +37,9 @@ public class RoutePanel extends JPanel {
         mapGen.repaint();
 
 
-        JScrollBar vertScrollBar = scrollPane.getVerticalScrollBar();
-        vertScrollBar.setUnitIncrement(25);
-        vertScrollBar.setBlockIncrement(50);
+        JScrollBar horizScrollBar = scrollPane.getHorizontalScrollBar();
+        horizScrollBar.setUnitIncrement(25);
+        horizScrollBar.setBlockIncrement(50);
         this.add(scrollPane, BorderLayout.WEST);
 
         RoutePanel.PopupListener ppListener = new RoutePanel.PopupListener();
@@ -51,7 +51,7 @@ public class RoutePanel extends JPanel {
 
     private void buildSidePanel() {
         // Side Panel
-        CreateRoutePanel routePanel = new CreateRoutePanel();
+        CreateRoutePanel routePanel = new CreateRoutePanel(mapGen);
         JPanel sidePanel = new JPanel();
         sidePanel.setLayout(new GridLayout(2, 1));
         sidePanel.setPreferredSize(new Dimension(getWidth(), getHeight()));

@@ -15,7 +15,7 @@ public class BusAndDriverPanel extends JPanel {
     DriverList driverList;
     BusList busList;
     Font font = new Font(Font.MONOSPACED, Font.BOLD, 14);
-    String fileName = "memoranda/nodes1.json";
+    String fileName = "nodes1.json";
 
 
     /**
