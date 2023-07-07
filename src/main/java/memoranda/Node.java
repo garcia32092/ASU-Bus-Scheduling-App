@@ -1,25 +1,32 @@
 package main.java.memoranda;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Node {
     String id;
     double latitude;
     double longitude;
     private int x;
     private int y;
+    private boolean isBusStop;
+    private List<Node> neighbors;
 
-    /**
+	/**
      * The default constructor for Node
      *
      * @param id  the ID associated with the specific node
      * @param lat the latitude coordinates of the Node
      * @param lon the longitude coordinates of the Node
      */
-    public Node(String id, double latitude, double longitude) {
+    public Node(String id, double latitude, double longitude, boolean isBusStop) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.isBusStop = isBusStop;
         x = -1;
         y = -1;
+        neighbors = new ArrayList<>();
     }
 
     /**
@@ -63,6 +70,18 @@ public class Node {
 
     public void setY(int y) {
         this.y = y;
+    }
+    
+    public boolean isBusStop() {
+		return isBusStop;
+	}
+    
+    public List<Node> getNeighbors() {
+        return neighbors;
+    }
+
+    public void addNeighbor(Node node) {
+        neighbors.add(node);
     }
 
     /**
