@@ -18,6 +18,7 @@ public class JsonHandler {
     public ArrayList<Driver> driverList;
     public ArrayList<Bus> busList;
     private final ArrayList<Route> routeList;
+    private int numOfNodes = -1;
 
     public JsonHandler() {
         nodes = new ArrayList<Node>();
@@ -55,15 +56,62 @@ public class JsonHandler {
                 String id = (String) nodeObj.get("id");
                 double latitude = Double.parseDouble((String) nodeObj.get("lat"));
                 double longitude = Double.parseDouble((String) nodeObj.get("lon"));
-                addNodeString((String) nodeObj.get("id"));
-                addNode(id, latitude, longitude);
+                boolean isBusStop = (Boolean) nodeObj.get("isBusStop");
+                if (isBusStop) {
+                	addNodeString((String) nodeObj.get("id"));
+                }
+                addNode(id, latitude, longitude, isBusStop);
             }
+            
+            setCoords();
+            addNeighbors();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
+    private void setCoords() {
+    	double refLatitude = 0;
+        double refLongitude = 0;
+        for (Node node : nodes) {
+            if (node.getId().equals("Reference")) {
+                refLatitude = node.getLatitude();
+                refLongitude = node.getLongitude();
+            }
+            // Scale the longitude and latitude to fit within the panel dimensions
+            int x = (int) ((((refLongitude - node.getLongitude()) * -1) / 0.0000206) + 222);
+            int y = (int) (((refLatitude - node.getLatitude()) / 0.00001706) + 135);
+            node.setX(x);
+            node.setY(y);
+        }
+    }
+    
+    private void addNeighbors() {
+    	for (Node node : nodes) {
+    		if (node.getId().equals("Reference")) {
+    			continue;
+    		}
+    	    int nodeId = Integer.parseInt(node.getId());
+    	    for (Node potentialNeighbor : nodes) {
+    	    	if (potentialNeighbor.getId().equals("Reference")) {
+        			continue;
+        		}
+    	        if (node != potentialNeighbor) {
+    	            int neighborId = Integer.parseInt(potentialNeighbor.getId());
+    	            if (Math.abs(nodeId - neighborId) <= 1) {
+    	                node.addNeighbor(potentialNeighbor);
+    	            }
+    	            else if (nodeId == 1 && neighborId == numOfNodes) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            }
+    	            else if (nodeId == numOfNodes && neighborId == 1) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            }
+    	        }
+    	    }
+    	}
+    }
 
     private JSONObject createNodePoint(String id) {
         JSONObject object = new JSONObject();
@@ -167,7 +215,8 @@ public class JsonHandler {
                 String id = (String) routeObj.get("Id");
                 Double longitude = (Double) routeObj.get("Longitude");
                 Double latitude = (Double) routeObj.get("Latitude");
-                listOfNodes.add(new Node(id, latitude, longitude));
+                boolean isBusStop = (Boolean) routeObj.get("isBusStop");
+                listOfNodes.add(new Node(id, latitude, longitude, isBusStop));
             }
 
 
@@ -345,8 +394,10 @@ public class JsonHandler {
         busesToString.add(id);
     }
 
-    public void addNode(String id, double latitude, double longitude) {
-        nodes.add(new Node(id, latitude, longitude));
+    public void addNode(String id, double latitude, double longitude, boolean isBusStop) {
+        nodes.add(new Node(id, latitude, longitude, isBusStop));
+        numOfNodes++;
+        System.out.println("Nodes: " + numOfNodes);
     }
 
     public void addDriver(String id, String name, String phoneNumber) {
