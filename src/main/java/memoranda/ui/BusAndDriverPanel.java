@@ -504,16 +504,6 @@ public class BusAndDriverPanel extends JPanel {
                 return;
 
             updateList();
-            /*
-
-            if (driverList.hasDriver(dialogBox.tempDriver.getId()))
-                return; //temp solution so no duplicate IDs are made
-            driverList.addDriver(dialogBox.tempDriver);
-
-            jsonHandler.writeDriversToJSON(fileName);
-
-            updateList();
-             */
         }
     }
 }
