@@ -1,19 +1,24 @@
 package main.java.memoranda;
 
-// Route(nodes, length, duration)
+import java.awt.Color;
 
-import java.util.*;
+// Route(nodes, length, duration)
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class
 Route {
     private List<Node> nodes;
     private double length; // in km
     private double duration; // in minutes
-    double stopDuration; // in minutes
+    private Random rand;
+    private Color color;
+    
+    private double stopDuration; // in minutes
 
     private Driver driver;
     private Bus bus;
-
 
     /**
      * Constructor for Route, uses an existing ArrayList of Node objects
@@ -25,7 +30,9 @@ Route {
         this.nodes = n;
         length = calculateLength();
         duration = calculateDuration();
-        stopDuration = sd;
+        this.stopDuration = sd;
+    	rand = new Random();
+    	this.color = new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
     }
 
     /**
@@ -35,11 +42,13 @@ Route {
      * @param sd          stopDuration of Bus at each Node
      */
     public Route(Node initialNode, double sd) {
-        nodes = new ArrayList<Node>();
+        this.nodes = new ArrayList<Node>();
         nodes.add(initialNode);
         length = calculateLength();
         duration = calculateDuration();
-        stopDuration = sd;
+        this.stopDuration = sd;
+    	rand = new Random();
+    	this.color = new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
     }
 
     /**
@@ -49,10 +58,12 @@ Route {
      */
 
     public Route(double sd) {
-        nodes = new ArrayList<Node>();
+        this.nodes = new ArrayList<Node>();
         length = 0;
         duration = 0;
-        stopDuration = sd;
+        this.stopDuration = sd;
+    	rand = new Random();
+    	this.color = new Color(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255));
     }
 
     /**
@@ -196,9 +207,19 @@ Route {
     public double calculateLength() {
         double out = 0;
         for (int i = 0; i < nodes.size() - 1; ++i) {
-            out += Node.distanceOfNodes(nodes.get(i), nodes.get(i + 1));
+            out += distance(nodes.get(i), nodes.get(i + 1));
         }
         return out;
+    }
+    
+    private double distance(Node node1, Node node2) {
+	    double dx = node1.getX() - node2.getX();
+	    double dy = node1.getY() - node2.getY();
+	    return Math.sqrt(dx * dx + dy * dy);
+	}
+    
+    public Color getColor() {
+    	return color;
     }
 
     /**
@@ -212,7 +233,7 @@ Route {
 
     public double calculateDuration() {
         double distance = length;
-        double speed = 20.44;
+        double speed = 30;
         double minutes = (distance / speed) * 60; // convert to minutes
         minutes += (stopDuration * nodes.size());
         return minutes;
