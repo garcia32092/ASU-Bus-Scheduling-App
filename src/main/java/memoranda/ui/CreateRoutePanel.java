@@ -20,6 +20,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
     private JComboBox<Object> busBox;
     private List<Node> listOfNodes;
     private MapGenerator mapGen;
+    private List<Route> routes;
 
     public CreateRoutePanel() {
         try {
@@ -46,6 +47,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
         jsonHandler.readBusesFromJSON(fileName);
         jsonHandler.readNodesFromJSON(fileName);
         listOfNodes = new ArrayList<>();
+        routes = new ArrayList<>();
         buildPanel();
     }
 
@@ -130,7 +132,7 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
             	try {
                     for (String selectedNode : nodes) {
                         for (Node node : jsonHandler.getNodes()) {
-                            if (node.getId().equals(selectedNode)) {
+                            if (node.getStopName().equals(selectedNode)) {
                                 listOfNodes.add(node);
                             }
                         }
@@ -201,9 +203,10 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
                 route.setBus(bus);
             }
         }
-
+        
+        routes.add(route);
         jsonHandler.writeRouteToJson(route);
-        mapGen.setRoute(newRoute);
+        mapGen.setRoutes(routes);
         mapGen.repaint();
 
     }
@@ -246,6 +249,10 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
 
     public List<Node> getListOfNodes() {
         return listOfNodes;
+    }
+    
+    public List<Route> getRoutes() {
+        return routes;
     }
 
     public JsonHandler getJsonHandler() {
