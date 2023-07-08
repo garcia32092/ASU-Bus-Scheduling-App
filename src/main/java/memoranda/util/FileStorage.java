@@ -333,7 +333,7 @@ public class FileStorage implements Storage {
                 + File.separator
                 + ".notes");
         saveDocument(
-            nl.getXMLContent(),
+            nl.getXmlContent(),
             JN_DOCPATH + prj.getID() + File.separator + ".notes");
     }
 

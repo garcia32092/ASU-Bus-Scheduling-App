@@ -33,6 +33,6 @@ public interface NoteList {
 
     Note getActiveNote();
 
-    nu.xom.Document getXMLContent();
+    nu.xom.Document getXmlContent();
 
 }
