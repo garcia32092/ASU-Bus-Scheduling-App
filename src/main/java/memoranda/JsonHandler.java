@@ -57,10 +57,11 @@ public class JsonHandler {
                 double latitude = Double.parseDouble((String) nodeObj.get("lat"));
                 double longitude = Double.parseDouble((String) nodeObj.get("lon"));
                 boolean isBusStop = (Boolean) nodeObj.get("isBusStop");
+            	String busStopName = (String) nodeObj.get("stopName");
                 if (isBusStop) {
-                	addNodeString((String) nodeObj.get("id"));
+                	addNodeString((String) nodeObj.get("stopName"));
                 }
-                addNode(id, latitude, longitude, isBusStop);
+                addNode(id, latitude, longitude, isBusStop, busStopName);
             }
             
             setCoords();
@@ -218,7 +219,8 @@ public class JsonHandler {
                 Double longitude = (Double) routeObj.get("Longitude");
                 Double latitude = (Double) routeObj.get("Latitude");
                 boolean isBusStop = (Boolean) routeObj.get("isBusStop");
-                listOfNodes.add(new Node(id, latitude, longitude, isBusStop));
+            	String busStopName = (String) routeObj.get("stopName");
+                listOfNodes.add(new Node(id, latitude, longitude, isBusStop, busStopName));
             }
 
 
@@ -396,8 +398,8 @@ public class JsonHandler {
         busesToString.add(id);
     }
 
-    public void addNode(String id, double latitude, double longitude, boolean isBusStop) {
-        nodes.add(new Node(id, latitude, longitude, isBusStop));
+    public void addNode(String id, double latitude, double longitude, boolean isBusStop, String stopName) {
+        nodes.add(new Node(id, latitude, longitude, isBusStop, stopName));
         numOfNodes++;
         System.out.println("Nodes: " + numOfNodes);
     }
