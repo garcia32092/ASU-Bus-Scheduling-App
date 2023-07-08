@@ -15,7 +15,7 @@ public class BusAndDriverPanel extends JPanel {
     DriverList driverList;
     BusList busList;
     Font font = new Font(Font.MONOSPACED, Font.BOLD, 14);
-    String fileName = "memoranda/nodes1.json";
+    String fileName = "nodes1.json";
 
 
     /**
@@ -504,16 +504,6 @@ public class BusAndDriverPanel extends JPanel {
                 return;
 
             updateList();
-            /*
-
-            if (driverList.hasDriver(dialogBox.tempDriver.getId()))
-                return; //temp solution so no duplicate IDs are made
-            driverList.addDriver(dialogBox.tempDriver);
-
-            jsonHandler.writeDriversToJSON(fileName);
-
-            updateList();
-             */
         }
     }
 }

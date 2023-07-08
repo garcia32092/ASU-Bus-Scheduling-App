@@ -30,17 +30,17 @@ public class RoutePanel extends JPanel {
         mapGen = new MapGenerator(jsonHandler.getNodes());
         scrollPane = new JScrollPane();
 
-        this.setLayout(new GridLayout(0, 2));
+        this.setLayout(new BorderLayout());
         scrollPane.getViewport().setBackground(Color.DARK_GRAY);
         scrollPane.getViewport().add(mapGen);
         scrollPane.setPreferredSize(new Dimension(900, 800));
         mapGen.repaint();
 
 
-        JScrollBar vertScrollBar = scrollPane.getVerticalScrollBar();
-        vertScrollBar.setUnitIncrement(25);
-        vertScrollBar.setBlockIncrement(50);
-        this.add(scrollPane, BorderLayout.WEST);
+        JScrollBar horizScrollBar = scrollPane.getHorizontalScrollBar();
+        horizScrollBar.setUnitIncrement(25);
+        horizScrollBar.setBlockIncrement(50);
+        this.add(scrollPane, BorderLayout.CENTER);
 
         RoutePanel.PopupListener ppListener = new RoutePanel.PopupListener();
         scrollPane.addMouseListener(ppListener);
@@ -51,11 +51,8 @@ public class RoutePanel extends JPanel {
 
     private void buildSidePanel() {
         // Side Panel
-        CreateRoutePanel routePanel = new CreateRoutePanel();
+        CreateRoutePanel routePanel = new CreateRoutePanel(mapGen);
         JPanel sidePanel = new JPanel();
-        sidePanel.setLayout(new GridLayout(2, 1));
-        sidePanel.setPreferredSize(new Dimension(getWidth(), getHeight()));
-        sidePanel.setBackground(Color.BLACK);
 
         sidePanel.add(routePanel);
 
