@@ -5,6 +5,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net Copyright (c) 2003
  * Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -14,7 +15,7 @@ import nu.xom.*;
 import java.util.*;
 
 /**
- *
+ * This is the constructor for the Events manager.
  */
 /*$Id: EventsManager.java,v 1.11 2004/10/06 16:00:11 ivanrise Exp $*/
 public class EventsManager {
@@ -38,9 +39,10 @@ public class EventsManager {
 			_root.appendChild(
 				new Comment("This is JNotes 2 data file. Do not modify.")); */
             _doc = new Document(_root);
-        } else
+        }
+        else {
             _root = _doc.getRootElement();
-
+        }
     }
 
     public static void createSticker(String text, int prior) {
@@ -73,7 +75,7 @@ public class EventsManager {
         }
     }
 
-    public static boolean isNREventsForDate(CalendarDate date) {
+    public static boolean isNrEventsForDate(CalendarDate date) {
         Day d = getDay(date);
         if (d == null)
             return false;
