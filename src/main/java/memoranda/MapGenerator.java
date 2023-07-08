@@ -11,12 +11,14 @@ import java.util.*;
 public class MapGenerator extends JPanel {
     private List<Node> nodes;
     private List<Node> route;
+    private List<Route> routes;
 
     private BufferedImage image;
 
     public MapGenerator() {
         this.nodes = new ArrayList<>();
         this.route = new ArrayList<>();
+        this.routes = new ArrayList<>();
 
         getImage("/map1.png");
 
@@ -26,6 +28,7 @@ public class MapGenerator extends JPanel {
     public MapGenerator(List<Node> nodes) {
         this.nodes = nodes;
         this.route = new ArrayList<>();
+        this.routes = new ArrayList<>();
 
         getImage("/map1.png");
 
@@ -54,21 +57,8 @@ public class MapGenerator extends JPanel {
         repaint();
     }
 
-
-//    public void addNode(String id, double latitude, double longitude) {
-//        nodes.add(new Node(id, latitude, longitude));
-//    }
-
     public void addRoutePoint(Node n) {
         route.add(n);
-    }
-
-    // TODO: Algorithm for finding the shortest path between 2 specified nodes needs to be implemented
-    public List<Node> getShortestRoute(String sourceId, String destinationId) {
-        List<Node> shortestPath = new ArrayList<>();
-
-        // Return the sequence of nodes representing the shortest path
-        return shortestPath;
     }
 
 	public List<Node> getRoute() {
@@ -77,6 +67,10 @@ public class MapGenerator extends JPanel {
 
 	public void setRoute(List<Node> route) {
 		this.route = route;
+	}
+	
+	public void setRoutes(List<Route> routes) {
+		this.routes = routes;
 	}
 
     protected void paintComponent(Graphics g) {
@@ -87,31 +81,39 @@ public class MapGenerator extends JPanel {
             g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), this);
         }
 
-        Stroke str1 = new BasicStroke(3f);
+        Stroke str1 = new BasicStroke(5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL,
+                0, new float[]{9}, 0);
         g2d.setStroke(str1);
         
         // Draw route
-        g2d.setColor(Color.RED);
-        if (!route.isEmpty()) {
-        	for (int i = 0; i < route.size() - 1; i++) {
-                Node node1 = route.get(i);
-                Node node2 = route.get(i + 1);
-                System.out.println("X: " + node1.getX() + " Y: " + node1.getY());
-                System.out.println("X: " + node2.getX() + " Y: " + node2.getY());
-                g2d.drawLine(node1.getX() + 16/2, node1.getY() + 16/2, node2.getX() + 16/2, node2.getY() + 16/2);
+        if (!routes.isEmpty()) {
+        	for (Route route : routes) {
+        		g2d.setColor(route.getColor());
+            	List<Node> routeNodes = route.getNodes();
+            	for (int i = 0; i < routeNodes.size() - 1; i++) {
+                    Node node1 = routeNodes.get(i);
+                    Node node2 = routeNodes.get(i + 1);
+                    System.out.println("X: " + node1.getX() + " Y: " + node1.getY());
+                    System.out.println("X: " + node2.getX() + " Y: " + node2.getY());
+                    g2d.drawLine(node1.getX() + 16/2, node1.getY() + 16/2, node2.getX() + 16/2, node2.getY() + 16/2);
+                }
             }
         }
 
         // Iterate over the nodes and draw them on the panel
         for (Node node : nodes) {
-            g.setColor(Color.DARK_GRAY);
+            g.setColor(Color.BLACK);
             if (node.isBusStop()) {
             	// Draw a dot for each node
                 g.fillOval(node.getX(), node.getY(), 16, 16);
                 // Draw the node's ID
-                g.drawString(node.getId(), node.getX(), node.getY());
+                Font font = new Font("Verdana", Font.BOLD, 12);
+                g.setFont(font);
+                FontMetrics metrics = g.getFontMetrics(font);
+                int xPos = node.getX() - metrics.stringWidth(node.getStopName()) / 2;
+                int yPos = node.getY() - metrics.getHeight() / 2 + metrics.getAscent() / 2;
+                g.drawString(node.getStopName(), xPos, yPos);
             }
-
         }
     }
 }
