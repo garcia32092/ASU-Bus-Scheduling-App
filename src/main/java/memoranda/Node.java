@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
-    String id;
-    double latitude;
-    double longitude;
+	private String id;
+	private String stopName;
+	private double latitude;
+	private double longitude;
     private int x;
     private int y;
     private boolean isBusStop;
@@ -19,11 +20,12 @@ public class Node {
      * @param lat the latitude coordinates of the Node
      * @param lon the longitude coordinates of the Node
      */
-    public Node(String id, double latitude, double longitude, boolean isBusStop) {
+    public Node(String id, double latitude, double longitude, boolean isBusStop, String stopName) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.isBusStop = isBusStop;
+        this.stopName = stopName;
         x = -1;
         y = -1;
         neighbors = new ArrayList<>();
@@ -83,41 +85,9 @@ public class Node {
     public void addNeighbor(Node node) {
         neighbors.add(node);
     }
-
-    /**
-     * Calculates the distance between the Nodes in km
-     *
-     * @param n  the first Node
-     * @param nn the second Node
-     * @return the distance of the Nodes in km
-     */
-    public static double distanceOfNodes(Node n, Node nn) {
-//        double R = 6371; // radius of the earth in km;
-//        double dLat = Math.toRadians(n.getLatitude() - nn.getLatitude());
-//        double dLon = Math.toRadians(n.getLongitude() - nn.getLongitude());
-//
-//        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-//                Math.cos(Math.toRadians(nn.getLatitude())) * Math.cos(Math.toRadians(n.getLatitude())) *
-//                        Math.sin(dLon/2) * Math.sin(dLon/2);
-//        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-//        double d = R * c; //distance in kilometers
-//        return d;
-        double xDiff = nn.getX() - n.getX();
-        double yDiff = nn.getY() - n.getY();
-
-        double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-        return distance;
-    }
-
-    /**
-     * Calculates the distance between Nodes in miles
-     *
-     * @param n  first node
-     * @param nn second node
-     * @return The distance of nodes in miles
-     */
-    public static double distanceOfNodesMiles(Node n, Node nn) {
-        return distanceOfNodes(n, nn) * 0.621371;
+    
+    public String getStopName() {
+    	return stopName;
     }
 
     /**
