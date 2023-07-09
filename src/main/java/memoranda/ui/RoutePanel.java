@@ -80,7 +80,7 @@ public class RoutePanel extends JPanel {
 
         private void maybeShowPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
-                //                eventPPMenu.show(e.getComponent(), e.getxCoord(), e.getyCoord());
+                //                eventPPMenu.show(e.getComponent(), e.getCoordinateX(), e.getCoordinateY());
             }
         }
 

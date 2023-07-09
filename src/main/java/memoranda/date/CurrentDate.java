@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda.date;
 
 import java.util.Collection;
@@ -25,7 +26,9 @@ public class CurrentDate {
     }
 
     public static void set(CalendarDate date) {
-        if (date.equals(_date)) return;
+        if (date.equals(_date)) {
+            return;
+        }
         _date = date;
         dateChanged(date);
     }
@@ -43,7 +46,8 @@ public class CurrentDate {
     }
 
     private static void dateChanged(CalendarDate date) {
-        for (int i = 0; i < dateListeners.size(); i++)
+        for (int i = 0; i < dateListeners.size(); i++) {
             ((DateListener) dateListeners.get(i)).dateChange(date);
+        }
     }
 }

@@ -4,22 +4,22 @@ public class Node {
     String id;
     double latitude;
     double longitude;
-    private int xCoord;
-    private int yCoord;
+    private int coordinateX;
+    private int coordinateY;
 
     /**
      * The default constructor for Node
      *
      * @param id  the ID associated with the specific node
-     * @param lat the latitude coordinates of the Node
-     * @param lon the longitude coordinates of the Node
+     * @param latitude the latitude coordinates of the Node
+     * @param longitude the longitude coordinates of the Node
      */
     public Node(String id, double latitude, double longitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
-        xCoord = -1;
-        yCoord = -1;
+        coordinateX = -1;
+        coordinateY = -1;
     }
 
     /**
@@ -49,20 +49,20 @@ public class Node {
         return longitude;
     }
 
-    public int getxCoord() {
-        return xCoord;
+    public int getCoordinateX() {
+        return coordinateX;
     }
 
-    public void setxCoord(int xCoord) {
-        this.xCoord = xCoord;
+    public void setCoordinateX(int coordinateX) {
+        this.coordinateX = coordinateX;
     }
 
-    public int getyCoord() {
-        return yCoord;
+    public int getCoordinateY() {
+        return coordinateY;
     }
 
-    public void setyCoord(int yCoord) {
-        this.yCoord = yCoord;
+    public void setCoordinateY(int coordinateY) {
+        this.coordinateY = coordinateY;
     }
 
     /**
@@ -83,8 +83,8 @@ public class Node {
 //        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 //        double d = R * c; //distance in kilometers
 //        return d;
-        double xDiff = nn.getxCoord() - n.getxCoord();
-        double yDiff = nn.getyCoord() - n.getyCoord();
+        double xDiff = nn.getCoordinateX() - n.getCoordinateX();
+        double yDiff = nn.getCoordinateY() - n.getCoordinateY();
 
         double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         return distance;

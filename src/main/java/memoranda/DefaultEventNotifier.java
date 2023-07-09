@@ -5,6 +5,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net Copyright (c) 2003
  * Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.ui.*;

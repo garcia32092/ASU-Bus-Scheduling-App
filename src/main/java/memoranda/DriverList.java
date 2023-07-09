@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import java.util.*;
@@ -55,9 +56,11 @@ public class DriverList implements Iterable<Driver> {
      * @return driver object.
      */
     public Driver getDriver(String id) {
-        for (int i = 0; i < driverList.size(); i++)
-            if (driverList.get(i).getId().equals(id))
+        for (int i = 0; i < driverList.size(); i++) {
+            if (driverList.get(i).getId().equals(id)) {
                 return driverList.get(i);
+            }
+        }
         return null;
     }
 

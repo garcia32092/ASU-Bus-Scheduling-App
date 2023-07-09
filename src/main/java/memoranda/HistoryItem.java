@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -16,32 +17,32 @@ import main.java.memoranda.date.*;
 /*$Id: HistoryItem.java,v 1.4 2004/10/06 19:15:43 ivanrise Exp $*/
 public class HistoryItem {
 
-    private final CalendarDate _date;
-    private final Project _project;
+    private final CalendarDate calendarDate;
+    private final Project project;
 
     /**
      * Constructor for HistoryItem.
      */
     public HistoryItem(CalendarDate date, Project project) {
-        _date = date;
-        _project = project;
+        calendarDate = date;
+        this.project = project;
     }
 
     public HistoryItem(Note note) {
-        _date = note.getDate();
-        _project = note.getProject();
+        calendarDate = note.getDate();
+        project = note.getProject();
     }
 
     public CalendarDate getDate() {
-        return _date;
+        return calendarDate;
     }
 
     public Project getProject() {
-        return _project;
+        return project;
     }
 
     public boolean equals(HistoryItem i) {
-        return i.getDate().equals(_date) && i.getProject().getId().equals(_project.getId());
+        return i.getDate().equals(calendarDate) && i.getProject().getId().equals(project.getId());
     }
 
 }
