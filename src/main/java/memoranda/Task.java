@@ -60,7 +60,7 @@ public interface Task {
 
     void setPriority(int p);
 
-    String getID();
+    String getId();
 
     String getText();
 

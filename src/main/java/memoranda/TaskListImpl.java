@@ -139,7 +139,7 @@ public class TaskListImpl implements TaskList {
             Element parentNode = getTaskElement(parentTaskId);
             parentNode.removeChild(task.getContent());
         }
-        elements.remove(task.getID());
+        elements.remove(task.getId());
     }
 
     public boolean hasSubTasks(String id) {
@@ -181,8 +181,8 @@ public class TaskListImpl implements TaskList {
      */
     public long calculateTotalEffortFromSubTasks(Task t) {
         long totalEffort = 0;
-        if (hasSubTasks(t.getID())) {
-            Collection subTasks = getAllSubTasks(t.getID());
+        if (hasSubTasks(t.getId())) {
+            Collection subTasks = getAllSubTasks(t.getId());
             for (Iterator iter = subTasks.iterator(); iter.hasNext(); ) {
                 Task e = (Task) iter.next();
                 totalEffort = totalEffort + calculateTotalEffortFromSubTasks(e);
@@ -202,8 +202,8 @@ public class TaskListImpl implements TaskList {
      */
     public CalendarDate getEarliestStartDateFromSubTasks(Task t) {
         CalendarDate d = t.getStartDate();
-        if (hasSubTasks(t.getID())) {
-            Collection subTasks = getAllSubTasks(t.getID());
+        if (hasSubTasks(t.getId())) {
+            Collection subTasks = getAllSubTasks(t.getId());
             for (Iterator iter = subTasks.iterator(); iter.hasNext(); ) {
                 Task e = (Task) iter.next();
                 CalendarDate dd = getEarliestStartDateFromSubTasks(e);
@@ -226,8 +226,8 @@ public class TaskListImpl implements TaskList {
      */
     public CalendarDate getLatestEndDateFromSubTasks(Task t) {
         CalendarDate d = t.getEndDate();
-        if (hasSubTasks(t.getID())) {
-            Collection subTasks = getAllSubTasks(t.getID());
+        if (hasSubTasks(t.getId())) {
+            Collection subTasks = getAllSubTasks(t.getId());
             for (Iterator iter = subTasks.iterator(); iter.hasNext(); ) {
                 Task e = (Task) iter.next();
                 CalendarDate dd = getLatestEndDateFromSubTasks(e);
@@ -254,8 +254,8 @@ public class TaskListImpl implements TaskList {
         long[] res = new long[2];
         long expendedEffort = 0; // milliseconds
         long totalEffort = 0; // milliseconds
-        if (hasSubTasks(t.getID())) {
-            Collection subTasks = getAllSubTasks(t.getID());
+        if (hasSubTasks(t.getId())) {
+            Collection subTasks = getAllSubTasks(t.getId());
             for (Iterator iter = subTasks.iterator(); iter.hasNext(); ) {
                 Task e = (Task) iter.next();
                 long[] subTaskCompletion = calculateCompletionFromSubTasks(e);
