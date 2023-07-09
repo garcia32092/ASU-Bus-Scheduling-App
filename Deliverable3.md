@@ -44,76 +44,74 @@ I would also advise you to already fill out the Contributions section (End of sp
 
 | Date  | Who did not attend  |Meeting notes (very brief)   | Burndown Info (on track, ahead behind is enough) | TravisCI info (does the master pass) | Additional Info  |
 |-------|---|---|---|--|--|
-|23-06-26 |   | Sprint 3 Planning  |   |  |  |
-| | | |   |  |  |
+|23-06-26|   | Sprint 3 Planning  |   |  |  |
+|23-07-02| | Sprint Checkin |   |  |  |
 
 ### Meeting Summary:
 
 > Add rows as needed and add the number how many meetings for each team member:
 
-   Eli : 
+   Eli : 2
 
-   Josh : 
+   Josh : 2
    
-   Will : 
+   Will : 2
 
-   Andres : 
+   Andres : 2
 
-   Frankie : 
+   Frankie : 1
    
 ## 3: After the Sprint
 
 ### Sprint Review
 Answer as a team!
 
-**Screen Cast link**: Your link
-
 > Answer the following questions as a team. 
 
 **What do you think is the value you created this Sprint?**
 
-> 
+>  We finished the project: full value
 
 **Do you think you worked enough and that you did what was expected of you?**
 
-> 
+> The team as a whole yes, some individuals put in more value that others
 
 **Would you say you met the customers’ expectations? Why, why not?**
 
-> 
+> yes, project finished
 
 
 ### Sprint Retrospective
 
-> 
+> Assignment 5 threw a wrench in progress towards all members. If Assignment 5 was not as time consuming, more time could have been spent on memoranda
 
 **Did you meet your sprint goal?**
 
-> 
+> Yes, project completed
 
 **Did you complete all stories on your Spring Backlog?**
 
-> 
+> Yes, other than SpotBugs
 
 **If not, what went wrong?**
 
-> 
+> Assignment 5 took a ton of time
 
 **Did you work at a consistent rate of speed, or velocity? (Meaning did you work during the whole Sprint or did you start working when the deadline approached.)**
 
-> 
+> No. The first week of the Sprint was consumed by assignment 5
 
 **Did you deliver business value?**
 
-> 
+> yes, project completed
 
 **Are there things the team thinks it can do better in the next Sprint?**
 
-> 
+> N/a, no next sprint
 
 **How do you feel at this point? Get a pulse on the optimism of the team.**
 
-> 
+> Extremely optimistic
 
 ### Contributions:
 
@@ -243,18 +241,17 @@ Answer as a team!
     - info
   
 ## 4: Checklist for you to see if you are done
-- [ ] Filled out the complete form from above, all fields are filled and written in full sentences
-- [ ] Read the kickoff again to make sure you have all the details
-- [ ] User Stories that were not completed, were left in the Sprint and a copy created
-- [ ] Your Quality Policies are accurate and up to date
-- [ ] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
-  - [ ] Andres Morales
-  - [ ] William Jedynak
-  - [ ] Elias Garcia
-  - [ ] Josh Benn
-  - [ ] Frank Lin
-- [ ] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
-  - [ ] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
-  - [ ] All User Stories have acceptance tests
-  - [ ] User Stories in your new Sprint Backlog have initial tasks which are in New
-  - [ ] You know how to proceed
+- [x] Filled out the complete form from above, all fields are filled and written in full sentences
+- [x] Read the kickoff again to make sure you have all the details
+- [x] User Stories that were not completed, were left in the Sprint and a copy created
+- [x] Your Quality Policies are accurate and up to date
+- [x] **Individual** Survey was submitted **individually** (create checkboxes below -- see Canvas to get link)
+  - [x] Andres Morales
+  - [x] William Jedynak
+  - [x] Elias Garcia
+  - [x] Josh Benn
+- [x] The original of this file was copied for the next Sprint (needed for all but last Sprint where you do not need to copy it anymore)
+  - [x] Basic information (part 1) for next Sprint was included (meaning Spring Planning is complete)
+  - [x] All User Stories have acceptance tests
+  - [x] User Stories in your new Sprint Backlog have initial tasks which are in New
+  - [x] You know how to proceed
