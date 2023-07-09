@@ -408,6 +408,4 @@ public class NoteListImpl implements NoteList {
     public Document getXmlContent() {
         return doc;
     }
-
-
 }
