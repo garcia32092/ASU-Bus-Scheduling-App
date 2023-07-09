@@ -34,6 +34,6 @@ public interface ResourcesList {
 
     int getAllResourcesCount();
 
-    Document getXMLContent();
+    Document getXmlContent();
 
 }

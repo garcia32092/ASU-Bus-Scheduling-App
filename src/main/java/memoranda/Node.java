@@ -4,8 +4,8 @@ public class Node {
     String id;
     double latitude;
     double longitude;
-    private int x;
-    private int y;
+    private int xCoord;
+    private int yCoord;
 
     /**
      * The default constructor for Node
@@ -18,8 +18,8 @@ public class Node {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
-        x = -1;
-        y = -1;
+        xCoord = -1;
+        yCoord = -1;
     }
 
     /**
@@ -49,20 +49,20 @@ public class Node {
         return longitude;
     }
 
-    public int getX() {
-        return x;
+    public int getxCoord() {
+        return xCoord;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setxCoord(int xCoord) {
+        this.xCoord = xCoord;
     }
 
-    public int getY() {
-        return y;
+    public int getyCoord() {
+        return yCoord;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setyCoord(int yCoord) {
+        this.yCoord = yCoord;
     }
 
     /**
@@ -83,8 +83,8 @@ public class Node {
 //        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 //        double d = R * c; //distance in kilometers
 //        return d;
-        double xDiff = nn.getX() - n.getX();
-        double yDiff = nn.getY() - n.getY();
+        double xDiff = nn.getxCoord() - n.getxCoord();
+        double yDiff = nn.getyCoord() - n.getyCoord();
 
         double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         return distance;

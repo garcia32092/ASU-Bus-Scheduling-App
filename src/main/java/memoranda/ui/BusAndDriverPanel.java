@@ -34,9 +34,9 @@ public class BusAndDriverPanel extends JPanel {
      */
     private void panelInitialization() {
         //Import the drivers from the json file and populate driverList
-        jsonHandler.readDriversFromJSON(fileName);
+        jsonHandler.readDriversFromJson(fileName);
         driverList = new DriverList(jsonHandler.driverList);
-        jsonHandler.readBusesFromJSON(fileName);
+        jsonHandler.readBusesFromJson(fileName);
         busList = new BusList(jsonHandler.busList);
 
         //set the main panel layout to be a borderlayout
@@ -257,7 +257,7 @@ public class BusAndDriverPanel extends JPanel {
             return; //temp solution so no duplicate IDs are made
         busList.addBus(dialogBox.tempBus);
 
-        jsonHandler.writeBusesToJSON(fileName);
+        jsonHandler.writeBusesToJson(fileName);
 
         updateList();
     }
@@ -281,7 +281,7 @@ public class BusAndDriverPanel extends JPanel {
             return; //temp solution so no duplicate IDs are made
         driverList.addDriver(dialogBox.tempDriver);
 
-        jsonHandler.writeDriversToJSON(fileName);
+        jsonHandler.writeDriversToJson(fileName);
 
         updateList();
     }
@@ -336,10 +336,10 @@ public class BusAndDriverPanel extends JPanel {
         private void deleteButton_ActionPerformed(ActionEvent e) {
             if (this.bus == null) {
                 driverList.removeDriver(this.driver);
-                jsonHandler.writeDriversToJSON("nodes1.json");
+                jsonHandler.writeDriversToJson("nodes1.json");
             } else {
                 busList.removeBus(this.bus);
-                jsonHandler.writeBusesToJSON("nodes1.json");
+                jsonHandler.writeBusesToJson("nodes1.json");
             }
             updateList();
         }

@@ -322,7 +322,7 @@ public class AgendaPanel extends JPanel {
     //
     //		private void maybeShowPopup(MouseEvent e) {
     //			if (e.isPopupTrigger()) {
-    //				agendaPPMenu.show(e.getComponent(), e.getX(), e.getY());
+    //				agendaPPMenu.show(e.getComponent(), e.getxCoord(), e.getyCoord());
     //			}
     //		}
     //

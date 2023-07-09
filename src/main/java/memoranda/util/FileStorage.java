@@ -423,7 +423,7 @@ public class FileStorage implements Storage {
                 + File.separator
                 + ".resources");
         saveDocument(
-            rl.getXMLContent(),
+            rl.getXmlContent(),
             JN_DOCPATH + prj.getId() + File.separator + ".resources");
     }
 

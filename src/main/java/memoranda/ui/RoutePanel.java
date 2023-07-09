@@ -26,7 +26,7 @@ public class RoutePanel extends JPanel {
 
         jsonHandler = new JsonHandler();
         String fileName = "nodes1.json";
-        jsonHandler.readNodesFromJSON(fileName);
+        jsonHandler.readNodesFromJson(fileName);
         mapGen = new MapGenerator(jsonHandler.getNodes());
         scrollPane = new JScrollPane();
 
@@ -80,7 +80,7 @@ public class RoutePanel extends JPanel {
 
         private void maybeShowPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
-                //                eventPPMenu.show(e.getComponent(), e.getX(), e.getY());
+                //                eventPPMenu.show(e.getComponent(), e.getxCoord(), e.getyCoord());
             }
         }
 

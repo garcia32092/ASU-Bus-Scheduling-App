@@ -76,11 +76,12 @@ public class MapGenerator extends JPanel {
 
         double refLatitude = 0;
         double refLongitude = 0;
-        for (Node node : nodes)
+        for (Node node : nodes) {
             if (node.getId().equals("Reference")) {
                 refLatitude = node.getLatitude();
                 refLongitude = node.getLongitude();
             }
+        }
 
         if (image != null) {
             g.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), this);
@@ -99,8 +100,8 @@ public class MapGenerator extends JPanel {
             // Scale the longitude and latitude to fit within the panel dimensions
             int x = (int) ((((refLongitude - node.getLongitude()) * -1) / 0.0000206) + 222);
             int y = (int) (((refLatitude - node.getLatitude()) / 0.00001706) + 135);
-            node.setX(x);
-            node.setY(y);
+            node.setxCoord(x);
+            node.setyCoord(y);
 
             // Draw a dot for each node
             g.setColor(Color.DARK_GRAY);

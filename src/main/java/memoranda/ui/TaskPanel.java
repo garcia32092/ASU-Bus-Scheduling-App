@@ -49,7 +49,7 @@ public class TaskPanel extends JPanel {
     }
 
     void jbInit() throws Exception {
-        jsonHandler.readNodesFromJSON("nodes1.json");
+        jsonHandler.readNodesFromJson("nodes1.json");
         driverList = new DriverList(jsonHandler.driverList);
         tasksToolBar.setFloatable(false);
 
