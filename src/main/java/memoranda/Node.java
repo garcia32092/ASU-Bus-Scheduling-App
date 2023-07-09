@@ -1,25 +1,40 @@
 package main.java.memoranda;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Node {
-    String id;
-    double latitude;
-    double longitude;
+
     private int coordinateX;
     private int coordinateY;
+	private String id;
+	private String stopName;
+	private double latitude;
+	private double longitude;
+    private int x;
+    private int y;
+    private boolean isBusStop;
+    private List<Node> neighbors;
 
-    /**
+
+	/**
      * The default constructor for Node
      *
      * @param id  the ID associated with the specific node
      * @param latitude the latitude coordinates of the Node
      * @param longitude the longitude coordinates of the Node
      */
-    public Node(String id, double latitude, double longitude) {
+    public Node(String id, double latitude, double longitude, boolean isBusStop, String stopName) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         coordinateX = -1;
         coordinateY = -1;
+        this.isBusStop = isBusStop;
+        this.stopName = stopName;
+        x = -1;
+        y = -1;
+        neighbors = new ArrayList<>();
     }
 
     /**
@@ -65,6 +80,7 @@ public class Node {
         this.coordinateY = coordinateY;
     }
 
+
     /**
      * Calculates the distance between the Nodes in km
      *
@@ -88,17 +104,23 @@ public class Node {
 
         double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         return distance;
+
+    
+    public boolean isBusStop() {
+		return isBusStop;
+	}
+    
+    public List<Node> getNeighbors() {
+        return neighbors;
+
     }
 
-    /**
-     * Calculates the distance between Nodes in miles
-     *
-     * @param n  first node
-     * @param nn second node
-     * @return The distance of nodes in miles
-     */
-    public static double distanceOfNodesMiles(Node n, Node nn) {
-        return distanceOfNodes(n, nn) * 0.621371;
+    public void addNeighbor(Node node) {
+        neighbors.add(node);
+    }
+    
+    public String getStopName() {
+    	return stopName;
     }
 
     /**
