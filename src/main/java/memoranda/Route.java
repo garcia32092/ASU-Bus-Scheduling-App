@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Route {
-    private ArrayList<Node> nodes;
+    ArrayList<Node> nodes;
     private double length; // in km
     private double duration; // in minutes
     private Random rand;
@@ -26,7 +26,7 @@ public class Route {
      * @param sd stopDuration of Bus at each Node
      */
     public Route(List<Node> n, double sd) {
-        this.nodes = n;
+        this.nodes = (ArrayList<Node>) n;
         length = calculateLength();
         duration = calculateDuration();
         this.stopDuration = sd;

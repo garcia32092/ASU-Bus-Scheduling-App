@@ -64,19 +64,19 @@ public class Node {
         return longitude;
     }
 
-    public int getCoordinateX() {
+    public int getX() {
         return coordinateX;
     }
 
-    public void setCoordinateX(int coordinateX) {
+    public void setX(int coordinateX) {
         this.coordinateX = coordinateX;
     }
 
-    public int getCoordinateY() {
+    public int getY() {
         return coordinateY;
     }
 
-    public void setCoordinateY(int coordinateY) {
+    public void setY(int coordinateY) {
         this.coordinateY = coordinateY;
     }
 
@@ -99,8 +99,8 @@ public class Node {
 //        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 //        double d = R * c; //distance in kilometers
 //        return d;
-        double xDiff = nn.getCoordinateX() - n.getCoordinateX();
-        double yDiff = nn.getCoordinateY() - n.getCoordinateY();
+        double xDiff = nn.getX() - n.getY();
+        double yDiff = nn.getX() - n.getY();
 
         double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         return distance;
