@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -17,28 +18,30 @@ import nu.xom.*;
 /*$Id: ProjectImpl.java,v 1.7 2004/11/22 10:02:37 alexeya Exp $*/
 public class ProjectImpl implements Project {
 
-    private Element _root = null;
+    private Element element = null;
 
     /**
      * Constructor for ProjectImpl.
      */
     public ProjectImpl(Element root) {
-        _root = root;
+        element = root;
     }
 
     /**
-     * @see main.java.memoranda.Project#getID()
+     * @see main.java.memoranda.Project#getId()
      */
-    public String getID() {
-        return _root.getAttribute("id").getValue();
+    public String getId() {
+        return element.getAttribute("id").getValue();
     }
 
     /**
      * @see main.java.memoranda.Project#getStartDate()
      */
     public CalendarDate getStartDate() {
-        Attribute d = _root.getAttribute("startDate");
-        if (d == null) return null;
+        Attribute d = element.getAttribute("startDate");
+        if (d == null) {
+            return null;
+        }
         return new CalendarDate(d.getValue());
     }
 
@@ -46,16 +49,19 @@ public class ProjectImpl implements Project {
      * @see main.java.memoranda.Project#setStartDate(net.sf.memoranda.util.CalendarDate)
      */
     public void setStartDate(CalendarDate date) {
-        if (date != null)
+        if (date != null) {
             setAttr("startDate", date.toString());
+        }
     }
 
     /**
      * @see main.java.memoranda.Project#getEndDate()
      */
     public CalendarDate getEndDate() {
-        Attribute d = _root.getAttribute("endDate");
-        if (d == null) return null;
+        Attribute d = element.getAttribute("endDate");
+        if (d == null) {
+            return null;
+        }
         return new CalendarDate(d.getValue());
     }
 
@@ -63,40 +69,46 @@ public class ProjectImpl implements Project {
      * @see main.java.memoranda.Project#setEndDate(net.sf.memoranda.util.CalendarDate)
      */
     public void setEndDate(CalendarDate date) {
-        if (date != null)
+        if (date != null) {
             setAttr("endDate", date.toString());
-        else if (_root.getAttribute("endDate") != null)
+        }
+        else if (element.getAttribute("endDate") != null) {
             setAttr("endDate", null);
+        }
     }
 
     /**
      * @see main.java.memoranda.Project#getStatus()
      */
     public int getStatus() {
-        if (isFrozen())
+        if (isFrozen()) {
             return Project.FROZEN;
+        }
         CalendarDate today = CurrentDate.get();
         CalendarDate prStart = getStartDate();
         CalendarDate prEnd = getEndDate();
         if (prEnd == null) {
-            if (today.before(prStart))
+            if (today.before(prStart)) {
                 return Project.SCHEDULED;
-            else
+            } else {
                 return Project.ACTIVE;
+            }
         }
-        if (today.inPeriod(prStart, prEnd))
+        if (today.inPeriod(prStart, prEnd)) {
             return Project.ACTIVE;
+        }
         else if (today.after(prEnd)) {
             //if (getProgress() == 100)
             return Project.COMPLETED;
             /*else
                 return Project.FAILED;*/
-        } else
+        } else {
             return Project.SCHEDULED;
+        }
     }
 
     private boolean isFrozen() {
-        return _root.getAttribute("frozen") != null;
+        return element.getAttribute("frozen") != null;
     }
 
    
@@ -116,24 +128,26 @@ public class ProjectImpl implements Project {
      * @see main.java.memoranda.Project#freeze()
      */
     public void freeze() {
-        _root.addAttribute(new Attribute("frozen", "yes"));
+        element.addAttribute(new Attribute("frozen", "yes"));
     }
 
     /**
      * @see main.java.memoranda.Project#unfreeze()
      */
     public void unfreeze() {
-        if (this.isFrozen())
-            _root.removeAttribute(new Attribute("frozen", "yes"));
+        if (this.isFrozen()) {
+            element.removeAttribute(new Attribute("frozen", "yes"));
+        }
     }
 
     /**
      * @see main.java.memoranda.Project#getTitle()
      */
     public String getTitle() {
-        Attribute ta = _root.getAttribute("title");
-        if (ta != null)
+        Attribute ta = element.getAttribute("title");
+        if (ta != null) {
             return ta.getValue();
+        }
         return "";
     }
 
@@ -145,18 +159,21 @@ public class ProjectImpl implements Project {
     }
 
     private void setAttr(String name, String value) {
-        Attribute a = _root.getAttribute(name);
+        Attribute a = element.getAttribute(name);
         if (a == null) {
-            if (value != null)
-                _root.addAttribute(new Attribute(name, value));
-        } else if (value != null)
+            if (value != null) {
+                element.addAttribute(new Attribute(name, value));
+            }
+        } else if (value != null) {
             a.setValue(value);
-        else
-            _root.removeAttribute(a);
+        }
+        else {
+            element.removeAttribute(a);
+        }
     }
 
     public String getDescription() {
-        Element thisElement = _root.getFirstChildElement("description");
+        Element thisElement = element.getFirstChildElement("description");
         if (thisElement == null) {
             return null;
         } else {
@@ -165,11 +182,11 @@ public class ProjectImpl implements Project {
     }
 
     public void setDescription(String s) {
-        Element desc = _root.getFirstChildElement("description");
+        Element desc = element.getFirstChildElement("description");
         if (desc == null) {
             desc = new Element("description");
             desc.appendChild(s);
-            _root.appendChild(desc);
+            element.appendChild(desc);
         } else {
             desc.removeChildren();
             desc.appendChild(s);

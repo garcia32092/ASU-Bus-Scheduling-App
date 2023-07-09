@@ -42,7 +42,7 @@ public class CurrentProject {
             _project = ProjectManager.getProject("__default");
             if (_project == null)
                 _project = (Project) ProjectManager.getActiveProjects().get(0);
-            Context.put("LAST_OPENED_PROJECT_ID", _project.getID());
+            Context.put("LAST_OPENED_PROJECT_ID", _project.getId());
 
         }
 
@@ -74,7 +74,7 @@ public class CurrentProject {
     }
 
     public static void set(Project project) {
-        if (project.getID().equals(_project.getID())) return;
+        if (project.getId().equals(_project.getId())) return;
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
@@ -84,7 +84,7 @@ public class CurrentProject {
         _notelist = newnotelist;
         _resources = newresources;
         notifyListenersAfter();
-        Context.put("LAST_OPENED_PROJECT_ID", project.getID());
+        Context.put("LAST_OPENED_PROJECT_ID", project.getId());
     }
 
     public static void addProjectListener(ProjectListener pl) {

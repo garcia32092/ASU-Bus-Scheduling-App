@@ -99,8 +99,8 @@ public class History {
         String id;
 
         for (int i = 0; i < _list.size(); i++) {
-            id = (((HistoryItem) _list.elementAt(i)).getProject()).getID();
-            if (id.equals(prj.getID())) {
+            id = (((HistoryItem) _list.elementAt(i)).getProject()).getId();
+            if (id.equals(prj.getId())) {
                 list.add(_list.elementAt(i));
                 p--;
                 if (_list.elementAt(i).equals(prev)) {

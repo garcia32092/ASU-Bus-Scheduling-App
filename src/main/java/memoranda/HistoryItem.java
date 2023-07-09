@@ -41,7 +41,7 @@ public class HistoryItem {
     }
 
     public boolean equals(HistoryItem i) {
-        return i.getDate().equals(_date) && i.getProject().getID().equals(_project.getID());
+        return i.getDate().equals(_date) && i.getProject().getId().equals(_project.getId());
     }
 
 }

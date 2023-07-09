@@ -27,7 +27,7 @@ public interface Project {
 
     int FAILED = 5;
 
-    String getID();
+    String getId();
 
     CalendarDate getStartDate();
 

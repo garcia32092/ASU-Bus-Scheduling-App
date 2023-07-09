@@ -90,7 +90,7 @@ public class FileStorage implements Storage {
      */
     public void storeNote(Note note, javax.swing.text.Document doc) {
         String filename =
-            JN_DOCPATH + note.getProject().getID() + File.separator;
+            JN_DOCPATH + note.getProject().getId() + File.separator;
         doc.putProperty(
             javax.swing.text.Document.TitleProperty,
             note.getTitle());
@@ -190,11 +190,11 @@ public class FileStorage implements Storage {
     }
 
     public String getNoteURL(Note note) {
-        return "file:" + JN_DOCPATH + note.getProject().getID() + "/" + note.getId();
+        return "file:" + JN_DOCPATH + note.getProject().getId() + "/" + note.getId();
     }
 
     public String getNotePath(Note note) {
-        String filename = JN_DOCPATH + note.getProject().getID() + File.separator;
+        String filename = JN_DOCPATH + note.getProject().getId() + File.separator;
 //        CalendarDate d = note.getDate();
         filename += note.getId();//d.getDay() + "-" + d.getMonth() + "-" + d.getYear();
         return filename;
@@ -236,7 +236,7 @@ public class FileStorage implements Storage {
      * @see main.java.memoranda.util.Storage#removeProject(main.java.memoranda.Project)
      */
     public void removeProjectStorage(Project prj) {
-        String id = prj.getID();
+        String id = prj.getId();
         File f = new File(JN_DOCPATH + id);
         File[] files = f.listFiles();
         for (int i = 0; i < files.length; i++)
@@ -245,14 +245,14 @@ public class FileStorage implements Storage {
     }
 
     public TaskList openTaskList(Project prj) {
-        String fn = JN_DOCPATH + prj.getID() + File.separator + ".tasklist";
+        String fn = JN_DOCPATH + prj.getId() + File.separator + ".tasklist";
 
         if (documentExists(fn)) {
             /*DEBUG*/
             System.out.println(
                 "[DEBUG] Open task list: "
                     + JN_DOCPATH
-                    + prj.getID()
+                    + prj.getId()
                     + File.separator
                     + ".tasklist");
 
@@ -280,12 +280,12 @@ public class FileStorage implements Storage {
         System.out.println(
             "[DEBUG] Save task list: "
                 + JN_DOCPATH
-                + prj.getID()
+                + prj.getId()
                 + File.separator
                 + ".tasklist");
         Document tasklistDoc = tasklist.getXMLContent();
         //tasklistDoc.setDocType(TaskListVersioning.getCurrentDocType());
-        saveDocument(tasklistDoc, JN_DOCPATH + prj.getID() + File.separator + ".tasklist");
+        saveDocument(tasklistDoc, JN_DOCPATH + prj.getId() + File.separator + ".tasklist");
     }
 
     /**
@@ -294,8 +294,8 @@ public class FileStorage implements Storage {
     public void createProjectStorage(Project prj) {
         /*DEBUG*/
         System.out.println(
-            "[DEBUG] Create project dir: " + JN_DOCPATH + prj.getID());
-        File dir = new File(JN_DOCPATH + prj.getID());
+            "[DEBUG] Create project dir: " + JN_DOCPATH + prj.getId());
+        File dir = new File(JN_DOCPATH + prj.getId());
         dir.mkdirs();
     }
 
@@ -303,14 +303,14 @@ public class FileStorage implements Storage {
      * @see main.java.memoranda.util.Storage#openNoteList(main.java.memoranda.Project)
      */
     public NoteList openNoteList(Project prj) {
-        String fn = JN_DOCPATH + prj.getID() + File.separator + ".notes";
+        String fn = JN_DOCPATH + prj.getId() + File.separator + ".notes";
         //System.out.println(fn);
         if (documentExists(fn)) {
             /*DEBUG*/
             System.out.println(
                 "[DEBUG] Open note list: "
                     + JN_DOCPATH
-                    + prj.getID()
+                    + prj.getId()
                     + File.separator
                     + ".notes");
             return new NoteListImpl(openDocument(fn), prj);
@@ -329,12 +329,12 @@ public class FileStorage implements Storage {
         System.out.println(
             "[DEBUG] Save note list: "
                 + JN_DOCPATH
-                + prj.getID()
+                + prj.getId()
                 + File.separator
                 + ".notes");
         saveDocument(
             nl.getXmlContent(),
-            JN_DOCPATH + prj.getID() + File.separator + ".notes");
+            JN_DOCPATH + prj.getId() + File.separator + ".notes");
     }
 
     /**
@@ -399,7 +399,7 @@ public class FileStorage implements Storage {
      * @see main.java.memoranda.util.Storage#openResourcesList(main.java.memoranda.Project)
      */
     public ResourcesList openResourcesList(Project prj) {
-        String fn = JN_DOCPATH + prj.getID() + File.separator + ".resources";
+        String fn = JN_DOCPATH + prj.getId() + File.separator + ".resources";
         if (documentExists(fn)) {
             /*DEBUG*/
             System.out.println("[DEBUG] Open resources list: " + fn);
@@ -419,12 +419,12 @@ public class FileStorage implements Storage {
         System.out.println(
             "[DEBUG] Save resources list: "
                 + JN_DOCPATH
-                + prj.getID()
+                + prj.getId()
                 + File.separator
                 + ".resources");
         saveDocument(
             rl.getXMLContent(),
-            JN_DOCPATH + prj.getID() + File.separator + ".resources");
+            JN_DOCPATH + prj.getId() + File.separator + ".resources");
     }
 
     /**

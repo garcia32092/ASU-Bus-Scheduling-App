@@ -33,7 +33,7 @@ public class AgendaGenerator {
 
     static String generateTasksInfo(Project p, CalendarDate date, Collection expandedTasks) {
         TaskList tl;
-        if (p.getID().equals(CurrentProject.get().getID())) {
+        if (p.getId().equals(CurrentProject.get().getId())) {
             tl = CurrentProject.getTaskList();
         } else {
             tl = CurrentStorage.get().openTaskList(p);
@@ -146,7 +146,7 @@ public class AgendaGenerator {
         }
 
         s += "<a name=\"" + t.getId() + "\"><li><p>" + subTaskOperation + "<a href=\"memoranda:tasks#"
-            + p.getID()
+            + p.getId()
             + "\"><b>"
             + t.getText()
             + "</b></a> : "
@@ -250,7 +250,7 @@ public class AgendaGenerator {
 
     static String generateProjectInfo(Project p, CalendarDate date, Collection expandedTasks) {
         String s = "<h2><a href=\"memoranda:project#"
-            + p.getID()
+            + p.getId()
             + "\">"
             + p.getTitle()
             + "</a></h2>\n"
@@ -273,7 +273,7 @@ public class AgendaGenerator {
              i.hasNext();
         ) {
             Project p = (Project) i.next();
-            if (!p.getID().equals(CurrentProject.get().getID()))
+            if (!p.getId().equals(CurrentProject.get().getId()))
                 s += generateProjectInfo(p, date, expandedTasks);
         }
         return s + "</td>";

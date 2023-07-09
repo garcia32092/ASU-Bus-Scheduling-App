@@ -57,7 +57,7 @@ public class TaskListVersioning {
             int c = 0;
             for (Iterator iter = projects.iterator(); iter.hasNext(); ) {
                 Project prj = (Project) iter.next();
-                projectIds[c++] = prj.getID();
+                projectIds[c++] = prj.getId();
             }
 
             // keep upgrading until it's the current version

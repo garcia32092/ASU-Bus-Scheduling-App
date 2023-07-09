@@ -40,11 +40,11 @@ public class ProjectPackager {
 
         try {
             zip = new ZipOutputStream(new FileOutputStream(zipfile));
-            File prDir = new File(JN_DOCPATH + prj.getID());
+            File prDir = new File(JN_DOCPATH + prj.getId());
 
             PackDirectory(prDir.getPath(), prDir, zip);
             zip.putNextEntry(new ZipEntry("__PROJECT_INFO__"));
-            String prInfo = prj.getID() + "\n" + prj.getTitle() + "\n" + prj.getStartDate().toString() + "\n";
+            String prInfo = prj.getId() + "\n" + prj.getTitle() + "\n" + prj.getStartDate().toString() + "\n";
             if (prj.getEndDate() != null)
                 prInfo += prj.getEndDate().toString();
             zip.write(prInfo.getBytes(java.nio.charset.StandardCharsets.UTF_8));
@@ -87,13 +87,13 @@ public class ProjectPackager {
             for (files = zip.entries(); files.hasMoreElements(); ) {
                 ZipEntry ze = (ZipEntry) files.nextElement();
                 if (ze.isDirectory()) {
-                    File theDirectory = new File(JN_DOCPATH + prj.getID() + "/" + ze.getName());
+                    File theDirectory = new File(JN_DOCPATH + prj.getId() + "/" + ze.getName());
                     // create this directory (including any necessary parent directories)
                     theDirectory.mkdirs();
                     theDirectory = null;
                 }
                 if ((!ze.getName().equals("__PROJECT_INFO__")) && (!ze.isDirectory())) {
-                    FileOutputStream out = new FileOutputStream(JN_DOCPATH + prj.getID() + "/" + ze.getName());
+                    FileOutputStream out = new FileOutputStream(JN_DOCPATH + prj.getId() + "/" + ze.getName());
                     InputStream inp = zip.getInputStream(ze);
 
                     byte[] buffer = new byte[1024];
