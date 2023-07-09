@@ -417,13 +417,13 @@ public class BusAndDriverPanel extends JPanel {
             JLabel assignedDriverID = new JLabel("------");
             assignedDriverID.setFont(font);
             if (bus.hasAssignedDriver())
-                assignedDriverID.setText(bus.getAssignedDriverID());
+                assignedDriverID.setText(bus.getAssignedDriverId());
             assignedDriverID.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY)); // Set cell border
             JLabel assignedDriverName = new JLabel("  ------");
             assignedDriverName.setFont(font);
             if (bus.hasAssignedDriver())
-                if (driverList.hasDriver(bus.getAssignedDriverID()))
-                    assignedDriverName.setText("  " + driverList.getDriver(bus.getAssignedDriverID()).getName()); //WHY THIS NO WORK!?!?!?!?!?
+                if (driverList.hasDriver(bus.getAssignedDriverId()))
+                    assignedDriverName.setText("  " + driverList.getDriver(bus.getAssignedDriverId()).getName()); //WHY THIS NO WORK!?!?!?!?!?
             assignedDriverName.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, Color.GRAY)); // Set cell border
 
             DeleteButton deleteButton = new DeleteButton(bus);

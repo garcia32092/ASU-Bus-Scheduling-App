@@ -293,7 +293,7 @@ public class JsonHandler {
                 JSONObject busObj = new JSONObject();
                 busObj.put("id", String.valueOf(bus.getId()));
                 busObj.put("seats", String.valueOf(bus.getSeats()));
-                busObj.put("assignedDriver", String.valueOf(bus.getAssignedDriverID()));
+                busObj.put("assignedDriver", String.valueOf(bus.getAssignedDriverId()));
 
                 busesArray.add(busObj);
             }
