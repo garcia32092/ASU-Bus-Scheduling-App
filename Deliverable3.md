@@ -153,8 +153,12 @@ Answer as a team!
 
   **GitHub links to your Code Reviews (up to 3 links) -- Sprint 2 and 3:
 
-    - link1
-    - link2
+    - [link1](https://github.com/TheNerdyBunch23/memoranda/commit/6c5782d9c3b517184f8600656c2f7dad2d218b49)
+    - [link2](https://github.com/TheNerdyBunch23/memoranda/commit/b57efba4e415d68d1ec334e9090666d47f143b20)
+    - [link3](https://github.com/TheNerdyBunch23/memoranda/commit/43b9782ab532224448d6b472007773d48e967038)
+    - [link4](https://github.com/TheNerdyBunch23/memoranda/commit/6dbadb755a4343a948ca42f629d51edbf7d30e2d)
+    - [link5](https://github.com/TheNerdyBunch23/memoranda/commit/86d401efbfd68153fa683495b3957a136e1f692d)
+    
 
   **How did you contribute to Static Analysis -- Sprint 3:
 
