@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -24,9 +25,9 @@ import java.util.*;
 /*$Id: TaskListImpl.java,v 1.14 2006/07/03 11:59:19 alexeya Exp $*/
 public class TaskListImpl implements TaskList {
 
-    private Project _project = null;
-    private Document _doc = null;
-    private Element _root = null;
+    private Project project = null;
+    private Document document = null;
+    private Element element = null;
 
     /*
      * Hastable of "task" XOM elements for quick searching them by ID's
@@ -38,20 +39,20 @@ public class TaskListImpl implements TaskList {
      * Constructor for TaskListImpl.
      */
     public TaskListImpl(Document doc, Project prj) {
-        _doc = doc;
-        _root = _doc.getRootElement();
-        _project = prj;
-        buildElements(_root);
+        document = doc;
+        element = document.getRootElement();
+        project = prj;
+        buildElements(element);
     }
 
     public TaskListImpl(Project prj) {
-        _root = new Element("tasklist");
-        _doc = new Document(_root);
-        _project = prj;
+        element = new Element("tasklist");
+        document = new Document(element);
+        project = prj;
     }
 
     public Project getProject() {
-        return _project;
+        return project;
     }
 
     /*
@@ -75,8 +76,9 @@ public class TaskListImpl implements TaskList {
             return getAllRootTasks();
         } else {
             Element task = getTaskElement(taskId);
-            if (task == null)
+            if (task == null) {
                 return new Vector();
+            }
             Elements subTasks = task.getChildElements("task");
             return convertToTaskObjects(subTasks);
         }
@@ -114,7 +116,7 @@ public class TaskListImpl implements TaskList {
         el.appendChild(desc);
 
         if (parentTaskId == null) {
-            _root.appendChild(el);
+            element.appendChild(el);
         } else {
             Element parent = getTaskElement(parentTaskId);
             parent.appendChild(el);
@@ -134,7 +136,7 @@ public class TaskListImpl implements TaskList {
     public void removeTask(Task task) {
         String parentTaskId = task.getParentId();
         if (parentTaskId == null) {
-            _root.removeChild(task.getContent());
+            element.removeChild(task.getContent());
         } else {
             Element parentNode = getTaskElement(parentTaskId);
             parentNode.removeChild(task.getContent());
@@ -144,7 +146,9 @@ public class TaskListImpl implements TaskList {
 
     public boolean hasSubTasks(String id) {
         Element task = getTaskElement(id);
-        if (task == null) return false;
+        if (task == null) {
+            return false;
+        }
         return task.getChildElements("task").size() > 0;
     }
 
@@ -166,10 +170,10 @@ public class TaskListImpl implements TaskList {
     }
 
     /**
-     * @see main.java.memoranda.TaskList#getXMLContent()
+     * @see main.java.memoranda.TaskList#getXmlContent()
      */
-    public Document getXMLContent() {
-        return _doc;
+    public Document getXmlContent() {
+        return document;
     }
 
     /**
@@ -290,24 +294,24 @@ public class TaskListImpl implements TaskList {
      */
     private Element getTaskElement(String id) {
                
-		/*Nodes nodes = XQueryUtil.xquery(_doc, "//task[@id='" + id + "']");
+		/*Nodes nodes = XQueryUtil.xquery(document, "//task[@id='" + id + "']");
         if (nodes.size() > 0) {
             Element el = (Element) nodes.get(0);
             return el;            
         }
         else {
-            Util.debug("Task " + id + " cannot be found in project " + _project.getTitle());
+            Util.debug("Task " + id + " cannot be found in project " + project.getTitle());
             return null;
         } */
         Element el = (Element) elements.get(id);
         if (el == null) {
-            Util.debug("Task " + id + " cannot be found in project " + _project.getTitle());
+            Util.debug("Task " + id + " cannot be found in project " + project.getTitle());
         }
         return el;
     }
 
     private Collection getAllRootTasks() {
-        Elements tasks = _root.getChildElements("task");
+        Elements tasks = element.getChildElements("task");
         return convertToTaskObjects(tasks);
     }
 
