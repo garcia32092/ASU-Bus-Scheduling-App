@@ -12,19 +12,19 @@ public class ExportSticker {
 
     private final String name;
         
-        /*public static Document _doc = null;
+        /*public static Document document = null;
         static Element _root = null;
 
         static {
                 CurrentStorage.get().openEventsManager();
-                if (_doc == null) {
+                if (document == null) {
                         _root = new Element("eventslist");
 /*                        _root.addNamespaceDeclaration("jnevents", NS_JNEVENTS);
                         _root.appendChild(
                                 new Comment("This is JNotes 2 data file. Do not modify.")); */
-/*                        _doc = new Document(_root);
+/*                        document = new Document(_root);
                 } else
-                        _root = _doc.getRootElement();
+                        _root = document.getRootElement();
 
         }*/
 

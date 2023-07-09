@@ -213,13 +213,13 @@ public class FileStorage implements Storage {
      */
     public void openProjectManager() {
         if (!new File(JN_DOCPATH + ".projects").exists()) {
-            ProjectManager._doc = null;
+            ProjectManager.document = null;
             return;
         }
         /*DEBUG*/
         System.out.println(
             "[DEBUG] Open project manager: " + JN_DOCPATH + ".projects");
-        ProjectManager._doc = openDocument(JN_DOCPATH + ".projects");
+        ProjectManager.document = openDocument(JN_DOCPATH + ".projects");
     }
 
     /**
@@ -229,7 +229,7 @@ public class FileStorage implements Storage {
         /*DEBUG*/
         System.out.println(
             "[DEBUG] Save project manager: " + JN_DOCPATH + ".projects");
-        saveDocument(ProjectManager._doc, JN_DOCPATH + ".projects");
+        saveDocument(ProjectManager.document, JN_DOCPATH + ".projects");
     }
 
     /**

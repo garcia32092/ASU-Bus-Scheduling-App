@@ -35,8 +35,8 @@ public class EventsManager {
         CurrentStorage.get().openEventsManager();
         if (_doc == null) {
             _root = new Element("eventslist");
-/*			_root.addNamespaceDeclaration("jnevents", NS_JNEVENTS);
-			_root.appendChild(
+/*			element.addNamespaceDeclaration("jnevents", NS_JNEVENTS);
+			element.appendChild(
 				new Comment("This is JNotes 2 data file. Do not modify.")); */
             _doc = new Document(_root);
         }

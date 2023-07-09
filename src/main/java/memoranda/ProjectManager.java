@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -21,8 +22,8 @@ import java.util.*;
 public class ProjectManager {
 //    public static final String NS_JNPROJECT = "http://www.openmechanics.org/2003/jnotes-projects-file";
 
-    public static Document _doc = null;
-    static Element _root = null;
+    public static Document document = null;
+    static Element element = null;
 
     static {
         init();
@@ -30,18 +31,19 @@ public class ProjectManager {
 
     public static void init() {
         CurrentStorage.get().openProjectManager();
-        if (_doc == null) {
-            _root = new Element("projects-list");
-//            _root.addNamespaceDeclaration("jnotes", NS_JNPROJECT);
-//            _root.appendChild(new Comment("This is JNotes 2 data file. Do not modify."));
-            _doc = new Document(_root);
+        if (document == null) {
+            element = new Element("projects-list");
+//            element.addNamespaceDeclaration("jnotes", NS_JNPROJECT);
+//            element.appendChild(new Comment("This is JNotes 2 data file. Do not modify."));
+            document = new Document(element);
             createProject("__default", Local.getString("Default project"), CalendarDate.today(), null);
-        } else
-            _root = _doc.getRootElement();
+        } else {
+            element = document.getRootElement();
+        }
     }
 
     public static Project getProject(String id) {
-        Elements prjs = _root.getChildElements("project");
+        Elements prjs = element.getChildElements("project");
         for (int i = 0; i < prjs.size(); i++) {
             String pid = prjs.get(i).getAttribute("id").getValue();
             if (pid.equals(id)) {
@@ -52,17 +54,18 @@ public class ProjectManager {
     }
 
     public static Vector getAllProjects() {
-        Elements prjs = _root.getChildElements("project");
+        Elements prjs = element.getChildElements("project");
         Vector v = new Vector();
-        for (int i = 0; i < prjs.size(); i++)
+        for (int i = 0; i < prjs.size(); i++) {
             v.add(new ProjectImpl(prjs.get(i)));
+        }
         return v;
     }
 
     public static int getAllProjectsNumber() {
         int i;
         try {
-            i = _root.getChildElements("project").size();
+            i = element.getChildElements("project").size();
         } catch (NullPointerException e) {
             i = 1;
         }
@@ -70,23 +73,25 @@ public class ProjectManager {
     }
 
     public static Vector getActiveProjects() {
-        Elements prjs = _root.getChildElements("project");
+        Elements prjs = element.getChildElements("project");
         Vector v = new Vector();
         for (int i = 0; i < prjs.size(); i++) {
             Project prj = new ProjectImpl(prjs.get(i));
-            if (prj.getStatus() == Project.ACTIVE)
+            if (prj.getStatus() == Project.ACTIVE) {
                 v.add(prj);
+            }
         }
         return v;
     }
 
     public static int getActiveProjectsNumber() {
-        Elements prjs = _root.getChildElements("project");
+        Elements prjs = element.getChildElements("project");
         int count = 0;
         for (int i = 0; i < prjs.size(); i++) {
             Project prj = new ProjectImpl(prjs.get(i));
-            if (prj.getStatus() == Project.ACTIVE)
+            if (prj.getStatus() == Project.ACTIVE) {
                 count++;
+            }
         }
         return count;
     }
@@ -94,7 +99,7 @@ public class ProjectManager {
     public static Project createProject(String id, String title, CalendarDate startDate, CalendarDate endDate) {
         Element el = new Element("project");
         el.addAttribute(new Attribute("id", id));
-        _root.appendChild(el);
+        element.appendChild(el);
         Project prj = new ProjectImpl(el);
         prj.setTitle(title);
         prj.setStartDate(startDate);
@@ -109,15 +114,16 @@ public class ProjectManager {
 
     public static void removeProject(String id) {
         Project prj = getProject(id);
-        if (prj == null)
+        if (prj == null) {
             return;
+        }
         History.removeProjectHistory(prj);
         CurrentStorage.get().removeProjectStorage(prj);
-        Elements prjs = _root.getChildElements("project");
+        Elements prjs = element.getChildElements("project");
         for (int i = 0; i < prjs.size(); i++) {
             String pid = prjs.get(i).getAttribute("id").getValue();
             if (pid.equals(id)) {
-                _root.removeChild(prjs.get(i));
+                element.removeChild(prjs.get(i));
                 return;
             }
         }
