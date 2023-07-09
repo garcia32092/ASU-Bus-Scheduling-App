@@ -104,6 +104,7 @@ public class Node {
 
         double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         return distance;
+    }
 
     
     public boolean isBusStop() {
