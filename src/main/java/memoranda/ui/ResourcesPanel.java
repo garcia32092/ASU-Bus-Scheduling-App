@@ -392,10 +392,10 @@ public class ResourcesPanel extends JPanel {
         } else
             baseName = srcStr;
 
-        String destStr = JN_DOCPATH + CurrentProject.get().getID()
+        String destStr = JN_DOCPATH + CurrentProject.get().getId()
             + File.separator + "_projectFiles" + File.separator + baseName;
 
-        File f = new File(JN_DOCPATH + CurrentProject.get().getID() + File.separator + "_projectFiles");
+        File f = new File(JN_DOCPATH + CurrentProject.get().getId() + File.separator + "_projectFiles");
         if (!f.exists()) {
             f.mkdirs();
         }

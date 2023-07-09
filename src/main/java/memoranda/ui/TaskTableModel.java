@@ -94,7 +94,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
                 //return new Integer(t.getProgress());
                 return t;
             case TaskTable.TASK_ID:
-                return t.getID();
+                return t.getId();
             case TaskTable.TASK:
                 return t;
         }
@@ -148,7 +148,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
         }
         Task t = (Task) parent;
         if (activeOnly())
-            return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).size();
+            return CurrentProject.getTaskList().getActiveSubTasks(t.getId(), CurrentDate.get()).size();
         else return t.getSubTasks().size();
     }
 
@@ -162,7 +162,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
             else return CurrentProject.getTaskList().getTopLevelTasks().toArray()[index];
         Task t = (Task) parent;
         if (activeOnly())
-            return CurrentProject.getTaskList().getActiveSubTasks(t.getID(), CurrentDate.get()).toArray()[index];
+            return CurrentProject.getTaskList().getActiveSubTasks(t.getId(), CurrentDate.get()).toArray()[index];
         else return t.getSubTasks().toArray()[index];
     }
 

@@ -43,9 +43,9 @@ public class CreateRoutePanel extends JPanel implements ActionListener {
     	this.mapGen = mapGen;
         jsonHandler = new JsonHandler();
         String fileName = "nodes1.json";
-        jsonHandler.readDriversFromJSON(fileName);
-        jsonHandler.readBusesFromJSON(fileName);
-        jsonHandler.readNodesFromJSON(fileName);
+        jsonHandler.readDriversFromJson(fileName);
+        jsonHandler.readBusesFromJson(fileName);
+        jsonHandler.readNodesFromJson(fileName);
         listOfNodes = new ArrayList<>();
         routes = new ArrayList<>();
         buildPanel();

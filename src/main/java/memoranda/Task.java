@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -60,7 +61,7 @@ public interface Task {
 
     void setPriority(int p);
 
-    String getID();
+    String getId();
 
     String getText();
 

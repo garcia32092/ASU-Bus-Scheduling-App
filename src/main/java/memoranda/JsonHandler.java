@@ -39,7 +39,7 @@ public class JsonHandler {
         return object;
     }
 
-    public void readNodesFromJSON(String filename) {
+    public void readNodesFromJson(String filename) {
         try {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(
@@ -198,7 +198,7 @@ public class JsonHandler {
         }
     }
 
-    public void readRoutesFromJSON() {
+    public void readRoutesFromJson() {
         try {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(
@@ -238,7 +238,7 @@ public class JsonHandler {
         return nodesString;
     }
 
-    public void readDriversFromJSON(String filename) {
+    public void readDriversFromJson(String filename) {
         try {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(
@@ -262,7 +262,7 @@ public class JsonHandler {
         }
     }
 
-    public void readBusesFromJSON(String filename) {
+    public void readBusesFromJson(String filename) {
         try {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject) parser.parse(
@@ -285,7 +285,7 @@ public class JsonHandler {
         }
     }
 
-    public void writeDriversToJSON(String filename) {
+    public void writeDriversToJson(String filename) {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
@@ -328,7 +328,7 @@ public class JsonHandler {
         }
     }
 
-    public void writeBusesToJSON(String filename) {
+    public void writeBusesToJson(String filename) {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
@@ -346,7 +346,7 @@ public class JsonHandler {
                 JSONObject busObj = new JSONObject();
                 busObj.put("id", String.valueOf(bus.getId()));
                 busObj.put("seats", String.valueOf(bus.getSeats()));
-                busObj.put("assignedDriver", String.valueOf(bus.getAssignedDriverID()));
+                busObj.put("assignedDriver", String.valueOf(bus.getAssignedDriverId()));
 
                 busesArray.add(busObj);
             }

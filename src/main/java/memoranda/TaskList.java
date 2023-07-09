@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -46,6 +47,6 @@ public interface TaskList {
 
     long[] calculateCompletionFromSubTasks(Task t);
 
-    nu.xom.Document getXMLContent();
+    nu.xom.Document getXmlContent();
 
 }

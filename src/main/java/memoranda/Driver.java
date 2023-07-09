@@ -1,33 +1,35 @@
 package main.java.memoranda;
 
 public class Driver {
-    private final String ID;
+    private final String id;
     private String name;
     private String phone;
 
     /**
      * Default constructor.
      *
-     * @param ID    int, max of 6 characters
+     * @param id    int, max of 6 characters
      * @param name  String, max of 100 characters
      * @param phone String, max of 14 characters
      */
-    public Driver(String ID, String name, String phone) {
-        if (ID.length() < 6)
-            for (int i = ID.length(); i < 6; i++)
-                ID = "0" + ID;
-        this.ID = ID;
+    public Driver(String id, String name, String phone) {
+        if (id.length() < 6) {
+            for (int i = id.length(); i < 6; i++) {
+                id = "0" + id;
+            }
+        }
+        this.id = id;
         this.name = name;
         this.phone = phone;
     }
 
     /**
-     * Returns Driver ID.
+     * Returns Driver id.
      *
-     * @return int ID
+     * @return int id
      */
     public String getId() {
-        return this.ID;
+        return this.id;
     }
 
     /**
@@ -75,7 +77,7 @@ public class Driver {
     public String toString() {
 
         String info = "Driver: " + getName() + "\n" +
-            "ID: " + getId() + "\n" +
+            "id: " + getId() + "\n" +
             "Phone Number: " + getPhoneNumber() + "\n";
         return info;
     }

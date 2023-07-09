@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -33,6 +34,6 @@ public interface NoteList {
 
     Note getActiveNote();
 
-    nu.xom.Document getXMLContent();
+    nu.xom.Document getXmlContent();
 
 }

@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import nu.xom.*;
@@ -34,6 +35,6 @@ public interface ResourcesList {
 
     int getAllResourcesCount();
 
-    Document getXMLContent();
+    Document getXmlContent();
 
 }

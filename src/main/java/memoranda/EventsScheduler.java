@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import java.util.*;
@@ -67,18 +68,22 @@ public class EventsScheduler {
 
     public static Vector getScheduledEvents() {
         Vector v = new Vector();
-        for (int i = 0; i < _timers.size(); i++)
+        for (int i = 0; i < _timers.size(); i++) {
             v.add(((EventTimer) _timers.get(i)).getEvent());
+        }
         return v;
     }
 
     public static Event getFirstScheduledEvent() {
-        if (!isEventScheduled()) return null;
+        if (!isEventScheduled()) {
+            return null;
+        }
         Event e1 = ((EventTimer) _timers.get(0)).getEvent();
         for (int i = 1; i < _timers.size(); i++) {
             Event ev = ((EventTimer) _timers.get(i)).getEvent();
-            if (ev.getTime().before(e1.getTime()))
+            if (ev.getTime().before(e1.getTime())) {
                 e1 = ev;
+            }
         }
         return e1;
     }
@@ -93,13 +98,15 @@ public class EventsScheduler {
     }
 
     private static void notifyListeners(Event ev) {
-        for (int i = 0; i < _listeners.size(); i++)
+        for (int i = 0; i < _listeners.size(); i++) {
             ((EventNotificationListener) _listeners.get(i)).eventIsOccured(ev);
+        }
     }
 
     private static void notifyChanged() {
-        for (int i = 0; i < _listeners.size(); i++)
+        for (int i = 0; i < _listeners.size(); i++) {
             ((EventNotificationListener) _listeners.get(i)).eventsChanged();
+        }
     }
 
     private static Date getMidnight() {
@@ -114,31 +121,31 @@ public class EventsScheduler {
 
     static class NotifyTask extends TimerTask {
 
-        EventTimer _timer;
+        EventTimer eventTimer;
 
         public NotifyTask(EventTimer t) {
             super();
-            _timer = t;
+            eventTimer = t;
         }
 
         public void run() {
-            _timer.cancel();
-            _timers.remove(_timer);
-            notifyListeners(_timer.getEvent());
+            eventTimer.cancel();
+            _timers.remove(eventTimer);
+            notifyListeners(eventTimer.getEvent());
             notifyChanged();
         }
     }
 
     static class EventTimer extends Timer {
-        Event _event;
+        Event event;
 
         public EventTimer(Event ev) {
             super();
-            _event = ev;
+            event = ev;
         }
 
         public Event getEvent() {
-            return _event;
+            return event;
         }
     }
 

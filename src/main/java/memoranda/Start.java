@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.ui.*;
@@ -54,19 +55,19 @@ public class Start {
                 // If socket is not opened (app is not started), continue
                 // e.printStackTrace();
             }
-            new SLThread().start();
+            new SlThread().start();
         }
 
         //System.out.println(EventsScheduler.isEventScheduled());
         if ((args.length == 0) || (!args[0].equals("-m"))) {
             app = new App(true);
-        } else
+        } else {
             app = new App(false);
+        }
     }
 }
 
-class SLThread extends Thread {
-
+class SlThread extends Thread {
     public void run() {
         ServerSocket serverSocket = null;
         try {
@@ -74,7 +75,7 @@ class SLThread extends Thread {
             serverSocket.accept();
             Start.app.show();
             serverSocket.close();
-            new SLThread().start();
+            new SlThread().start();
 
         } catch (Exception e) {
             System.err.println("Port:" + Start.DEFAULT_PORT);

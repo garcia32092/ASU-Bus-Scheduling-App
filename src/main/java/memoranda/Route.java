@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class
-Route {
-    private List<Node> nodes;
+public class Route {
+    private ArrayList<Node> nodes;
     private double length; // in km
     private double duration; // in minutes
     private Random rand;
@@ -263,12 +262,14 @@ Route {
      */
     public boolean equals(Route route) {
         // first check number of nodes
-        if (!route.getNodes().equals(nodes))
+        if (!route.getNodes().equals(nodes)) {
             return false;
+        }
         else {
             for (int i = 0; i < route.getNodes().size(); ++i) {
-                if (!nodes.get(i).equals(route.getNodes().get(i)))
+                if (!nodes.get(i).equals(route.getNodes().get(i))) {
                     return false;
+                }
             }
             return true;
         }

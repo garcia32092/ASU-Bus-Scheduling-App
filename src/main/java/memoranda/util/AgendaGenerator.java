@@ -33,7 +33,7 @@ public class AgendaGenerator {
 
     static String generateTasksInfo(Project p, CalendarDate date, Collection expandedTasks) {
         TaskList tl;
-        if (p.getID().equals(CurrentProject.get().getID())) {
+        if (p.getId().equals(CurrentProject.get().getId())) {
             tl = CurrentProject.getTaskList();
         } else {
             tl = CurrentStorage.get().openTaskList(p);
@@ -63,12 +63,12 @@ public class AgendaGenerator {
                 //                	}
                 //        		}
                 // ignore if it's a sub-task, iterate over ROOT tasks here only
-                if (tl.hasParentTask(t.getID())) {
+                if (tl.hasParentTask(t.getId())) {
                     continue;
                 }
 
                 s = s + renderTask(p, date, tl, t, 0, expandedTasks);
-                if (expandedTasks.contains(t.getID())) {
+                if (expandedTasks.contains(t.getId())) {
                     s = s + expandRecursively(p, date, tl, t, expandedTasks, 1);
                 }
             }
@@ -86,7 +86,7 @@ public class AgendaGenerator {
     private static String expandRecursively(Project p, CalendarDate date, TaskList tl, Task t, Collection expandedTasks, int level) {
         Util.debug("Expanding task " + t.getText() + " level " + level);
 
-        Collection st = tl.getActiveSubTasks(t.getID(), date);
+        Collection st = tl.getActiveSubTasks(t.getId(), date);
 
         Util.debug("number of subtasks " + st.size());
 
@@ -100,7 +100,7 @@ public class AgendaGenerator {
             //            	}
             //			}
             s = s + renderTask(p, date, tl, subTask, level, expandedTasks);
-            if (expandedTasks.contains(subTask.getID())) {
+            if (expandedTasks.contains(subTask.getId())) {
                 s = s + expandRecursively(p, date, tl, subTask, expandedTasks, level + 1);
             }
         }
@@ -134,19 +134,19 @@ public class AgendaGenerator {
         //		Util.debug("Spacing for task " + t.getText() + " is " + spacing);
 
         String subTaskOperation = "";
-        if (tl.hasSubTasks(t.getID())) {
+        if (tl.hasSubTasks(t.getId())) {
             //			Util.debug("Task " + t.getID() + " has subtasks");
-            if (expandedTasks.contains(t.getID())) {
+            if (expandedTasks.contains(t.getId())) {
                 //				Util.debug("Task " + t.getID() + " is in list of expanded tasks");
-                subTaskOperation = "<a href=\"memoranda:closesubtasks#" + t.getID() + "\">(-)</a>";
+                subTaskOperation = "<a href=\"memoranda:closesubtasks#" + t.getId() + "\">(-)</a>";
             } else {
                 //				Util.debug("Task " + t.getID() + " is not in list of expanded tasks");
-                subTaskOperation = "<a href=\"memoranda:expandsubtasks#" + t.getID() + "\">(+)</a>";
+                subTaskOperation = "<a href=\"memoranda:expandsubtasks#" + t.getId() + "\">(+)</a>";
             }
         }
 
-        s += "<a name=\"" + t.getID() + "\"><li><p>" + subTaskOperation + "<a href=\"memoranda:tasks#"
-            + p.getID()
+        s += "<a name=\"" + t.getId() + "\"><li><p>" + subTaskOperation + "<a href=\"memoranda:tasks#"
+            + p.getId()
             + "\"><b>"
             + t.getText()
             + "</b></a> : "
@@ -250,7 +250,7 @@ public class AgendaGenerator {
 
     static String generateProjectInfo(Project p, CalendarDate date, Collection expandedTasks) {
         String s = "<h2><a href=\"memoranda:project#"
-            + p.getID()
+            + p.getId()
             + "\">"
             + p.getTitle()
             + "</a></h2>\n"
@@ -273,7 +273,7 @@ public class AgendaGenerator {
              i.hasNext();
         ) {
             Project p = (Project) i.next();
-            if (!p.getID().equals(CurrentProject.get().getID()))
+            if (!p.getId().equals(CurrentProject.get().getId()))
                 s += generateProjectInfo(p, date, expandedTasks);
         }
         return s + "</td>";

@@ -14,7 +14,7 @@ public class ProjectsTablePanel extends JPanel {
     JScrollPane scrollPane = new JScrollPane();
     public JTable projectsTable = new JTable() {
         public TableCellRenderer getCellRenderer(int row, int column) {
-            if (getModel().getValueAt(row, PROJECT_ID).equals(CurrentProject.get().getID())) {
+            if (getModel().getValueAt(row, PROJECT_ID).equals(CurrentProject.get().getId())) {
                 return new javax.swing.table.DefaultTableCellRenderer() {
                     public Component getTableCellRendererComponent(
                         JTable table,
@@ -156,7 +156,7 @@ public class ProjectsTablePanel extends JPanel {
                 case 3:
                     return getStatusString(pr.getStatus());
                 case 100:
-                    return pr.getID();
+                    return pr.getId();
                 case 101:
                     return pr;
             }

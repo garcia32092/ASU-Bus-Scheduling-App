@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda.date;
 
 import main.java.memoranda.util.Local;
@@ -21,9 +22,9 @@ import java.util.Date;
 /*$Id: CalendarDate.java,v 1.3 2004/01/30 12:17:41 alexeya Exp $*/
 public class CalendarDate {
 
-    private final int _year;
-    private final int _month;
-    private final int _day;
+    private final int year;
+    private final int month;
+    private final int day;
 
     public static Calendar dateToCalendar(Date date) {
         Calendar cal = Calendar.getInstance();
@@ -36,24 +37,25 @@ public class CalendarDate {
     }
 
     public CalendarDate(int day, int month, int year) {
-        _year = year;
-        _month = month;
+        this.year = year;
+        this.month = month;
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, _year);
-        cal.set(Calendar.MONTH, _month);
+        cal.set(Calendar.YEAR, this.year);
+        cal.set(Calendar.MONTH, this.month);
         cal.getTime();
         int dmax = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-        if (day <= dmax)
-            _day = day;
-        else
-            _day = dmax;
-
+        if (day <= dmax) {
+            this.day = day;
+        }
+        else {
+            this.day = dmax;
+        }
     }
 
     public CalendarDate(Calendar cal) {
-        _year = cal.get(Calendar.YEAR);
-        _day = cal.get(Calendar.DAY_OF_MONTH);
-        _month = cal.get(Calendar.MONTH);
+        year = cal.get(Calendar.YEAR);
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        month = cal.get(Calendar.MONTH);
     }
 
     public CalendarDate(Date date) {
@@ -62,9 +64,9 @@ public class CalendarDate {
 
     public CalendarDate(String date) {
         int[] d = Util.parseDateStamp(date);
-        _day = d[0];
-        _month = d[1];
-        _year = d[2];
+        day = d[0];
+        month = d[1];
+        year = d[2];
 
     }
 
@@ -102,23 +104,23 @@ public class CalendarDate {
     }
 
     public Calendar getCalendar() {
-        return toCalendar(_day, _month, _year);
+        return toCalendar(day, month, year);
     }
 
     public Date getDate() {
-        return toDate(_day, _month, _year);
+        return toDate(day, month, year);
     }
 
     public int getDay() {
-        return _day;
+        return day;
     }
 
     public int getMonth() {
-        return _month;
+        return month;
     }
 
     public int getYear() {
-        return _year;
+        return year;
     }
 
     public boolean equals(Object object) {
@@ -136,17 +138,23 @@ public class CalendarDate {
     }
 
     public boolean equals(CalendarDate date) {
-        if (date == null) return false;
+        if (date == null) {
+            return false;
+        }
         return ((date.getDay() == getDay()) && (date.getMonth() == getMonth()) && (date.getYear() == getYear()));
     }
 
     public boolean before(CalendarDate date) {
-        if (date == null) return true;
+        if (date == null) {
+            return true;
+        }
         return this.getCalendar().before(date.getCalendar());
     }
 
     public boolean after(CalendarDate date) {
-        if (date == null) return true;
+        if (date == null) {
+            return true;
+        }
         return this.getCalendar().after(date.getCalendar());
     }
 

@@ -232,7 +232,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
                                 prjTablePanel.projectsTable.getSelectedRow(),
                                 ProjectsTablePanel.PROJECT_ID)
                             .toString()
-                            .equals(CurrentProject.get().getID());
+                            .equals(CurrentProject.get().getId());
                     ppDeleteProject.setEnabled(enabled);
                     ppOpenProject.setEnabled(enabled);
                     ppProperties.setEnabled(true);
@@ -358,7 +358,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
                     .getValueAt(
                         prjTablePanel.projectsTable.getSelectedRows()[i],
                         ProjectsTablePanel.PROJECT);
-            toremove.add(prj.getID());
+            toremove.add(prj.getId());
         }
         for (int i = 0; i < toremove.size(); i++) {
             ProjectManager.removeProject((String) toremove.get(i));

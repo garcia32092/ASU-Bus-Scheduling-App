@@ -29,7 +29,7 @@ MapPanel extends JPanel {
 
     void jbInit() throws Exception {
 
-        jsonHandler.readNodesFromJSON("nodes1.json");
+        jsonHandler.readNodesFromJson("nodes1.json");
         mapGen = new MapGenerator(jsonHandler.nodes);
         route = new Route(5.0);
 
@@ -300,7 +300,7 @@ MapPanel extends JPanel {
 
         private void maybeShowPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
-//                eventPPMenu.show(e.getComponent(), e.getX(), e.getY());
+//                eventPPMenu.show(e.getComponent(), e.getCoordinateX(), e.getCoordinateY());
             }
         }
 

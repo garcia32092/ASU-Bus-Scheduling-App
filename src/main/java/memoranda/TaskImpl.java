@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.date.*;
@@ -20,23 +21,23 @@ import java.util.*;
 /*$Id: TaskImpl.java,v 1.15 2005/12/01 08:12:26 alexeya Exp $*/
 public class TaskImpl implements Task, Comparable {
 
-    private Element _element = null;
-    private TaskList _tl = null;
+    private Element element = null;
+    private TaskList taskList = null;
 
     /**
      * Constructor for DefaultTask.
      */
     public TaskImpl(Element taskElement, TaskList tl) {
-        _element = taskElement;
-        _tl = tl;
+        element = taskElement;
+        taskList = tl;
     }
 
     public Element getContent() {
-        return _element;
+        return element;
     }
 
     public CalendarDate getStartDate() {
-        return new CalendarDate(_element.getAttribute("startDate").getValue());
+        return new CalendarDate(element.getAttribute("startDate").getValue());
     }
 
     public void setStartDate(CalendarDate date) {
@@ -44,27 +45,31 @@ public class TaskImpl implements Task, Comparable {
     }
 
     public CalendarDate getEndDate() {
-        String ed = _element.getAttribute("endDate").getValue();
-        if (!ed.equals("") )
-            return new CalendarDate(_element.getAttribute("endDate").getValue());
+        String ed = element.getAttribute("endDate").getValue();
+        if (!ed.equals("")) {
+            return new CalendarDate(element.getAttribute("endDate").getValue());
+        }
         Task parent = this.getParentTask();
-        if (!parent.equals(null))
+        if (!parent.equals(null)) {
             return parent.getEndDate();
-        Project pr = this._tl.getProject();
-        if (!pr.getEndDate().equals(null))
+        }
+        Project pr = this.taskList.getProject();
+        if (!pr.getEndDate().equals(null)) {
             return pr.getEndDate();
+        }
         return this.getStartDate();
 
     }
 
     public void setEndDate(CalendarDate date) {
-        if (date.equals(null))
+        if (date.equals(null)) {
             setAttr("endDate", "");
+        }
         setAttr("endDate", date.toString());
     }
 
     public long getEffort() {
-        Attribute attr = _element.getAttribute("effort");
+        Attribute attr = element.getAttribute("effort");
         if (attr.equals(null)) {
             return 0;
         } else {
@@ -84,38 +89,42 @@ public class TaskImpl implements Task, Comparable {
      * @see net.sf.memoranda.Task#getParentTask()
      */
     public Task getParentTask() {
-        Node parentNode = _element.getParent();
+        Node parentNode = element.getParent();
         if (parentNode instanceof Element) {
             Element parent = (Element) parentNode;
-            if (parent.getLocalName().equalsIgnoreCase("task"))
-                return new TaskImpl(parent, _tl);
+            if (parent.getLocalName().equalsIgnoreCase("task")) {
+                return new TaskImpl(parent, taskList);
+            }
         }
         return null;
     }
 
     public String getParentId() {
         Task parent = this.getParentTask();
-        if (parent != null)
-            return parent.getID();
+        if (parent != null) {
+            return parent.getId();
+        }
         return null;
     }
 
     public String getDescription() {
-        Element thisElement = _element.getFirstChildElement("description");
+        Element thisElement = element.getFirstChildElement("description");
         if (thisElement == null) {
             return null;
-        } else {
+        }
+        else {
             return thisElement.getValue();
         }
     }
 
     public void setDescription(String s) {
-        Element desc = _element.getFirstChildElement("description");
+        Element desc = element.getFirstChildElement("description");
         if (desc == null) {
             desc = new Element("description");
             desc.appendChild(s);
-            _element.appendChild(desc);
-        } else {
+            element.appendChild(desc);
+        }
+        else {
             desc.removeChildren();
             desc.appendChild(s);
         }
@@ -129,17 +138,22 @@ public class TaskImpl implements Task, Comparable {
     public int getStatus(CalendarDate date) {
         CalendarDate start = getStartDate();
         CalendarDate end = getEndDate();
-        if (isFrozen())
+        if (isFrozen()) {
             return Task.FROZEN;
-        if (isCompleted())
+        }
+        if (isCompleted()) {
             return Task.COMPLETED;
+        }
 
         if (date.inPeriod(start, end)) {
-            if (date.equals(end))
+            if (date.equals(end)) {
                 return Task.DEADLINE;
-            else
+            }
+            else {
                 return Task.ACTIVE;
-        } else if (date.before(start)) {
+            }
+        }
+        else if (date.before(start)) {
             return Task.SCHEDULED;
         }
 
@@ -168,7 +182,7 @@ public class TaskImpl implements Task, Comparable {
     }
 */
     private boolean isFrozen() {
-        return _element.getAttribute("frozen") != null;
+        return element.getAttribute("frozen") != null;
     }
 
     private boolean isCompleted() {
@@ -176,17 +190,17 @@ public class TaskImpl implements Task, Comparable {
     }
 
     /**
-     * @see main.java.memoranda.Task#getID()
+     * @see main.java.memoranda.Task#getId()
      */
-    public String getID() {
-        return _element.getAttribute("id").getValue();
+    public String getId() {
+        return element.getAttribute("id").getValue();
     }
 
     /**
      * @see main.java.memoranda.Task#getText()
      */
     public String getText() {
-        return _element.getFirstChildElement("text").getValue();
+        return element.getFirstChildElement("text").getValue();
     }
 
     public String toString() {
@@ -197,8 +211,8 @@ public class TaskImpl implements Task, Comparable {
      * @see main.java.memoranda.Task#setText()
      */
     public void setText(String s) {
-        _element.getFirstChildElement("text").removeChildren();
-        _element.getFirstChildElement("text").appendChild(s);
+        element.getFirstChildElement("text").removeChildren();
+        element.getFirstChildElement("text").appendChild(s);
     }
 
     /**
@@ -212,8 +226,9 @@ public class TaskImpl implements Task, Comparable {
      * @see main.java.memoranda.Task#unfreeze()
      */
     public void unfreeze() {
-        if (this.isFrozen())
-            _element.removeAttribute(new Attribute("frozen", "yes"));
+        if (this.isFrozen()) {
+            element.removeAttribute(new Attribute("frozen", "yes"));
+        }
     }
 
     /**
@@ -221,12 +236,13 @@ public class TaskImpl implements Task, Comparable {
      */
     public Collection getDependsFrom() {
         Vector v = new Vector();
-        Elements deps = _element.getChildElements("dependsFrom");
+        Elements deps = element.getChildElements("dependsFrom");
         for (int i = 0; i < deps.size(); i++) {
             String id = deps.get(i).getAttribute("idRef").getValue();
-            Task t = _tl.getTask(id);
-            if (t != null)
+            Task t = taskList.getTask(id);
+            if (t != null) {
                 v.add(t);
+            }
         }
         return v;
     }
@@ -236,19 +252,19 @@ public class TaskImpl implements Task, Comparable {
      */
     public void addDependsFrom(Task task) {
         Element dep = new Element("dependsFrom");
-        dep.addAttribute(new Attribute("idRef", task.getID()));
-        _element.appendChild(dep);
+        dep.addAttribute(new Attribute("idRef", task.getId()));
+        element.appendChild(dep);
     }
 
     /**
      * @see main.java.memoranda.Task#removeDependsFrom(main.java.memoranda.Task)
      */
     public void removeDependsFrom(Task task) {
-        Elements deps = _element.getChildElements("dependsFrom");
+        Elements deps = element.getChildElements("dependsFrom");
         for (int i = 0; i < deps.size(); i++) {
             String id = deps.get(i).getAttribute("idRef").getValue();
-            if (id.equals(task.getID())) {
-                _element.removeChild(deps.get(i));
+            if (id.equals(task.getId())) {
+                element.removeChild(deps.get(i));
                 return;
             }
         }
@@ -258,24 +274,26 @@ public class TaskImpl implements Task, Comparable {
      * @see main.java.memoranda.Task#getProgress()
      */
     public int getProgress() {
-        return Integer.parseInt(_element.getAttribute("progress").getValue());
+        return Integer.parseInt(element.getAttribute("progress").getValue());
     }
 
     /**
      * @see main.java.memoranda.Task#setProgress(int)
      */
     public void setProgress(int p) {
-        if ((p >= 0) && (p <= 100))
+        if ((p >= 0) && (p <= 100)) {
             setAttr("progress", Integer.valueOf(p).toString());
+        }
     }
 
     /**
      * @see main.java.memoranda.Task#getPriority()
      */
     public int getPriority() {
-        Attribute pa = _element.getAttribute("priority");
-        if (pa == null)
+        Attribute pa = element.getAttribute("priority");
+        if (pa == null) {
             return Task.PRIORITY_NORMAL;
+        }
         return Integer.parseInt(pa.getValue());
     }
 
@@ -287,11 +305,13 @@ public class TaskImpl implements Task, Comparable {
     }
 
     private void setAttr(String a, String value) {
-        Attribute attr = _element.getAttribute(a);
-        if (attr == null)
-            _element.addAttribute(new Attribute(a, value));
-        else
+        Attribute attr = element.getAttribute(a);
+        if (attr == null) {
+            element.addAttribute(new Attribute(a, value));
+        }
+        else {
             attr.setValue(value);
+        }
     }
 
     /**
@@ -310,7 +330,9 @@ public class TaskImpl implements Task, Comparable {
         Calendar dateCal = d.getCalendar();
         int numOfDays = (endDateCal.get(Calendar.YEAR) * 365 + endDateCal.get(Calendar.DAY_OF_YEAR)) -
             (dateCal.get(Calendar.YEAR) * 365 + dateCal.get(Calendar.DAY_OF_YEAR));
-        if (numOfDays < 0) return -1; //Something wrong ?
+        if (numOfDays < 0) {
+            return -1; //Something wrong ?
+        }
         return (long) (100 - getProgress()) / (numOfDays + 1) * (getPriority() + 1);
     }
 
@@ -337,30 +359,33 @@ public class TaskImpl implements Task, Comparable {
 
     public int compareTo(Object o) {
         Task task = (Task) o;
-        if (getRate() > task.getRate())
+        if (getRate() > task.getRate()) {
             return 1;
-        else if (getRate() < task.getRate())
+        }
+        else if (getRate() < task.getRate()) {
             return -1;
-        else
+        }
+        else {
             return 0;
+        }
     }
 
     public boolean equals(Object o) {
-        return ((o instanceof Task) && (((Task) o).getID().equals(this.getID())));
+        return ((o instanceof Task) && (((Task) o).getId().equals(this.getId())));
     }
 
     /*
      * @see net.sf.memoranda.Task#getSubTasks()
      */
     public Collection getSubTasks() {
-        Elements subTasks = _element.getChildElements("task");
+        Elements subTasks = element.getChildElements("task");
         return convertToTaskObjects(subTasks);
     }
 
     private Collection convertToTaskObjects(Elements tasks) {
         Vector v = new Vector();
         for (int i = 0; i < tasks.size(); i++) {
-            Task t = new TaskImpl(tasks.get(i), _tl);
+            Task t = new TaskImpl(tasks.get(i), taskList);
             v.add(t);
         }
         return v;
@@ -370,10 +395,11 @@ public class TaskImpl implements Task, Comparable {
      * @see net.sf.memoranda.Task#getSubTask(java.lang.String)
      */
     public Task getSubTask(String id) {
-        Elements subTasks = _element.getChildElements("task");
+        Elements subTasks = element.getChildElements("task");
         for (int i = 0; i < subTasks.size(); i++) {
-            if (subTasks.get(i).getAttribute("id").getValue().equals(id))
-                return new TaskImpl(subTasks.get(i), _tl);
+            if (subTasks.get(i).getAttribute("id").getValue().equals(id)) {
+                return new TaskImpl(subTasks.get(i), taskList);
+            }
         }
         return null;
     }
@@ -382,10 +408,12 @@ public class TaskImpl implements Task, Comparable {
      * @see net.sf.memoranda.Task#hasSubTasks()
      */
     public boolean hasSubTasks(String id) {
-        Elements subTasks = _element.getChildElements("task");
-        for (int i = 0; i < subTasks.size(); i++)
-            if (subTasks.get(i).getAttribute("id").getValue().equals(id))
+        Elements subTasks = element.getChildElements("task");
+        for (int i = 0; i < subTasks.size(); i++) {
+            if (subTasks.get(i).getAttribute("id").getValue().equals(id)) {
                 return true;
+            }
+        }
         return false;
     }
 

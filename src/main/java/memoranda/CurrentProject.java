@@ -6,6 +6,7 @@
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
+
 package main.java.memoranda;
 
 import main.java.memoranda.ui.*;
@@ -40,9 +41,10 @@ public class CurrentProject {
             // alexeya: Fixed bug with NullPointer when LAST_OPENED_PROJECT_ID
             // references to missing project
             _project = ProjectManager.getProject("__default");
-            if (_project == null)
+            if (_project == null) {
                 _project = (Project) ProjectManager.getActiveProjects().get(0);
-            Context.put("LAST_OPENED_PROJECT_ID", _project.getID());
+            }
+            Context.put("LAST_OPENED_PROJECT_ID", _project.getId());
 
         }
 
@@ -74,7 +76,9 @@ public class CurrentProject {
     }
 
     public static void set(Project project) {
-        if (project.getID().equals(_project.getID())) return;
+        if (project.getId().equals(_project.getId())) {
+            return;
+        }
         TaskList newtasklist = CurrentStorage.get().openTaskList(project);
         NoteList newnotelist = CurrentStorage.get().openNoteList(project);
         ResourcesList newresources = CurrentStorage.get().openResourcesList(project);
@@ -84,7 +88,7 @@ public class CurrentProject {
         _notelist = newnotelist;
         _resources = newresources;
         notifyListenersAfter();
-        Context.put("LAST_OPENED_PROJECT_ID", project.getID());
+        Context.put("LAST_OPENED_PROJECT_ID", project.getId());
     }
 
     public static void addProjectListener(ProjectListener pl) {
