@@ -1,36 +1,54 @@
 package main.java.memoranda;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Node {
-    String id;
-    double latitude;
-    double longitude;
+
+    private int coordinateX;
+    private int coordinateY;
+	private String id;
+	private String stopName;
+	private double latitude;
+	private double longitude;
     private int x;
     private int y;
+    private boolean isBusStop;
+    private List<Node> neighbors;
 
-    /**
+
+	/**
      * The default constructor for Node
-     * @param id the ID associated with the specific node
-     * @param lat the latitude coordinates of the Node
-     * @param lon the longitude coordinates of the Node
+     *
+     * @param id  the ID associated with the specific node
+     * @param latitude the latitude coordinates of the Node
+     * @param longitude the longitude coordinates of the Node
      */
-    public Node(String id, double latitude, double longitude) {
+    public Node(String id, double latitude, double longitude, boolean isBusStop, String stopName) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
+        coordinateX = -1;
+        coordinateY = -1;
+        this.isBusStop = isBusStop;
+        this.stopName = stopName;
         x = -1;
         y = -1;
+        neighbors = new ArrayList<>();
     }
 
-	/**
+    /**
      * Getter function for the String ID
+     *
      * @return the ID associated with the node
      */
     public String getId() {
-    	return id;
+        return id;
     }
 
     /**
      * Getter function for the latitude value
+     *
      * @return the latitude value of the Node
      */
     public double getLatitude() {
@@ -39,31 +57,34 @@ public class Node {
 
     /**
      * Getter function for the longitude value
+     *
      * @return the longitude value of the Node
      */
     public double getLongitude() {
         return longitude;
     }
-    
-	public int getX() {
-		return x;
-	}
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    public int getX() {
+        return coordinateX;
+    }
 
-	public int getY() {
-		return y;
-	}
+    public void setX(int coordinateX) {
+        this.coordinateX = coordinateX;
+    }
 
-	public void setY(int y) {
-		this.y = y;
-	}
+    public int getY() {
+        return coordinateY;
+    }
+
+    public void setY(int coordinateY) {
+        this.coordinateY = coordinateY;
+    }
+
 
     /**
      * Calculates the distance between the Nodes in km
-     * @param n the first Node
+     *
+     * @param n  the first Node
      * @param nn the second Node
      * @return the distance of the Nodes in km
      */
@@ -78,21 +99,29 @@ public class Node {
 //        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 //        double d = R * c; //distance in kilometers
 //        return d;
-    	double xDiff = nn.getX() - n.getX();
-        double yDiff = nn.getY() - n.getY();
-        
+        double xDiff = nn.getX() - n.getY();
+        double yDiff = nn.getX() - n.getY();
+
         double distance = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
         return distance;
     }
 
-    /**
-     * Calculates the distance between Nodes in miles
-     * @param n first node
-     * @param nn second node
-     * @return The distance of nodes in miles
-     */
-    public static double distanceOfNodesMiles(Node n, Node nn) {
-        return distanceOfNodes(n, nn) * 0.621371;
+    
+    public boolean isBusStop() {
+		return isBusStop;
+	}
+    
+    public List<Node> getNeighbors() {
+        return neighbors;
+
+    }
+
+    public void addNeighbor(Node node) {
+        neighbors.add(node);
+    }
+    
+    public String getStopName() {
+    	return stopName;
     }
 
     /**
@@ -104,17 +133,16 @@ public class Node {
      * @return the string
      */
     public String toString() {
-        return "Node: " + id.toString() + "\nlatitude: " + latitude + "\nlongitude: " + longitude;
+        return "Node: " + id + "\nlatitude: " + latitude + "\nlongitude: " + longitude;
     }
 
     /**
      * equals implementation
+     *
      * @param n the comparison Node
      * @return returns true if the latitude and longitude values are equal, else returns false
      */
     public boolean equals(Node n) {
-        if(latitude == n.getLatitude() && longitude == n.getLongitude())
-            return true;
-        return false;
+        return latitude == n.getLatitude() && longitude == n.getLongitude();
     }
 }

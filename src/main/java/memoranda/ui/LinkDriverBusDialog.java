@@ -1,10 +1,9 @@
 package main.java.memoranda.ui;
 
-import main.java.memoranda.Bus;
-import main.java.memoranda.DriverList;
+import main.java.memoranda.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.swing.border.*;
 import java.awt.*;
 
 public class LinkDriverBusDialog extends JDialog {
@@ -33,7 +32,7 @@ public class LinkDriverBusDialog extends JDialog {
     JLabel seatsLabel = new JLabel();
     JPanel seatsFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-    public LinkDriverBusDialog(Frame frame, String title, DriverList driverList, Bus bus){
-        
+    public LinkDriverBusDialog(Frame frame, String title, DriverList driverList, Bus bus) {
+
     }
 }

@@ -1,34 +1,13 @@
 package main.java.memoranda.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.io.File;
+import main.java.memoranda.util.*;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-
-import main.java.memoranda.util.AppList;
-import main.java.memoranda.util.CurrentStorage;
-import main.java.memoranda.util.Local;
-import main.java.memoranda.util.MimeType;
-import main.java.memoranda.util.MimeTypesList;
-import main.java.memoranda.util.Util;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
 
 /*$Id: ResourceTypePanel.java,v 1.8 2004/10/18 19:09:10 ivanrise Exp $*/
 public class ResourceTypePanel extends JPanel {
@@ -39,92 +18,91 @@ public class ResourceTypePanel extends JPanel {
     TitledBorder titledBorder2;
     public String ext = "";
     boolean CANCELLED = true;
-  JPanel jPanel1 = new JPanel();
-  JButton newTypeB = new JButton();
-  JScrollPane jScrollPane1 = new JScrollPane();
-  BorderLayout borderLayout2 = new BorderLayout();
-  JPanel areaPanel = new JPanel();
-  JPanel jPanel2 = new JPanel();
-  JButton editB = new JButton();
-  JButton deleteB = new JButton();
-  BorderLayout borderLayout1 = new BorderLayout();
-  public JList typesList = new JList();
-  BorderLayout borderLayout3 = new BorderLayout();
-  Border border3;
+    JPanel jPanel1 = new JPanel();
+    JButton newTypeB = new JButton();
+    JScrollPane jScrollPane1 = new JScrollPane();
+    BorderLayout borderLayout2 = new BorderLayout();
+    JPanel areaPanel = new JPanel();
+    JPanel jPanel2 = new JPanel();
+    JButton editB = new JButton();
+    JButton deleteB = new JButton();
+    BorderLayout borderLayout1 = new BorderLayout();
+    public JList typesList = new JList();
+    BorderLayout borderLayout3 = new BorderLayout();
+    Border border3;
 
     public ResourceTypePanel() {
         super();
         try {
             jbInit();
 
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     void jbInit() throws Exception {
         border1 = BorderFactory.createLineBorder(SystemColor.controlText, 2);
-        titledBorder1 = new TitledBorder(BorderFactory.createEmptyBorder(),Local.getString("Registered types"));
+        titledBorder1 = new TitledBorder(BorderFactory.createEmptyBorder(), Local.getString("Registered types"));
         border2 = BorderFactory.createLineBorder(Color.gray, 1);
         titledBorder2 = new TitledBorder(BorderFactory.createLineBorder(Color.gray, 1), Local.getString("Details"));
         border3 = BorderFactory.createEmptyBorder(0, 10, 0, 0);
 
 
         jPanel1.setBorder(titledBorder1);
-    jPanel1.setLayout(borderLayout1);
-    newTypeB.setMaximumSize(new Dimension(110, 25));
-    newTypeB.setPreferredSize(new Dimension(110, 25));
-    newTypeB.setText(Local.getString("New"));
-    newTypeB.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.setLayout(borderLayout1);
+        newTypeB.setMaximumSize(new Dimension(110, 25));
+        newTypeB.setPreferredSize(new Dimension(110, 25));
+        newTypeB.setText(Local.getString("New"));
+        newTypeB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 newTypeB_actionPerformed(e);
             }
         });
-    areaPanel.setLayout(borderLayout2);
-    jPanel2.setMaximumSize(new Dimension(120, 32767));
-    jPanel2.setMinimumSize(new Dimension(120, 36));
-    jPanel2.setPreferredSize(new Dimension(120, 36));
-    jPanel2.setBorder(border3);
-    editB.setText(Local.getString("Edit"));
-    editB.addActionListener(new java.awt.event.ActionListener() {
+        areaPanel.setLayout(borderLayout2);
+        jPanel2.setMaximumSize(new Dimension(120, 32767));
+        jPanel2.setMinimumSize(new Dimension(120, 36));
+        jPanel2.setPreferredSize(new Dimension(120, 36));
+        jPanel2.setBorder(border3);
+        editB.setText(Local.getString("Edit"));
+        editB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 editB_actionPerformed(e);
             }
         });
-    editB.setEnabled(false);
-    editB.setMaximumSize(new Dimension(110, 25));
-    editB.setPreferredSize(new Dimension(110, 25));
-    deleteB.setEnabled(false);
-    deleteB.setMaximumSize(new Dimension(110, 25));
-    deleteB.setPreferredSize(new Dimension(110, 25));
-    deleteB.setText(Local.getString("Delete"));
-    deleteB.addActionListener(new java.awt.event.ActionListener() {
+        editB.setEnabled(false);
+        editB.setMaximumSize(new Dimension(110, 25));
+        editB.setPreferredSize(new Dimension(110, 25));
+        deleteB.setEnabled(false);
+        deleteB.setMaximumSize(new Dimension(110, 25));
+        deleteB.setPreferredSize(new Dimension(110, 25));
+        deleteB.setText(Local.getString("Delete"));
+        deleteB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 deleteB_actionPerformed(e);
             }
         });
-    typesList.setCellRenderer(new TypesListRenderer());
-    typesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    typesList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-      public void valueChanged(ListSelectionEvent e) {
-        typesList_valueChanged(e);
-      }
-    });
+        typesList.setCellRenderer(new TypesListRenderer());
+        typesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        typesList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                typesList_valueChanged(e);
+            }
+        });
         initTypesList();
 
         //typesList.setCellRenderer(new TypesListRenderer());
-    this.setLayout(borderLayout3);
-    this.add(areaPanel, BorderLayout.CENTER);
-    areaPanel.add(jPanel1, BorderLayout.CENTER);
-    jPanel1.add(jScrollPane1, BorderLayout.CENTER);
-    jScrollPane1.getViewport().add(typesList, null);
-    jPanel1.add(jPanel2, BorderLayout.EAST);
-    jPanel2.add(newTypeB, null);
-    jPanel2.add(editB, null);
-    jPanel2.add(deleteB, null);
-    typesList.setListData(MimeTypesList.getAllMimeTypes());
-    //typesList.updateUI();
+        this.setLayout(borderLayout3);
+        this.add(areaPanel, BorderLayout.CENTER);
+        areaPanel.add(jPanel1, BorderLayout.CENTER);
+        jPanel1.add(jScrollPane1, BorderLayout.CENTER);
+        jScrollPane1.getViewport().add(typesList, null);
+        jPanel1.add(jPanel2, BorderLayout.EAST);
+        jPanel2.add(newTypeB, null);
+        jPanel2.add(editB, null);
+        jPanel2.add(deleteB, null);
+        typesList.setListData(MimeTypesList.getAllMimeTypes());
+        //typesList.updateUI();
 
     }
 
@@ -277,8 +255,7 @@ public class ResourceTypePanel extends JPanel {
             if (isSelected) {
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());
-            }
-            else {
+            } else {
                 setBackground(list.getBackground());
                 setForeground(list.getForeground());
             }
@@ -287,11 +264,10 @@ public class ResourceTypePanel extends JPanel {
     }
 
     void typesList_valueChanged(ListSelectionEvent e) {
-      boolean en = typesList.getSelectedValue() != null;
-      this.editB.setEnabled(en);
-      this.deleteB.setEnabled(en);
+        boolean en = typesList.getSelectedValue() != null;
+        this.editB.setEnabled(en);
+        this.deleteB.setEnabled(en);
     }
-
 
 
 }

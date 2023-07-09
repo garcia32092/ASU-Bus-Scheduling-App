@@ -1,148 +1,58 @@
 {
-    "nodes":   [
-        {
-            "lon": "-111.94335810187346",
-            "id":  "Reference",
-            "lat": "33.431553798164614"
-        },
-        {
-            "lon": "-111.94001299549043",
-            "id":  "1",
-            "lat": "33.42963052995682"
-        },
-        {
-            "lon": "-111.93902571041023",
-            "id":  "2",
-            "lat": "33.42971772751683"
-        },
-        {
-            "lon": "-111.93770401098949",
-            "id":  "3",
-            "lat": "33.43034642067085"
-        },
-        {
-            "lon": "-111.9369191108673",
-            "id":  "4",
-            "lat": "33.43060429649762"
-        },
-        {
-            "lon": "-111.93579363638791",
-            "id":  "5",
-            "lat": "33.430529004367344"
-        },
-        {
-            "lon": "-111.93491927257037",
-            "id":  "6",
-            "lat": "33.43013999405162"
-        },
-        {
-            "lon": "-111.9343855407143",
-            "id":  "7",
-            "lat": "33.429746028587815"
-        },
-        {
-            "lon": "-111.93350305357069",
-            "id":  "8",
-            "lat": "33.429419181165336"
-        },
-        {
-            "lon": "-111.93214858482243",
-            "id":  "9",
-            "lat": "33.42935338268244"
-        },
-        {
-            "lon": "-111.93041857550217",
-            "id":  "10",
-            "lat": "33.42883392317258"
-        },
-        {
-            "lon": "-111.92929207251115",
-            "id":  "11",
-            "lat": "33.428724212103965"
-        },
-        {
-            "lon": "-111.92774714799783",
-            "id":  "12",
-            "lat": "33.42889656235257"
-        },
-        {
-            "lon": "-111.9270631369918",
-            "id":  "13",
-            "lat": "33.428892121350096"
-        },
-        {
-            "lon": "-111.92628633366814",
-            "id":  "14",
-            "lat": "33.42883466574869"
-        },
-        {
-            "lon": "-111.92629148223463",
-            "id":  "15",
-            "lat": "33.425312299963835"
-        },
-        {
-            "lon": "-111.92629148223463",
-            "id":  "16",
-            "lat": "33.421985897491155"
-        },
-        {
-            "lon": "-111.93273647756827",
-            "id":  "17",
-            "lat": "33.421985897491155"
-        },
-        {
-            "lon": "-111.94001299549043",
-            "id":  "18",
-            "lat": "33.421941756397246"
-        },
-        {
-            "lon": "-111.94001299549043",
-            "id":  "19",
-            "lat": "33.425502367605745"
-        }
-    ],
-    "buses":   [
-        {
-            "id":             "123",
-            "seats":          "321",
-            "assignedDriver": "null"
-        }
-    ],
-    "Routes":  [
-        {
-            "Route": [
-                {
-                    "Stop Duration": 3.0,
-                    "Driver":        "test",
-                    "Latitude":      33.429746028587815,
-                    "Id":            "7",
-                    "Longitude":     -111.9343855407143,
-                    "Bus ID":        "123"
-                },
-                {
-                    "Stop Duration": 3.0,
-                    "Driver":        "test",
-                    "Latitude":      33.429746028587815,
-                    "Id":            "7",
-                    "Longitude":     -111.9343855407143,
-                    "Bus ID":        "123"
-                },
-                {
-                    "Stop Duration": 3.0,
-                    "Driver":        "test",
-                    "Latitude":      33.429746028587815,
-                    "Id":            "7",
-                    "Longitude":     -111.9343855407143,
-                    "Bus ID":        "123"
-                }
-            ]
-        }
-    ],
-    "drivers": [
-        {
-            "phoneNumber": "(123",
-            "name":        "test",
-            "id":          "000123"
-        }
-    ]
+"nodes":[
+    {"id": "Reference", "lat":"33.431553798164614", "lon": "-111.94335810187346", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "1", "lat": "33.42963052995682", "lon": "-111.94005999549043", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "2", "lat": "33.42971772751683", "lon": "-111.93902571041023", "isBusStop": true, "stopName": "Hayden Butte"},
+    {"id": "3", "lat": "33.43040642067085", "lon": "-111.93770401098949", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "4", "lat": "33.43063429649762", "lon": "-111.9369191108673", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "5", "lat": "33.430529004367344", "lon": "-111.93579363638791", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "6", "lat": "33.43013999405162", "lon": "-111.93491927257037", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "7", "lat": "33.429746028587815", "lon": "-111.9343855407143", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "8", "lat": "33.429419181165336", "lon": "-111.93350305357069", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "9", "lat": "33.42935338268244", "lon": "-111.93214858482243", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "10", "lat": "33.42883392317258", "lon": "-111.93041857550217", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "11", "lat": "33.428724212103965", "lon": "-111.92929207251115", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "12", "lat": "33.42889656235257", "lon": "-111.92774714799783", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "13", "lat": "33.428892121350096", "lon": "-111.9270631369918", "isBusStop": true, "stopName": "Rio Salado & Rural"},
+    {"id": "14", "lat": "33.42883466574869", "lon": "-111.92628633366814", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "15", "lat": "33.42468826521116", "lon": "-111.92629148223463", "isBusStop": true, "stopName": "6th St & Rural"},
+    {"id": "16", "lat": "33.42201875628707", "lon": "-111.92629148223463", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "17", "lat": "33.42201875628707", "lon": "-111.92893474547174", "isBusStop": true, "stopName": "University & Veterans"},
+    {"id": "18", "lat": "33.42225269686521", "lon": "-111.92896223811209", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "19", "lat": "33.4224183577592", "lon": "-111.92903935162414", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "20", "lat": "33.42266740816688", "lon": "-111.92933037129107", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "21", "lat": "33.42275471556089", "lon": "-111.92948593942215", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "22", "lat": "33.42290638395635", "lon": "-111.92977092410864", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "23", "lat": "33.42305322730075", "lon": "-111.93006328578834", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "24", "lat": "33.42313549736121", "lon": "-111.93029261464196", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "25", "lat": "33.42333766845361", "lon": "-111.93085145112808", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "26", "lat": "33.42353693661658", "lon": "-111.93131820462325", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "27", "lat": "33.4240875994965", "lon": "-111.93200216351798", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "28", "lat": "33.42460471698086", "lon": "-111.9326807991286", "isBusStop": true, "stopName": "Sun Devil Stadium"},
+    {"id": "29", "lat": "33.42506584915704", "lon": "-111.93370808623877", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "30", "lat": "33.42541501771678", "lon": "-111.93454226720417", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "31", "lat": "33.42551573443614", "lon": "-111.93500204694945", "isBusStop": true, "stopName": "5th St & College Ave"},
+    {"id": "32", "lat": "33.421985897491155", "lon": "-111.93500204694945", "isBusStop": true, "stopName": "University & College Ave"},
+    {"id": "33", "lat": "33.421985897491155", "lon": "-111.94005999549043", "isBusStop": true, "stopName": "University & Mill Ave"},
+    {"id": "34", "lat": "33.425502367605745", "lon": "-111.94005999549043", "isBusStop": true, "stopName": "5th St & Mill Ave"},
+    {"id": "35", "lat": "33.42551761618468", "lon": "-111.94186891608034", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "36", "lat": "33.42552207549513", "lon": "-111.94338434829014", "isBusStop": true, "stopName": "5th St & Ash Ave"},
+    {"id": "37", "lat": "33.4264309564698", "lon": "-111.9433923469078", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "38", "lat": "33.42708689250566", "lon": "-111.94318845237311", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "39", "lat": "33.42758161386139", "lon": "-111.94277812230762", "isBusStop": true, "stopName": "3rd St & Ash Ave"},
+    {"id": "40", "lat": "33.42797110089167", "lon": "-111.94255279471807", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "41", "lat": "33.428503863365734", "lon": "-111.94248038062652", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "42", "lat": "33.42928732309078", "lon": "-111.94263064688934", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "43", "lat": "33.429463545085824", "lon": "-111.9424227223489", "isBusStop": false, "stopName": "This Is Not A Stop"},
+    {"id": "44", "lat": "33.429450732079054", "lon": "-111.9416650517162", "isBusStop": true, "stopName": "Tempe Beach Park"},
+    {"id": "45", "lat": "33.42960963007238", "lon": "-111.94034813573508", "isBusStop": false, "stopName": "This Is Not A Stop"}
+],
+"drivers": [
+    {"id":  "1", "name":  "Joe Bob", "phoneNumber":  "(401) 555-5555"},
+    {"id":  "2", "name":  "Jim Cob", "phoneNumber":  "(401) 555-5555"},
+    {"id":  "3", "name":  "One Round for Jose Cuervo", "phoneNumber":  "(401) 555-5555"}
+],
+"buses": [
+    {"id":  "1", "seats":  "32", "assignedDriver": "000001"}
+]
 }

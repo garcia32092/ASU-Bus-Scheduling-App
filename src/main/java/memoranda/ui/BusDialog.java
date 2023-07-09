@@ -1,17 +1,12 @@
 package main.java.memoranda.ui;
 
-import main.java.memoranda.Bus;
-import main.java.memoranda.Driver;
-import main.java.memoranda.util.Local;
+import main.java.memoranda.*;
+import main.java.memoranda.util.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 
 public class BusDialog extends JDialog {
     JPanel mPanel = new JPanel(new BorderLayout());
@@ -40,13 +35,12 @@ public class BusDialog extends JDialog {
     JPanel seatsFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     Bus tempBus;
 
-    public BusDialog(Frame frame, String title){
+    public BusDialog(Frame frame, String title) {
         super(frame, title, true);
-        try{
+        try {
             jbInit();
             pack();
-        }
-        catch(Exception ex) {
+        } catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
@@ -56,12 +50,12 @@ public class BusDialog extends JDialog {
         this.setSize(new Dimension(430, 300));
         border1 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         border2 = BorderFactory.createEtchedBorder(Color.white,
-                new Color(142, 142, 142));
+            new Color(142, 142, 142));
         border3 = new TitledBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0),
-                Local.getString("Bus ID"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
+            Local.getString("Bus ID"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
         border4 = BorderFactory.createEmptyBorder(0, 5, 0, 5);
         border8 = BorderFactory.createEtchedBorder(Color.white,
-                new Color(178, 178, 178));
+            new Color(178, 178, 178));
 
         cancelButton.setMaximumSize(new Dimension(100, 26));
         cancelButton.setMinimumSize(new Dimension(100, 26));
@@ -91,7 +85,7 @@ public class BusDialog extends JDialog {
         header.setFont(new java.awt.Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
         header.setText(Local.getString("Bus"));
-        header.setIcon(new ImageIcon(DriverDialog.class.getResource( "/ui/icons/task48.png")));
+        header.setIcon(new ImageIcon(DriverDialog.class.getResource("/ui/icons/task48.png")));
 
         GridBagLayout gbLayout = (GridBagLayout) jPanel8.getLayout();
 
@@ -100,7 +94,7 @@ public class BusDialog extends JDialog {
         GridBagConstraints idFieldConstraints = new GridBagConstraints();
         idFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         idFieldConstraints.weighty = 1;
-        gbLayout.setConstraints(idField,idFieldConstraints);
+        gbLayout.setConstraints(idField, idFieldConstraints);
         idLabel.setText(Local.getString("ID Number"));
         idLabel.setMinimumSize(new Dimension(60, 16));
         idLabel.setMaximumSize(new Dimension(100, 16));
@@ -110,7 +104,7 @@ public class BusDialog extends JDialog {
         GridBagConstraints seatsFieldConstraints = new GridBagConstraints();
         seatsFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         seatsFieldConstraints.weighty = 1;
-        gbLayout.setConstraints(seatsField,seatsFieldConstraints);
+        gbLayout.setConstraints(seatsField, seatsFieldConstraints);
         seatsLabel.setText(Local.getString("Number of Seats"));
         seatsLabel.setMinimumSize(new Dimension(60, 16));
         seatsLabel.setMaximumSize(new Dimension(100, 16));
@@ -137,7 +131,7 @@ public class BusDialog extends JDialog {
         seatsField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(idField.getText().length() >= 6)
+                if (idField.getText().length() >= 6)
                     e.consume();
             }
 
@@ -148,7 +142,7 @@ public class BusDialog extends JDialog {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(!seatsField.getText().matches("\\d")) {
+                if (!seatsField.getText().matches("\\d")) {
                     seatsField.setText(seatsField.getText().replaceAll("\\D", ""));
                 }
             }
@@ -157,12 +151,13 @@ public class BusDialog extends JDialog {
         idField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-                if(idField.getText().length() >= 6)
+                if (idField.getText().length() >= 6)
                     e.consume();
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {            }
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
             public void keyReleased(KeyEvent e) {

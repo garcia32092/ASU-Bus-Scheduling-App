@@ -1,14 +1,19 @@
 package main.java.memoranda.ui;
 
-import main.java.memoranda.*;
-import main.java.memoranda.util.*;
+import main.java.memoranda.Bus;
+import main.java.memoranda.util.Local;
 
 import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class DriverDialog extends JDialog {
+public class AddDriverToBusDialog extends JDialog {
+    Bus bus;
     JPanel mPanel = new JPanel(new BorderLayout());
     JPanel areaPanel = new JPanel(new BorderLayout());
     JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -23,21 +28,21 @@ public class DriverDialog extends JDialog {
     Border border3;
     Border border4;
     JPanel gridPanel = new JPanel(new GridLayout(2, 2));
-    JTextField nameField = new JTextField();
+    JTextField seatsField = new JTextField();
     JTextField idField = new JTextField();
-    JTextField phoneField = new JTextField();
     Border border8;
+
     JPanel idFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JPanel idLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
     JLabel idLabel = new JLabel();
-    JPanel phoneLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    JLabel phoneNumberLabel = new JLabel();
-    JPanel phoneFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-    Driver tempDriver;
+    JPanel seatsLabelPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    JLabel seatsLabel = new JLabel();
+    JPanel seatsFieldPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+    Bus tempBus;
 
-
-    public DriverDialog(Frame frame, String title) {
+    public AddDriverToBusDialog(Frame frame, String title, Bus bus) {
         super(frame, title, true);
+        this.bus = bus;
         try {
             jbInit();
             pack();
@@ -53,17 +58,18 @@ public class DriverDialog extends JDialog {
         border2 = BorderFactory.createEtchedBorder(Color.white,
             new Color(142, 142, 142));
         border3 = new TitledBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0),
-            Local.getString("Driver Name"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
+            Local.getString("Driver ID"), TitledBorder.LEFT, TitledBorder.BELOW_TOP);
         border4 = BorderFactory.createEmptyBorder(0, 5, 0, 5);
         border8 = BorderFactory.createEtchedBorder(Color.white,
             new Color(178, 178, 178));
+
         cancelButton.setMaximumSize(new Dimension(100, 26));
         cancelButton.setMinimumSize(new Dimension(100, 26));
         cancelButton.setPreferredSize(new Dimension(100, 26));
         cancelButton.setText(Local.getString("Cancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                cancelB_actionPerformed(e);
+                cancelBtn_actionPerformed(e);
             }
         });
 
@@ -73,7 +79,7 @@ public class DriverDialog extends JDialog {
         okayButton.setText(Local.getString("Ok"));
         okayButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                okayButton_ActionPerformed(e);
+                okayBtn_ActionPerformed(e);
             }
         });
 
@@ -82,20 +88,12 @@ public class DriverDialog extends JDialog {
         areaPanel.setBorder(border2);
         dialogTitlePanel.setBackground(Color.WHITE);
         dialogTitlePanel.setBorder(border4);
-        header.setFont(new java.awt.Font("Dialog", 0, 20));
+        header.setFont(new Font("Dialog", 0, 20));
         header.setForeground(new Color(0, 0, 124));
-        header.setText(Local.getString("Driver"));
+        header.setText(Local.getString("Bus"));
         header.setIcon(new ImageIcon(DriverDialog.class.getResource("/ui/icons/task48.png")));
 
         GridBagLayout gbLayout = (GridBagLayout) jPanel8.getLayout();
-        jPanel8.setBorder(border3);
-
-        nameField.setBorder(border8);
-        nameField.setPreferredSize(new Dimension(375, 24));
-        GridBagConstraints nameFieldConstraints = new GridBagConstraints();
-        nameFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        nameFieldConstraints.weighty = 1;
-        gbLayout.setConstraints(nameField, nameFieldConstraints);
 
         idField.setBorder(border8);
         idField.setPreferredSize(new Dimension(55, 24));
@@ -103,21 +101,10 @@ public class DriverDialog extends JDialog {
         idFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
         idFieldConstraints.weighty = 1;
         gbLayout.setConstraints(idField, idFieldConstraints);
-
-        phoneField.setBorder(border8);
-        phoneField.setPreferredSize(new Dimension(155, 24));
-        GridBagConstraints phoneFieldConstraints = new GridBagConstraints();
-        phoneFieldConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        phoneFieldConstraints.weighty = 1;
-        gbLayout.setConstraints(phoneField, phoneFieldConstraints);
-
-        idLabel.setText(Local.getString("ID Number"));
+        idLabel.setText(Local.getString("Driver ID"));
         idLabel.setMinimumSize(new Dimension(60, 16));
         idLabel.setMaximumSize(new Dimension(100, 16));
 
-        phoneNumberLabel.setMaximumSize(new Dimension(270, 16));
-        phoneNumberLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        phoneNumberLabel.setText(Local.getString("Phone Number"));
 
         getContentPane().add(mPanel);
         mPanel.add(areaPanel, BorderLayout.CENTER);
@@ -127,21 +114,13 @@ public class DriverDialog extends JDialog {
         this.getContentPane().add(dialogTitlePanel, BorderLayout.NORTH);
         dialogTitlePanel.add(header, null);
         areaPanel.add(jPanel8, BorderLayout.NORTH);
-        jPanel8.add(nameField, null);
         areaPanel.add(gridPanel, BorderLayout.CENTER);
 
-        //Add the items to the gridPanel
         gridPanel.add(idLabelPanel, null);
         idLabelPanel.add(idLabel, null);
-        gridPanel.add(phoneLabelPanel, null);
-        phoneLabelPanel.add(phoneNumberLabel, null);
         gridPanel.add(idFieldPanel, null);
         idFieldPanel.add(idField, null);
-        gridPanel.add(phoneField, phoneFieldConstraints);
-        gridPanel.add(phoneFieldPanel, null);
-        phoneFieldPanel.add(phoneField, null);
 
-        //Listener to ensure only integers with length no greater than 6 characters are typed
         idField.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -155,61 +134,32 @@ public class DriverDialog extends JDialog {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (!idField.getText().matches("\\d"))
+                if (!idField.getText().matches("\\d")) {
                     idField.setText(idField.getText().replaceAll("\\D", ""));
+                }
             }
         });
 
-        nameField.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (nameField.getText().length() >= 35)
-                    e.consume();
-            }
 
-            @Override
-            public void keyPressed(KeyEvent e) {
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-
-        phoneField.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                if (phoneField.getText().length() >= 14)
-                    e.consume();
-                if (phoneField.getText().length() == 0)
-                    phoneField.setText("(");
-                if (phoneField.getText().length() == 4)
-                    phoneField.setText(phoneField.getText() + ") ");
-                if (phoneField.getText().length() == 9)
-                    phoneField.setText(phoneField.getText() + "-");
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (phoneField.getText().length() >= 14)
-                    e.consume();
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (phoneField.getText().length() >= 14)
-                    e.consume();
-            }
-        });
     }
 
-    void okayButton_ActionPerformed(ActionEvent e) {
+    void okayBtn_ActionPerformed(ActionEvent e) {
         CANCELLED = false;
-        tempDriver = new Driver(idField.getText(), nameField.getText(), phoneField.getText());
+        String id = idField.getText();
+        if (id.length() < 6)
+            for (int i = id.length(); i < 6; i++)
+            	id = "0" + id;
+        if(id.equals("000000"))
+            this.bus.setAssignedDriver(null);
+        else
+            this.bus.setAssignedDriver(id);
         this.dispose();
     }
 
-    void cancelB_actionPerformed(ActionEvent e) {
+    void cancelBtn_actionPerformed(ActionEvent e) {
         this.dispose();
     }
 }
+
+
+

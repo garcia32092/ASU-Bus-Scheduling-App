@@ -8,11 +8,11 @@ package main.java.memoranda.ui;
  * @author Alex V. Alishevskikh, alex@openmechanics.net
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
-import java.io.File;
+
+import main.java.memoranda.util.*;
 
 import javax.swing.filechooser.FileFilter;
-
-import main.java.memoranda.util.Local;
+import java.io.*;
 
 /**
  *
@@ -34,6 +34,7 @@ public class AllFilesFilter extends FileFilter {
     public static final String WAV = "WAV";
 
     String _type = "";
+
     /**
      * Constructor for AllFilesFilter.
      */

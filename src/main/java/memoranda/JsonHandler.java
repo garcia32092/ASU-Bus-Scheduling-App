@@ -1,29 +1,24 @@
 package main.java.memoranda;
 
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.List;
+import org.json.simple.*;
+import org.json.simple.parser.*;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
 
 public class JsonHandler {
 
-	public List<Node> nodes;
+    public List<Node> nodes;
     public List<String> nodesString;
 
     public List<String> driversToString;
     public List<String> busesToString;
-	public ArrayList<Driver> driverList;
+    public ArrayList<Driver> driverList;
     public ArrayList<Bus> busList;
-    private ArrayList<Route> routeList;
+    private final ArrayList<Route> routeList;
+    private int numOfNodes = -1;
 
     public JsonHandler() {
         nodes = new ArrayList<Node>();
@@ -43,10 +38,15 @@ public class JsonHandler {
         object.put("lon", node.getLongitude());
         return object;
     }
-	public void readNodesFromJSON(String filename) {
+
+    public void readNodesFromJson(String filename) {
         try {
-        	JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONParser parser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             JSONArray nodesArray = (JSONArray) jsonObject.get("nodes");
 
@@ -56,24 +56,74 @@ public class JsonHandler {
                 String id = (String) nodeObj.get("id");
                 double latitude = Double.parseDouble((String) nodeObj.get("lat"));
                 double longitude = Double.parseDouble((String) nodeObj.get("lon"));
-                addNodeString((String) nodeObj.get("id"));
-                addNode(id, latitude, longitude);
+                boolean isBusStop = (Boolean) nodeObj.get("isBusStop");
+            	String busStopName = (String) nodeObj.get("stopName");
+                if (isBusStop) {
+                	addNodeString((String) nodeObj.get("stopName"));
+                }
+                addNode(id, latitude, longitude, isBusStop, busStopName);
             }
+            
+            setCoords();
+            addNeighbors();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+    
+    private void setCoords() {
+    	double refLatitude = 0;
+        double refLongitude = 0;
+        for (Node node : nodes) {
+            if (node.getId().equals("Reference")) {
+                refLatitude = node.getLatitude();
+                refLongitude = node.getLongitude();
+            }
+            // Scale the longitude and latitude to fit within the panel dimensions
+            int x = (int) ((((refLongitude - node.getLongitude()) * -1) / 0.0000206) + 222);
+            int y = (int) (((refLatitude - node.getLatitude()) / 0.00001706) + 135);
+            node.setX(x);
+            node.setY(y);
+        }
+    }
+    
+    private void addNeighbors() {
+    	for (Node node : nodes) {
+    		if (node.getId().equals("Reference")) {
+    			continue;
+    		}
+    	    int nodeId = Integer.parseInt(node.getId());
+    	    for (Node potentialNeighbor : nodes) {
+    	    	if (potentialNeighbor.getId().equals("Reference")) {
+        			continue;
+        		}
+    	        if (node != potentialNeighbor) {
+    	            int neighborId = Integer.parseInt(potentialNeighbor.getId());
+    	            if (Math.abs(nodeId - neighborId) <= 1) {
+    	                node.addNeighbor(potentialNeighbor);
+    	            } else if ((nodeId == 1 && neighborId == numOfNodes) || (nodeId == numOfNodes && neighborId == 1)) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            } else if ((nodeId == 32 && neighborId == 17) || (nodeId == 17 && neighborId == 32)) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            } else if ((nodeId == 34 && neighborId == 31) || (nodeId == 31 && neighborId == 34)) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            } else if ((nodeId == 34 && neighborId == 1) || (nodeId == 1 && neighborId == 34)) {
+    	            	node.addNeighbor(potentialNeighbor);
+    	            }
+    	        }
+    	    }
+    	}
+    }
 
     private JSONObject createNodePoint(String id) {
         JSONObject object = new JSONObject();
 
 
         Node selectedNode = nodes.stream()
-                .filter(node -> node.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+            .filter(node -> node.getId().equals(id))
+            .findFirst()
+            .orElse(null);
 
 
         if (selectedNode != null) {
@@ -86,12 +136,15 @@ public class JsonHandler {
     }
 
 
-
     public void writeRouteToJson(Route route) {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("nodes1.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream("nodes1.json"), "UTF-8")));
+
 
             // Create a new JSONArray to store all routes (existing + new)
             JSONArray routesArray = new JSONArray();
@@ -130,33 +183,44 @@ public class JsonHandler {
             jsonObject.put("Routes", routesArray);
 
             // Write the updated JSONObject to the file
-            FileWriter fileWriter = new FileWriter("nodes1.json");
-            fileWriter.write(jsonObject.toJSONString());
-            fileWriter.flush();
-            fileWriter.close();
+            try (OutputStreamWriter writer =
+                     new OutputStreamWriter(new FileOutputStream("nodes1.json"),"UTF-8")) {
+                writer.write(jsonObject.toJSONString());
+                writer.flush();
+                // The writer will be automatically closed by the try-with-resources block
+            } catch (IOException e) {
+                // Handle the exception appropriately
+                e.printStackTrace();
+            }
             System.out.println("Routes have been written to and saved in nodes1.json");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void readRoutesFromJSON() {
+    public void readRoutesFromJson() {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader("nodes1.json"));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream("nodes1.json"), "UTF-8")));
+
 
             JSONArray routesArray = (JSONArray) jsonObject.get("Routes");
-            List<Node> listOfNodes= new ArrayList<Node>();
+            List<Node> listOfNodes = new ArrayList<Node>();
             Double stopDuration = 0.0;
             for (Object obj : routesArray) {
                 JSONObject routeObj = (JSONObject) obj;
-                if(routeObj.get("Stop Duration").equals("Stop Duration")) {
+                if (routeObj.get("Stop Duration").equals("Stop Duration")) {
                     stopDuration = (Double) routeObj.get("Stop Duration");
                 }
                 String id = (String) routeObj.get("Id");
                 Double longitude = (Double) routeObj.get("Longitude");
                 Double latitude = (Double) routeObj.get("Latitude");
-                listOfNodes.add(new Node(id,latitude,longitude));
+                boolean isBusStop = (Boolean) routeObj.get("isBusStop");
+            	String busStopName = (String) routeObj.get("stopName");
+                listOfNodes.add(new Node(id, latitude, longitude, isBusStop, busStopName));
             }
 
 
@@ -173,10 +237,15 @@ public class JsonHandler {
     public List<String> getNodesString() {
         return nodesString;
     }
-    public void readDriversFromJSON(String filename) {
+
+    public void readDriversFromJson(String filename) {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             JSONArray nodesArray = (JSONArray) jsonObject.get("drivers");
 
@@ -193,11 +262,13 @@ public class JsonHandler {
         }
     }
 
-    public void readBusesFromJSON(String filename) {
+    public void readBusesFromJson(String filename) {
         try {
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
-
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
             JSONArray nodesArray = (JSONArray) jsonObject.get("buses");
 
             for (Object obj : nodesArray) {
@@ -214,11 +285,15 @@ public class JsonHandler {
         }
     }
 
-    public void writeDriversToJSON(String filename) {
+    public void writeDriversToJson(String filename) {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             // Create a new JSONArray to store all drivers (existing + new)
             JSONArray driversArray = new JSONArray();
@@ -237,21 +312,31 @@ public class JsonHandler {
             jsonObject.put("drivers", driversArray);
 
             // Write the updated JSONObject to the file
-            FileWriter fileWriter = new FileWriter(filename);
-            fileWriter.write(jsonObject.toJSONString());
-            fileWriter.flush();
-            fileWriter.close();
+
+            try (OutputStreamWriter writer =
+                     new OutputStreamWriter(new FileOutputStream(filename),"UTF-8")) {
+                writer.write(jsonObject.toJSONString());
+                writer.flush();
+                // The writer will be automatically closed by the try-with-resources block
+            } catch (IOException e) {
+                // Handle the exception appropriately
+                e.printStackTrace();
+            }
             System.out.println("Drivers have been written to and saved in nodes1.json");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void writeBusesToJSON(String filename) {
+    public void writeBusesToJson(String filename) {
         try {
             // Read the existing JSON file and parse it into a JSONObject
             JSONParser parser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(filename));
+            JSONObject jsonObject = (JSONObject) parser.parse(
+                new BufferedReader(
+                    new InputStreamReader(
+                        new FileInputStream(filename), "UTF-8")));
+
 
             // Create a new JSONArray to store all drivers (existing + new)
             JSONArray busesArray = new JSONArray();
@@ -261,7 +346,7 @@ public class JsonHandler {
                 JSONObject busObj = new JSONObject();
                 busObj.put("id", String.valueOf(bus.getId()));
                 busObj.put("seats", String.valueOf(bus.getSeats()));
-                busObj.put("assignedDriver", String.valueOf(bus.getAssignedDriverID()));
+                busObj.put("assignedDriver", String.valueOf(bus.getAssignedDriverId()));
 
                 busesArray.add(busObj);
             }
@@ -270,10 +355,15 @@ public class JsonHandler {
             jsonObject.put("buses", busesArray);
 
             // Write the updated JSONObject to the file
-            FileWriter fileWriter = new FileWriter(filename);
-            fileWriter.write(jsonObject.toJSONString());
-            fileWriter.flush();
-            fileWriter.close();
+            try (OutputStreamWriter writer =
+                     new OutputStreamWriter(new FileOutputStream(filename),"UTF-8")) {
+                writer.write(jsonObject.toJSONString());
+                writer.flush();
+                // The writer will be automatically closed by the try-with-resources block
+            } catch (IOException e) {
+                // Handle the exception appropriately
+                e.printStackTrace();
+            }
             System.out.println("Buses have been written to and saved in nodes1.json");
         } catch (Exception e) {
             e.printStackTrace();
@@ -287,12 +377,15 @@ public class JsonHandler {
     public List<String> getBusesToString() {
         return busesToString;
     }
+
     public List<Node> getNodes() {
         return nodes;
     }
+
     public ArrayList<Route> getRouteList() {
         return routeList;
     }
+
     public void addNodeString(String option) {
         nodesString.add(option);
     }
@@ -304,8 +397,11 @@ public class JsonHandler {
     private void addBusToString(String id) {
         busesToString.add(id);
     }
-    public void addNode(String id, double latitude, double longitude) {
-        nodes.add(new Node(id, latitude, longitude));
+
+    public void addNode(String id, double latitude, double longitude, boolean isBusStop, String stopName) {
+        nodes.add(new Node(id, latitude, longitude, isBusStop, stopName));
+        numOfNodes++;
+        System.out.println("Nodes: " + numOfNodes);
     }
 
     public void addDriver(String id, String name, String phoneNumber) {
@@ -313,11 +409,9 @@ public class JsonHandler {
     }
 
 
-
     public ArrayList<Driver> getDriverList() {
         return driverList;
     }
-
 
 
     public ArrayList<Bus> getBusList() {
