@@ -1,8 +1,6 @@
 package main.java.memoranda.ui;
 
 import main.java.memoranda.*;
-import main.java.memoranda.date.*;
-import main.java.memoranda.util.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +15,7 @@ MapPanel extends JPanel {
     JsonHandler jsonHandler = new JsonHandler();
     MapGenerator mapGen;
     Route route;
-    DailyItemsPanel parentPanel = null;
+//    DailyItemsPanel parentPanel = null;
 
     public MapPanel() {
         try {
@@ -45,11 +43,11 @@ MapPanel extends JPanel {
         PopupListener ppListener = new PopupListener();
         scrollPane.addMouseListener(ppListener);
 
-        CurrentDate.addDateListener(new DateListener() {
-            public void dateChange(CalendarDate d) {
-                boolean enbl = d.after(CalendarDate.today()) || d.equals(CalendarDate.today());
-            }
-        });
+//        CurrentDate.addDateListener(new DateListener() {
+//            public void dateChange(CalendarDate d) {
+//                boolean enbl = d.after(CalendarDate.today()) || d.equals(CalendarDate.today());
+//            }
+//        });
 
 //        eventsTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 //            public void valueChanged(ListSelectionEvent e) {
@@ -160,94 +158,94 @@ MapPanel extends JPanel {
 //	saveEvents();
 //    }
 
-    void newEventB_actionPerformed(ActionEvent e) {
-        Calendar cdate = CurrentDate.get().getCalendar();
-        // round down to hour
-        cdate.set(Calendar.MINUTE, 0);
-        Util.debug("Default time is " + cdate);
+//    void newEventB_actionPerformed(ActionEvent e) {
+//        Calendar cdate = CurrentDate.get().getCalendar();
+//        // round down to hour
+//        cdate.set(Calendar.MINUTE, 0);
+//        Util.debug("Default time is " + cdate);
+//
+//        newEventB_actionPerformed(e, null, cdate.getTime(), cdate.getTime());
+//    }
 
-        newEventB_actionPerformed(e, null, cdate.getTime(), cdate.getTime());
-    }
+//    void newEventB_actionPerformed(ActionEvent e, String tasktext, Date startDate, Date endDate) {
+//        EventDialog dlg = new EventDialog(App.getFrame(), Local.getString("New event"));
+//        Dimension frmSize = App.getFrame().getSize();
+//        Point loc = App.getFrame().getLocation();
+//        if (tasktext != null) {
+//            dlg.textField.setText(tasktext);
+//        }
+//        dlg.startDate.getModel().setValue(startDate);
+//        dlg.endDate.getModel().setValue(endDate);
+//        dlg.timeSpin.getModel().setValue(startDate);
+//
+//        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+//        dlg.setEventDate(startDate);
+//        dlg.setVisible(true);
+//        if (dlg.CANCELLED)
+//            return;
+//        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale()); //Fix deprecated methods to get hours
+//        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
+//        calendar.setTime(((Date) dlg.timeSpin.getModel().getValue()));//Fix deprecated methods to get hours
+//        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
+//        int hh = calendar.get(Calendar.HOUR_OF_DAY);//Fix deprecated methods to get hours
+//        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
+//        int mm = calendar.get(Calendar.MINUTE);//Fix deprecated methods to get hours
+//        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
+//
+//        //int hh = ((Date) dlg.timeSpin.getModel().getValue()).getHours();
+//        //int mm = ((Date) dlg.timeSpin.getModel().getValue()).getMinutes();
+//        String text = dlg.textField.getText();
+//
+//        CalendarDate eventCalendarDate = new CalendarDate(dlg.getEventDate());
+//
+//        if (dlg.noRepeatRB.isSelected())
+//            EventsManager.createEvent(eventCalendarDate, hh, mm, text);
+//        else {
+//            updateEvents(dlg, hh, mm, text);
+//        }
+////        saveEvents();
+//    }
 
-    void newEventB_actionPerformed(ActionEvent e, String tasktext, Date startDate, Date endDate) {
-        EventDialog dlg = new EventDialog(App.getFrame(), Local.getString("New event"));
-        Dimension frmSize = App.getFrame().getSize();
-        Point loc = App.getFrame().getLocation();
-        if (tasktext != null) {
-            dlg.textField.setText(tasktext);
-        }
-        dlg.startDate.getModel().setValue(startDate);
-        dlg.endDate.getModel().setValue(endDate);
-        dlg.timeSpin.getModel().setValue(startDate);
-
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-        dlg.setEventDate(startDate);
-        dlg.setVisible(true);
-        if (dlg.CANCELLED)
-            return;
-        Calendar calendar = new GregorianCalendar(Local.getCurrentLocale()); //Fix deprecated methods to get hours
-        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
-        calendar.setTime(((Date) dlg.timeSpin.getModel().getValue()));//Fix deprecated methods to get hours
-        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
-        int hh = calendar.get(Calendar.HOUR_OF_DAY);//Fix deprecated methods to get hours
-        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
-        int mm = calendar.get(Calendar.MINUTE);//Fix deprecated methods to get hours
-        //by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
-
-        //int hh = ((Date) dlg.timeSpin.getModel().getValue()).getHours();
-        //int mm = ((Date) dlg.timeSpin.getModel().getValue()).getMinutes();
-        String text = dlg.textField.getText();
-
-        CalendarDate eventCalendarDate = new CalendarDate(dlg.getEventDate());
-
-        if (dlg.noRepeatRB.isSelected())
-            EventsManager.createEvent(eventCalendarDate, hh, mm, text);
-        else {
-            updateEvents(dlg, hh, mm, text);
-        }
-        saveEvents();
-    }
-
-    private void saveEvents() {
-        CurrentStorage.get().storeEventsManager();
+//    private void saveEvents() {
+//        CurrentStorage.get().storeEventsManager();
 //        eventsTable.refresh();
-        EventsScheduler.init();
-        parentPanel.calendar.jnCalendar.updateUI();
-        parentPanel.updateIndicators();
-    }
+//        EventsScheduler.init();
+//        parentPanel.calendar.jnCalendar.updateUI();
+//        parentPanel.updateIndicators();
+//    }
 
-    private void updateEvents(EventDialog dlg, int hh, int mm, String text) {
-        int rtype;
-        int period;
-        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-        CalendarDate ed = null;
-        if (dlg.enableEndDateCB.isSelected())
-            ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-        if (dlg.dailyRepeatRB.isSelected()) {
-            rtype = EventsManager.REPEAT_DAILY;
-            period = ((Integer) dlg.daySpin.getModel().getValue()).intValue();
-        } else if (dlg.weeklyRepeatRB.isSelected()) {
-            rtype = EventsManager.REPEAT_WEEKLY;
-            period = dlg.weekdaysCB.getSelectedIndex() + 1;
-            if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
-                if (period == 7) period = 1;
-                else period++;
-            }
-        } else if (dlg.yearlyRepeatRB.isSelected()) {
-            rtype = EventsManager.REPEAT_YEARLY;
-            period = sd.getCalendar().get(Calendar.DAY_OF_YEAR);
-            if ((sd.getYear() % 4) == 0 && sd.getCalendar().get(Calendar.DAY_OF_YEAR) > 60)
-                period--;
-        } else {
-            rtype = EventsManager.REPEAT_MONTHLY;
-            period = ((Integer) dlg.dayOfMonthSpin.getModel().getValue()).intValue();
-        }
-        EventsManager.createRepeatableEvent(rtype, sd, ed, period, hh, mm, text, dlg.workingDaysOnlyCB.isSelected());
-    }
+//    private void updateEvents(EventDialog dlg, int hh, int mm, String text) {
+//        int rtype;
+//        int period;
+//        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+//        CalendarDate ed = null;
+//        if (dlg.enableEndDateCB.isSelected())
+//            ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+//        if (dlg.dailyRepeatRB.isSelected()) {
+//            rtype = EventsManager.REPEAT_DAILY;
+//            period = ((Integer) dlg.daySpin.getModel().getValue()).intValue();
+//        } else if (dlg.weeklyRepeatRB.isSelected()) {
+//            rtype = EventsManager.REPEAT_WEEKLY;
+//            period = dlg.weekdaysCB.getSelectedIndex() + 1;
+//            if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
+//                if (period == 7) period = 1;
+//                else period++;
+//            }
+//        } else if (dlg.yearlyRepeatRB.isSelected()) {
+//            rtype = EventsManager.REPEAT_YEARLY;
+//            period = sd.getCalendar().get(Calendar.DAY_OF_YEAR);
+//            if ((sd.getYear() % 4) == 0 && sd.getCalendar().get(Calendar.DAY_OF_YEAR) > 60)
+//                period--;
+//        } else {
+//            rtype = EventsManager.REPEAT_MONTHLY;
+//            period = ((Integer) dlg.dayOfMonthSpin.getModel().getValue()).intValue();
+//        }
+//        EventsManager.createRepeatableEvent(rtype, sd, ed, period, hh, mm, text, dlg.workingDaysOnlyCB.isSelected());
+//    }
 
     void removeEventB_actionPerformed(ActionEvent e) {
         String msg;
-        main.java.memoranda.Event ev;
+//        main.java.memoranda.Event ev;
 
 //		if(eventsTable.getSelectedRows().length > 1) 
 //			msg = Local.getString("Remove") + " " + eventsTable.getSelectedRows().length 
@@ -280,7 +278,7 @@ MapPanel extends JPanel {
         parentPanel.calendar.jnCalendar.updateUI();
         parentPanel.updateIndicators();
 */
-        saveEvents();
+//        saveEvents();
     }
 
     class PopupListener extends MouseAdapter {
@@ -314,7 +312,7 @@ MapPanel extends JPanel {
         removeEventB_actionPerformed(e);
     }
 
-    void ppNewEvent_actionPerformed(ActionEvent e) {
-        newEventB_actionPerformed(e);
-    }
+//    void ppNewEvent_actionPerformed(ActionEvent e) {
+//        newEventB_actionPerformed(e);
+//    }
 }

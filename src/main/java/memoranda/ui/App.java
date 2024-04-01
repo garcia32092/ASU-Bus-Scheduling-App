@@ -83,7 +83,7 @@ public class App {
             System.out.println("[DEBUG] first day of week is set to " + fdow);
         }
 
-        EventsScheduler.init();
+//        EventsScheduler.init();
         frame = new AppFrame();
         if (fullmode) {
             init();

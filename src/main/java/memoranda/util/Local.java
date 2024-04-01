@@ -1,6 +1,5 @@
 package main.java.memoranda.util;
 
-import main.java.memoranda.date.*;
 
 import java.io.*;
 import java.text.*;
@@ -161,9 +160,9 @@ public class Local {
         return getDateString(cal.getTime(), f);
     }
 
-    public static String getDateString(CalendarDate date, int f) {
-        return getDateString(date.getDate(), f);
-    }
+//    public static String getDateString(CalendarDate date, int f) {
+//        return getDateString(date.getDate(), f);
+//    }
 
     public static String getDateString(int m, int d, int y, int f) {
         Calendar cal = Calendar.getInstance();

@@ -93,11 +93,6 @@ public class ExceptionDialog extends JDialog {
         reportB.setMinimumSize(new Dimension(120, 25));
         reportB.setPreferredSize(new Dimension(120, 25));
         reportB.setText("Report bug...");
-        reportB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                reportB_actionPerformed(e);
-            }
-        });
         closeB.setMaximumSize(new Dimension(120, 25));
         closeB.setMinimumSize(new Dimension(120, 25));
         closeB.setPreferredSize(new Dimension(120, 25));
@@ -151,9 +146,5 @@ public class ExceptionDialog extends JDialog {
 
     void closeB_actionPerformed(ActionEvent e) {
         this.dispose();
-    }
-
-    void reportB_actionPerformed(ActionEvent e) {
-        Util.runBrowser(App.BUGS_TRACKER_URL);
     }
 }

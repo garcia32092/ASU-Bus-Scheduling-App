@@ -8,7 +8,6 @@
  */
 package main.java.memoranda.util;
 
-import main.java.memoranda.date.*;
 import main.java.memoranda.ui.*;
 
 import javax.swing.*;
@@ -46,10 +45,6 @@ public class Util {
 
     }
 
-    public static String getDateStamp(CalendarDate date) {
-        return Util.getDateStamp(date.getCalendar());
-    }
-
     public static int[] parseDateStamp(String s) {
         s = s.trim();
         int i1 = s.indexOf("/");
@@ -83,42 +78,6 @@ public class Util {
 
     public static String getCDATA(String s) {
         return "<![CDATA[" + s + "]]>";
-    }
-
-    public static void runBrowser(String url) {
-        if (!checkBrowser())
-            return;
-        String commandLine = MimeTypesList.getAppList().getBrowserExec() + " " + url;
-        System.out.println("Run: " + commandLine);
-        try {
-            /*DEBUG*/
-            Runtime.getRuntime().exec(commandLine);
-        } catch (Exception ex) {
-            new ExceptionDialog(ex, "Failed to run an external web-browser application with commandline<br><code>"
-                + commandLine + "</code>", "Check the application path and command line parameters " +
-                "(File-&gt;Preferences-&gt;Resource types).");
-        }
-    }
-
-    public static boolean checkBrowser() {
-        AppList appList = MimeTypesList.getAppList();
-        String bpath = appList.getBrowserExec();
-        if (bpath != null)
-            if (new File(bpath).isFile())
-                return true;
-        JFileChooser chooser = new JFileChooser();
-        chooser.setFileHidingEnabled(false);
-        chooser.setDialogTitle(Local.getString("Select the web-browser executable"));
-        chooser.setAcceptAllFileFilterUsed(true);
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        /*java.io.File lastSel = (java.io.File) Context.get("LAST_SELECTED_RESOURCE_FILE");
-        if (lastSel != null)
-            chooser.setCurrentDirectory(lastSel);*/
-        if (chooser.showOpenDialog(App.getFrame()) != JFileChooser.APPROVE_OPTION)
-            return false;
-        appList.setBrowserExec(chooser.getSelectedFile().getPath());
-        CurrentStorage.get().storeMimeTypesList();
-        return true;
     }
 
     public static String getHoursFromMillis(long ms) {

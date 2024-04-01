@@ -19,7 +19,7 @@ public class WorkPanel extends JPanel {
     JPanel panel = new JPanel();
     CardLayout cardLayout1 = new CardLayout();
     //**********************************************REMOVE vvvvvvvvvv
-    public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
+//    public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
     public MapPanel mapPanel = new MapPanel();
     public RoutePanel routePanel = new RoutePanel();
     public BusAndDriverPanel busAndDriverPanel = new BusAndDriverPanel();
@@ -149,10 +149,10 @@ public class WorkPanel extends JPanel {
         panel.add(mapPanel, "MAP");
         panel.add(routePanel, "Routes");
         panel.add(busAndDriverPanel, "Buses/Drivers");
-        toolBar.add(routeButton, null);
-        toolBar.add(busAndDriverButton, null);
         toolBar.add(mapButton, null);
-        currentButton = routeButton;
+        toolBar.add(busAndDriverButton, null);
+        toolBar.add(routeButton, null);
+        currentButton = mapButton;
 
         // Default blue color for the current button
         currentButton.setBackground(new Color(215, 225, 250));
@@ -187,7 +187,7 @@ public class WorkPanel extends JPanel {
     public void busDriverButton_actionPerformed(ActionEvent e) {
         cardLayout1.show(panel, "Buses/Drivers"); //switches to the correct window
         setCurrentButton(busAndDriverButton);
-        Context.put("CURRENT_PANEL", "Buses/Drivers");
+//        Context.put("CURRENT_PANEL", "Buses/Drivers");
     }
 
     /**
@@ -198,7 +198,7 @@ public class WorkPanel extends JPanel {
     public void routeButton_actionPerformed(ActionEvent e) {
         cardLayout1.show(panel, "Routes");
         setCurrentButton(routeButton);
-        Context.put("CURRENT_PANEL", "Routes");
+//        Context.put("CURRENT_PANEL", "Routes");
     }
 
     /**
@@ -209,7 +209,7 @@ public class WorkPanel extends JPanel {
     public void mapButton_actionPerformed(ActionEvent e) {
         cardLayout1.show(panel, "MAP");
         setCurrentButton(mapButton);
-        Context.put("CURRENT_PANEL", "MAP");
+//        Context.put("CURRENT_PANEL", "MAP");
     }
 
     /**
