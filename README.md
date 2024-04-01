@@ -1,3 +1,17 @@
+# ASU Bus Scheduling App
+
+![Example1 image](images/example1.jpg)
+![Example2 image](images/example2.jpg)
+![Example3 image](images/example3.jpg)
+
+## Description
+This was a team project that was worked on for SER316 (Software Enterprise: Construction - Summer 2023) while attending Arizona State University. The project assignment was to refactor code from the existing memoranda app to build a Bus Scheduling App. We decided to use the area surrounding ASU for our bus routes map.
+
+## Topic Description
+
+![Topic image](images/topic.jpg)
+
+## Professor's Initial README:
 Project SER316
 
 This is the initial dump for the SER316 project. It is a slightly modified version of the Memoranda project from memoranda.sf.net
